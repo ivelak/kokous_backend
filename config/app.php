@@ -146,7 +146,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 		/*
-		 * 3rd Party Service Providers
+		 * 3rd Party Service Providers. Some may be defined in app/providers/AppServiceProvider.php.
 		 */
 		 Collective\Html\HtmlServiceProvider::class,
     ],
