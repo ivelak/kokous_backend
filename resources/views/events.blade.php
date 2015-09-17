@@ -10,8 +10,16 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <?php
-        // put your code here
-        ?>
+        <p> Lisätyt tapahtumat </p>
+        <ul>
+            @forelse ($events as $event)
+            <li>{{ $event->name }}</li>
+            
+            @empty
+            <p>Ei lisättyjä tapahtumia!</p>
+            
+            @endforelse
+            
+        </ul>
     </body>
 </html>
