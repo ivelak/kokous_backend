@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('newEvent');
 });
+
+Route::get('/activity/new', function () {
+    return view('/Activity/new');
+});
