@@ -9,7 +9,7 @@ class CreateEventsTable extends Migration {
     public function up() {
         Schema::create('events', function (Blueprint $table) {
             $table->string('eventName');
-            $table->integer('eventId');
+            $table->increments('id');
             $table->date('date');
             $table->dateTime('time');
             $table->integer('authorityId');
