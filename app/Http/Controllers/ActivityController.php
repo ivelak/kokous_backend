@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
+use App\Activity;
 use App\Http\Controllers\Controller;
 
 class ActivityController extends Controller
@@ -16,7 +16,8 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        //
+        $activities = Activity::all();
+        return view('Activity.activities', ['activities' => $activities]);
     }
 
     /**

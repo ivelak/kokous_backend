@@ -12,12 +12,12 @@ class CreateHintsTable extends Migration
      */
     public function up()
     {
-        //
         Schema::create('hints', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('activity_id');
             $table->string('text');
         });
+
     }
 
     /**
@@ -27,7 +27,6 @@ class CreateHintsTable extends Migration
      */
     public function down()
     {
-        //
         Schema::drop('hints');
     }
 }
