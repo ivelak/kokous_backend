@@ -14,5 +14,8 @@
 Route::get('/', function () {
     return view('newEvent');
 });
+Route::get('/addActivity', function () {
+    return view('newActivity');
+});
 
 Route::get('/activities', "ActivityController@index");
