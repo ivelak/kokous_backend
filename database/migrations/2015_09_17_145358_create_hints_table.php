@@ -16,6 +16,7 @@ class CreateHintsTable extends Migration
             $table->increments('id');
             $table->integer('activity_id');
             $table->string('text');
+            $table->timestamps();
         });
 
     }

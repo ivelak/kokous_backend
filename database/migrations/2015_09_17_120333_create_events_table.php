@@ -10,11 +10,11 @@ class CreateEventsTable extends Migration {
         Schema::create('events', function (Blueprint $table) {
             $table->string('eventName');
             $table->increments('id');
-            $table->date('date');
-            $table->dateTime('time');
+            $table->dateTime('time'); // Sisältää ajan sekä paikan
             $table->integer('authorityId');
             $table->string('place');
             $table->string('activity');
+            $table->timestamps();
             
         });
     }

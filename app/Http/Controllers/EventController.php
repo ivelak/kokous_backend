@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Activity;
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Event;
 
-class ActivityController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        $activities = Activity::all();
-        return view('Activity.activities', ['activities' => $activities]);
+        //
     }
 
     /**
@@ -27,7 +27,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        return view('Activity.new');
+        return view('newEvent');
     }
 
     /**
@@ -38,7 +38,12 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $event = new Event();
+        $event->name = $request->input('name');
+        $event->time = strtotime($request->input('date') + ' ' + $request->input('time')); 
+        $event->authority = $request->input('authority');
+        $event->place = $request->input('place');
+        $event->save();
     }
 
     /**
@@ -49,7 +54,7 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
