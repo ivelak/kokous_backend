@@ -17,7 +17,7 @@ class ActivityController extends Controller
     public function index()
     {
         $activities = Activity::all();
-        return view('Activity.activities', ['activities' => $activities]);
+        return view('activity.activities', ['activities' => $activities]);
     }
 
     /**
@@ -27,7 +27,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        return view('Activity.new');
+        return view('activity.new');
     }
 
     /**
