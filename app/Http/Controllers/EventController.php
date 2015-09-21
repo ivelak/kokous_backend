@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Event;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -43,7 +44,7 @@ class EventController extends Controller
     {
         $event = new Event();
         $event->name = $request->input('name');
-        $event->time = strtotime($request->input('date') + ' ' + $request->input('time')); 
+        $event->time = Carbon::createFromFormat('d/m/Y H:i',$request->input('date').' '.$request->input('time')); 
         $event->place = $request->input('place');
         $event->description = $request->input('description');
         $event->save();
