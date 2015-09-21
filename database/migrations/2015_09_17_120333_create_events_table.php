@@ -8,7 +8,7 @@ class CreateEventsTable extends Migration {
     
     public function up() {
         Schema::create('events', function (Blueprint $table) {
-            $table->string('eventName');
+            $table->string('name');
             $table->increments('id');
             $table->dateTime('time'); // Sisältää ajan sekä paikan
             $table->string('place');

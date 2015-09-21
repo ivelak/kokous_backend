@@ -44,7 +44,6 @@ class EventController extends Controller
         $event = new Event();
         $event->name = $request->input('name');
         $event->time = strtotime($request->input('date') + ' ' + $request->input('time')); 
-        $event->authority = $request->input('authority');
         $event->place = $request->input('place');
         $event->save();
         
@@ -59,7 +58,8 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        //
+        $event = Event::find($id);
+        return view('event', ['event' => $event]);
     }
 
     /**

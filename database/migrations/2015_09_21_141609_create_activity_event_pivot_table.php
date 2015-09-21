@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ActivityEventPivot extends Migration
+class CreateActivityEventPivotTable extends Migration
 {
     /**
      * Run the migrations.
