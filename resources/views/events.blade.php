@@ -9,7 +9,7 @@ and open the template in the editor.
 @section('content')
 
 <div class="container">
-    <h1> Kaikki tapahtumat: </h1> <hr />
+    <h1> Kaikki tapahtumat </h1> <hr />
     <table class="table table-bordered">
         <tr>
             <td><strong>Tapahtuma</strong></td>
