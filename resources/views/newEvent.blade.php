@@ -27,12 +27,12 @@
 
     <div class="form-group">
         {!!Form::label('place', 'Paikka:')!!}<br/>
-        {!!Form::text('place', 'Kolo', ['class'=>'form-control'])!!}
+        {!!Form::text('place', null, ['class'=>'form-control'])!!}
     </div>
 
     <div class="form-group">
         {!!Form::label('description', 'Kuvaus:')!!}<br/>
-        {!!Form::textarea('desctiprion', null, ['size'=>'100x10'])!!}
+        {!!Form::textarea('description', null, ['size'=>'100x10'])!!}
     </div>
 
     <button type="submit" class="btn btn-default"> Lisää tapahtuma! </button>

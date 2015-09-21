@@ -16,7 +16,7 @@ and open the template in the editor.
         </tr>
         @foreach($events as $event)
         <tr>
-            <td><a href="/event/{{ $event->id }}">{{ $event->name }}</a></td>
+            <td><a href="/events/{{ $event->id }}">{{ $event->name }}</a></td>
         </tr>
         @endforeach
     </table>
