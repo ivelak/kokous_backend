@@ -10,28 +10,32 @@
     <h1> Tapahtuman lisäys: </h1> <hr />
     {!! Form::open(array('action' => 'EventController@store')) !!}
 
-        <div class="form-group">
-            <label for="eventName" >Tapahtuman nimi:</label>
-            <input type="text" name="name" class="form-control" id="name">
-        </div>
+    <div class="form-group">
+        {!!Form::label('name', 'Tapahtuman nimi:')!!}<br/>
+        {!!Form::text('name', null, ['class'=>'form-control'])!!}
+    </div>
 
-        <div class="form-group"> 
-            <label for="date">Päiväys:</label>
-            <input type="text" name="date" class="form-control" id="date" placeholder="dd/mm/yyyy">
-        </div>
+    <div class="form-group"> 
+        {!!Form::label('date', 'Päiväys:')!!}<br/>
+        {!!Form::text('date', null, ['class'=>'form-control', 'placeholder'=>'dd/mm/yyyy'])!!}
+    </div>
 
-        <div class="form-group">
-            <label for="time">Kellonaika:</label>
-            <input type="text" name="time" class="form-control" id="time" placeholder="hh:mm">
-        </div>
+    <div class="form-group">
+        {!!Form::label('time', 'Aika:')!!}<br/>
+        {!!Form::text('time', null, ['class'=>'form-control', 'placeholder'=>'hh:mm'])!!}
+    </div>
 
-        <div class="form-group">
-            <label for="place">Paikka:</label>
-            <input type="text" name="place" class="form-control" id="place">
-        </div>
+    <div class="form-group">
+        {!!Form::label('place', 'Paikka:')!!}<br/>
+        {!!Form::text('place', 'Kolo', ['class'=>'form-control'])!!}
+    </div>
 
-    
-        <button type="submit" class="btn btn-default"> Lisää tapahtuma! </button>
-    </form>{!! Form::close() !!}
+    <div class="form-group">
+        {!!Form::label('description', 'Kuvaus:')!!}<br/>
+        {!!Form::textarea('desctiprion', null, ['size'=>'100x10'])!!}
+    </div>
+
+    <button type="submit" class="btn btn-default"> Lisää tapahtuma! </button>
+</form>{!! Form::close() !!}
 </div>
 @endsection
