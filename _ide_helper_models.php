@@ -17,6 +17,7 @@ namespace App{
  * @property string $name
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Event[] $events
  * @method static \Illuminate\Database\Query\Builder|\App\Activity whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Activity whereGuid($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Activity whereName($value)
@@ -28,24 +29,25 @@ namespace App{
 
 namespace App{
 /**
- * App\User
+ * App\Event
  *
+ * @property string $eventName
  * @property integer $id
- * @property string $name
- * @property string $email
- * @property string $password
- * @property string $remember_token
+ * @property string $time
+ * @property string $place
+ * @property string $description
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Activity[] $activities
+ * @method static \Illuminate\Database\Query\Builder|\App\Event whereEventName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Event whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Event whereTime($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Event wherePlace($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Event whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Event whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Event whereUpdatedAt($value)
  */
-	class User {}
+	class Event {}
 }
 
 namespace App{
@@ -68,25 +70,23 @@ namespace App{
 
 namespace App{
 /**
- * App\Event
+ * App\User
  *
- * @property string $eventName
  * @property integer $id
- * @property string $time
- * @property integer $authorityId
- * @property string $place
- * @property string $activity
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereEventName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereTime($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereAuthorityId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event wherePlace($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereActivity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
  */
-	class Event {}
+	class User {}
 }
 
