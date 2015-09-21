@@ -18,6 +18,9 @@ class EventController extends Controller
     public function index()
     {
         //
+        $events = Event::all();
+        
+        return view('events', compact('events'));
     }
 
     /**
@@ -44,6 +47,8 @@ class EventController extends Controller
         $event->authority = $request->input('authority');
         $event->place = $request->input('place');
         $event->save();
+        
+        return redirect('events');
     }
 
     /**

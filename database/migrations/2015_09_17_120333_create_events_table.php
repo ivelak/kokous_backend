@@ -11,9 +11,8 @@ class CreateEventsTable extends Migration {
             $table->string('eventName');
             $table->increments('id');
             $table->dateTime('time'); // Sisältää ajan sekä paikan
-            $table->integer('authorityId');
             $table->string('place');
-            $table->string('activity');
+            $table->text('description');
             $table->timestamps();
             
         });

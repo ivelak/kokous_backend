@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-
+    public function events(){
+        return $this->belongsToMany('App\Event');
+    }
 }

@@ -17,3 +17,7 @@
 Route::get('/', "EventController@create");
 Route::get('/activities', "ActivityController@index");
 Route::get('/activities/new', "ActivityController@create");
+Route::get('/events', "EventController@index");
+Route::get('/events/new', "EventController@create");
+
+Route::post('/events/new',"EventController@store");

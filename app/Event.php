@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     public $name, $time, $authority, $place, $activity;
+    
+    public function activities(){
+        return $this->belongsToMany('App\Activity');
+    }
 }
