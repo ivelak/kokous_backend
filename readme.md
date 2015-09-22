@@ -9,3 +9,4 @@ kokous_backend on osa samaa projektia mobiilikokoussovelluksen kanssa ja dokumen
 Projektin backlog löytyy wafflesta:
 
 [![Sprint](https://badge.waffle.io/partio-scout/mobiilikokoussovellus.svg?label=sprint&title=Backlog)](http://waffle.io/partio-scout/mobiilikokoussovellus)
+[![Build Status](https://travis-ci.org/partio-scout/kokous_backend.svg?branch=master)](https://travis-ci.org/partio-scout/kokous_backend)
