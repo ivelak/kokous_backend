@@ -31,7 +31,7 @@ namespace App{
 /**
  * App\Event
  *
- * @property string $eventName
+ * @property string $name
  * @property integer $id
  * @property string $time
  * @property string $place
@@ -39,7 +39,7 @@ namespace App{
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Activity[] $activities
- * @method static \Illuminate\Database\Query\Builder|\App\Event whereEventName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Event whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Event whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Event whereTime($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Event wherePlace($value)
