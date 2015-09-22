@@ -149,6 +149,7 @@ return [
 		 * 3rd Party Service Providers. Some may be defined in app/providers/AppServiceProvider.php.
 		 */
 		 Collective\Html\HtmlServiceProvider::class,
+		 Aacotroneo\Saml2\Saml2ServiceProvider::class,
     ],
 
     /*
@@ -203,6 +204,7 @@ return [
 		 */
 		'Form' => Collective\Html\FormFacade::class,
 		'Html' => Collective\Html\HtmlFacade::class,
+		'Saml2' => Aacotroneo\Saml2\Facades\Saml2Auth::class,
     ],
 
 ];
