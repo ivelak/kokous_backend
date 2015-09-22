@@ -20,13 +20,22 @@
     <div class="panel panel-default">
         <div class="panel-heading"><strong>Kuvaus:</strong></div>
         <div class="panel-body">
-            {{ $event->description }}
+            {{ empty($event->description) ? 'Ei kuvausta' : $event->description}}
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading"><strong>Aktiviteetit:</strong></div>
-        <div class="panel-body">
-        </div>
+        <table class="table">
+            @forelse($event->activities() as $activity)
+            <tr>
+                <td>{{$activity->name}}</td>
+            </tr>
+            @empty
+            <tr>
+                <td>Ei merkittyjä aktiviteetteja</td>
+            </tr>
+            @endforelse</tr>
+        </table>
     </div>
 </div>
 
