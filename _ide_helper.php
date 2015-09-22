@@ -13543,5 +13543,81 @@ if (! function_exists('with')) {
     }
 
 
+    class Saml2 extends \Aacotroneo\Saml2\Facades\Saml2Auth{
+        
+        /**
+         * 
+         *
+         * @return bool if a valid user was fetched from the saml assertion this request.
+         * @static 
+         */
+        public static function isAuthenticated(){
+            return \Aacotroneo\Saml2\Saml2Auth::isAuthenticated();
+        }
+        
+        /**
+         * The user info from the assertion
+         *
+         * @return \Aacotroneo\Saml2\Saml2User 
+         * @static 
+         */
+        public static function getSaml2User(){
+            return \Aacotroneo\Saml2\Saml2Auth::getSaml2User();
+        }
+        
+        /**
+         * Initiate a saml2 login flow. It will redirect! Before calling this, check if user is
+         * authenticated (here in saml2). That would be true when the assertion was received this request.
+         *
+         * @static 
+         */
+        public static function login($returnTo = null){
+            return \Aacotroneo\Saml2\Saml2Auth::login($returnTo);
+        }
+        
+        /**
+         * Initiate a saml2 logout flow. It will close session on all other SSO services. You should close
+         * local session if applicable.
+         *
+         * @static 
+         */
+        public static function logout(){
+            return \Aacotroneo\Saml2\Saml2Auth::logout();
+        }
+        
+        /**
+         * Process a Saml response (assertion consumer service)
+         * When errors are encountered, it returns an array with proper description
+         *
+         * @static 
+         */
+        public static function acs(){
+            return \Aacotroneo\Saml2\Saml2Auth::acs();
+        }
+        
+        /**
+         * Process a Saml response (assertion consumer service)
+         * returns an array with errors if it can not logout
+         *
+         * @static 
+         */
+        public static function sls(){
+            return \Aacotroneo\Saml2\Saml2Auth::sls();
+        }
+        
+        /**
+         * Show metadata about the local sp. Use this to configure your saml2 IDP
+         *
+         * @return mixed xml string representing metadata
+         * @throws \InvalidArgumentException if metadata is not correctly set
+         * @static 
+         */
+        public static function getMetadata(){
+            return \Aacotroneo\Saml2\Saml2Auth::getMetadata();
+        }
+        
+    }
+
+
 }
 

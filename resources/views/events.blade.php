@@ -34,7 +34,7 @@ and open the template in the editor.
                     </tr>
                     @empty
                     <tr>
-                        <td>Ei tapahtumia</td>
+                        <td colspan="4">Ei tapahtumia</td>
                     </tr>
                     @endforelse
                 </table>
