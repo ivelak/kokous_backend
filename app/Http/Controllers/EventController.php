@@ -3,24 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Event;
 use Carbon\Carbon;
 
-class EventController extends Controller
-{
+class EventController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
-    {
+    public function index() {
         //
-        $events = Event::all();
-        
+        $events = Event::paginate(15);
+
         return view('events', compact('events'));
     }
 
@@ -29,8 +27,7 @@ class EventController extends Controller
      *
      * @return Response
      */
-    public function create()
-    {
+    public function create() {
         return view('newEvent');
     }
 
@@ -40,15 +37,18 @@ class EventController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+        $this->validate($request, [
+            'name' => 'required|max:64',
+        ]);
+
         $event = new Event();
         $event->name = $request->input('name');
-        $event->time = Carbon::createFromFormat('d/m/Y H:i',$request->input('date').' '.$request->input('time')); 
+        $event->time = Carbon::createFromFormat('d.m.Y H:i', $request->input('date') . ' ' . $request->input('time'));
         $event->place = $request->input('place');
         $event->description = $request->input('description');
         $event->save();
-        
+
         return redirect('events');
     }
 
@@ -58,8 +58,7 @@ class EventController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         $event = Event::findOrFail($id);
         return view('event', ['event' => $event]);
     }
@@ -70,8 +69,7 @@ class EventController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -82,8 +80,7 @@ class EventController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -93,8 +90,8 @@ class EventController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
 }
