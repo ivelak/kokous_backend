@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Event;
+use App\Activity;
 use Carbon\Carbon;
 
 class EventController extends Controller {
@@ -15,9 +16,9 @@ class EventController extends Controller {
      *
      * @return Response
      */
-    public function index() {
+    public function index(Request $request) {
         //
-        $events = Event::paginate(15);
+        $events = Event::paginate($request->input('perpage', 15));
 
         return view('events', compact('events'));
     }
@@ -40,6 +41,9 @@ class EventController extends Controller {
     public function store(Request $request) {
         $this->validate($request, [
             'name' => 'required|max:64',
+            'date' => 'required|date_format:d.m.Y|after:' . Carbon::now(),
+            'time' => 'required|date_format:H:i',
+            'place' => 'required|max:128'
         ]);
 
         $event = new Event();

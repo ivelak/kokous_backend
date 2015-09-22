@@ -10,11 +10,14 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {!!Html::style('css/bootstrap.min.css')!!}
         {!!Html::style('css/bootstrap-theme.min.css')!!}
+        @yield('styles')     
         {!! Html::script('js/jquery-2.1.4.js') !!}
         {!! Html::script('js/bootstrap.min.js') !!}
+        @yield('scripts')
         <title>@yield('title')</title>
     </head>
     <body>
+        @include('navbar')
         @yield('content')
     </body>
 </html>

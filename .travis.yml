@@ -9,6 +9,7 @@ notifications:
 before_script:
   - composer self-update
   - composer install --no-interaction
+  - composer update --no-interaction
 
 script:
   - phpunit
