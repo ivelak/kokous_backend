@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Event;
-use App\Activity;
 use Carbon\Carbon;
 
 class EventController extends Controller {

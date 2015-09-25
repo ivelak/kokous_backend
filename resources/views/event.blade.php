@@ -34,7 +34,7 @@
     <div class="panel panel-default">
         <div class="panel-heading"><strong>Aktiviteetit:</strong></div>
         <table class="table">
-            @forelse($event->activities() as $activity)
+            @forelse($event->activities()->get() as $activity)
             <tr>
                 <td>{{$activity->name}}</td>
             </tr>
