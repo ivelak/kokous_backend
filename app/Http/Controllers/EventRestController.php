@@ -16,7 +16,7 @@ class EventRestController extends Controller
      */
     public function index()
     {
-        return Event::all();
+        return Event::with('activities')->get();
     }
 
     /**
@@ -48,7 +48,7 @@ class EventRestController extends Controller
      */
     public function show($id)
     {
-        return Event::findOrFail($id);
+        return Event::with('activities')->findOrFail($id);
     }
 
     /**
