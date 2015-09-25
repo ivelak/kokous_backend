@@ -74,7 +74,8 @@ class EventController extends Controller {
      * @return Response
      */
     public function edit($id) {
-        //
+        $event = Event::findOrFail($id);
+        return view('editEvent', compact('event'));
     }
 
     /**
@@ -85,7 +86,20 @@ class EventController extends Controller {
      * @return Response
      */
     public function update(Request $request, $id) {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:64',
+            'date' => 'required|date_format:d.m.Y|after:' . Carbon::now(),
+            'time' => 'required|date_format:H:i',
+            'place' => 'required|max:128'
+        ]);
+        $event = Event::findOrFail($id);
+        $event->name = $request->input('name');
+        $event->time = Carbon::createFromFormat('d.m.Y H:i', $request->input('date') . ' ' . $request->input('time'));
+        $event->place = $request->input('place');
+        $event->description = $request->input('description');
+        $event->save();
+
+        return redirect()->action('EventController@show', [$event]);
     }
 
     /**

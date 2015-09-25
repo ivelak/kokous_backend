@@ -24,6 +24,8 @@ Route::group(['prefix' => 'events'], function () {
     Route::get('/new', "EventController@create");
     Route::post('/new', "EventController@store");
     Route::get('/{id}', "EventController@show")->where('id', '[0-9]+');
+    Route::get('/{id}/edit', 'EventController@edit')->where('id', '[0-9]+');
+    Route::put('/{id}', 'EventController@update')->where('id', '[0-9]+');
     
 });
 
