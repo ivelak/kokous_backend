@@ -11,6 +11,7 @@
         
         {!!Form::open(array('action' => ['EventController@destroy', $event], 'method'=>'delete', 'class'=>'form-inline'))!!}
             {!!link_to_action('EventController@edit', $title = 'Muokkaa tapahtumaa', ['id' => $event->id], $attributes = array('class'=>'btn btn-default'))!!}
+            {!!link_to_action('EventActivityController@index', $title = 'Muuta aktiviteetteja', ['id' => $event->id], $attributes = array('class'=>'btn btn-default'))!!}
             {!!Form::submit('Poista', ['onclick'=>'return confirm("Haluatko varmasti poistaa tapahtuman?")', 'class' => 'btn btn-default pull-right'])!!}
         {!!Form::close()!!}
         

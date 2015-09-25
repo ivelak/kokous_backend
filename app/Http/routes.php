@@ -23,10 +23,15 @@ Route::group(['prefix' => 'events'], function () {
     Route::get('/', "EventController@index");
     Route::get('/new', "EventController@create");
     Route::post('/new', "EventController@store");
+    
     Route::get('/{id}', "EventController@show")->where('id', '[0-9]+');
     Route::get('/{id}/edit', 'EventController@edit')->where('id', '[0-9]+');
     Route::put('/{id}', 'EventController@update')->where('id', '[0-9]+');
     Route::delete('/{id}', 'EventController@destroy')->where('id', '[0-9]+');
+    
+    Route::get('/{id}/activities', 'EventActivityController@index')->where('id', '[0-9]+');
+    Route::post('/{id}/activities', 'EventActivityController@add')->where('id', '[0-9]+');
+    Route::delete('/{id}/activities', 'EventActivityController@remove')->where('id', '[0-9]+');
     
 });
 
