@@ -10,10 +10,12 @@ and open the template in the editor.
 <div class="container">
     <h1> Kaikki tapahtumat </h1> <hr />
     <div class="panel">
+        {!!link_to_action('EventController@create', $title = 'Uusi tapahtuma', [], $attributes = array('class'=>'btn btn-default'))!!}
+    </div>
+    <div class="panel">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <strong>Tapahtumat:</strong>
-                {!!link_to('events/new', $title = 'Uusi tapahtuma', $attributes = array('class'=>'pull-right'))!!}
             </div>
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -24,8 +26,7 @@ and open the template in the editor.
                         <td><strong>Aika</strong></td>
                     </tr>
                     @forelse($events as $event)
-                    <tr onclick="location.href = '{!!url('events/'.$event -> id)!!}'">
-        <!--                <td>{!!link_to('events/' . $event->id, $title = $event->name)!!}</td>-->
+                    <tr onclick="location.href='{!!url('events/'.$event -> id)!!}'">
                         <td>{{$event->name}}</td>
                         <td>{{$event->place}}</td>
                         <td>{{$event->time->format('d.m.Y')}}</td>
