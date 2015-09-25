@@ -20,7 +20,7 @@
 
         <div class="form-group">
             {!!Form::label('name', 'Tapahtuman nimi:')!!}<br/>
-            {!!Form::text('name', old('name'), ['class'=>'form-control'])!!}
+            {!!Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Nimi tapahtumalle'])!!}
         </div>
 
         <div class="form-group"> 
@@ -35,15 +35,16 @@
 
         <div class="form-group">
             {!!Form::label('place', 'Paikka:')!!}<br/>
-            {!!Form::text('place', old('place'), ['class'=>'form-control'])!!}
+            {!!Form::text('place', old('place'), ['class'=>'form-control', 'placeholder'=>'Tapahtumapaikka'])!!}
         </div>
 
         <div class="form-group">
             {!!Form::label('description', 'Kuvaus:')!!}
-            {!!Form::textarea('description', old('description'), ['rows'=>'5', 'class'=>'form-control'])!!}
+            {!!Form::textarea('description', old('description'), ['rows'=>'5', 'class'=>'form-control', 'placeholder'=>'Tapahtuman kuvaus'])!!}
         </div>
 
-        {!!Form::submit('Lisää tapahtuma!', ['class' => 'btn btn-default'])!!}
+        {!!Form::submit('Lisää tapahtuma', ['class' => 'btn btn-default'])!!}
+        {!!link_to_action('EventController@index', $title = 'Peruuta', [], $attributes = array('class'=>'btn btn-default pull-right'))!!}
         {!! Form::close() !!}
     </div>
 </div>
