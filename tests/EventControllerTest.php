@@ -24,7 +24,7 @@ class EventControllerTest extends TestCase
              ->type('23:45','time')
              ->type('Onkalo','place')
              ->type('Kuvaus','description')
-             ->press('Lisää tapahtuma!')
+             ->press('Lisää tapahtuma')
              ->seePageIs('/events')
         
              ->seeInDatabase('events', ['name'=>'Marko','place'=>'Onkalo', 'description'=>'Kuvaus']);
@@ -39,7 +39,7 @@ class EventControllerTest extends TestCase
              ->type('23:40','time')
              ->type('Kukkula','place')
              ->type('Kuvaus','description')
-             ->press('Lisää tapahtuma!')
+             ->press('Lisää tapahtuma')
                 
              ->seePageIs('/events/new')
         
