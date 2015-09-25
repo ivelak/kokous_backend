@@ -109,7 +109,8 @@ class EventController extends Controller {
      * @return Response
      */
     public function destroy($id) {
-        //
+        Event::destroy($id);
+        return redirect('events');
     }
 
 }
