@@ -7,6 +7,8 @@ use Carbon\Carbon;
 
 class Event extends Model
 {   
+    protected $appends = ['time_string','date_string'];
+    
     public function activities(){
         return $this->belongsToMany('App\Activity');
     }
@@ -14,5 +16,13 @@ class Event extends Model
     public function getTimeAttribute($value)
     {
         return Carbon::parse($value);
+    }
+    
+    public function getTimeStringAttribute(){
+        return $this->time->toTimeString();
+    }
+    
+    public function getDateStringAttribute(){
+        return $this->time->toDateString();
     }
 }
