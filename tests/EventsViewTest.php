@@ -64,10 +64,12 @@ class EventsViewTest extends TestCase
              ->see('Kuvaus:')
              ->see('Hauskaa');
        */      
+        
+        //Tulisi klikata taulukon riviä ja nähdä, että siirtyy oikealle sivulle.
+    
         $this->visit('/events/'. $event_id)
              ->see('Kuvaus:')
              ->see('Hauskaa');
-       //Tulisi klikata taulukon riviä ja nähdä, että siirtyy oikealle sivulle.
     }
     
 }

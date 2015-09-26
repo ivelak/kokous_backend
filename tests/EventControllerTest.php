@@ -32,6 +32,13 @@ class EventControllerTest extends TestCase
         
     }
     
+    /*public function testEventIsSavedIntoDatabaseWhenInputIsValid(){
+        
+        
+        $this->withoutMiddleware()->call('POST','events/new', ['csrf_token'=>csrf_token(),'name'=>'Marko','date'=>'27.03.2016','time'=>'23:45','place'=>'Onkalo', 'description'=>'Kaikilla on kivaa']);
+        $this->seePageIs('/events/new');
+    }*/
+    
     public function testEventIsNotCreatedWithoutName(){
         $this->visit('/events/new')
              ->type('','name')
@@ -74,7 +81,5 @@ class EventControllerTest extends TestCase
         
              ->SeeInDatabase('events', ['name'=>'Ilmakitaraturnaus','place'=>'Helsinki','time'=>'2018-06-25 16:20:00', 'description'=>'']);
     }
-    
-    
-    
+   
 }
