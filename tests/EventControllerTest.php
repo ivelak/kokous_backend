@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Event;
 
 class EventControllerTest extends TestCase
 {   
@@ -27,9 +28,68 @@ class EventControllerTest extends TestCase
              ->press('Lisää tapahtuma')
              ->seePageIs('/events')
         
-             ->seeInDatabase('events', ['name'=>'Hippa','time'=>'2016-03-27 23:45:00','place'=>'Onkalo', 'description'=>'Kuvaus']);
-           
+             ->seeInDatabase('events', ['name'=>'Hippa','time'=>'2016-03-27 23:45:00','place'=>'Onkalo', 'description'=>'Kuvaus']);   
+    }
+    
+    public function testIndex(){
+        $this->action('GET', 'EventController@index');
+        $this -> seePageIs('/events');
+    }
+    
+    public function testCreate(){
+        $this->action('GET', 'EventController@create');
+        $this -> seePageIs('/events/new');
+    }
+    
+    public function testShow(){
+        $event = new Event();
+        $event->name = 'Leiri';
+        $event->time = '2018-06-25 16:40:00';
+        $event->place = 'Rauma';
+        $event->description = 'Onginta';
         
+        $event->save();
+        
+        $event_id = DB::table('events')->where('name', 'Leiri')->value('id');
+        
+        $this->action('GET','EventController@show',['id' => $event_id]);
+        
+        $this->seePageIs('/events/'.$event_id);
+    }
+    
+    public function testEdit(){
+        $event = new Event();
+        $event->name = 'Kokous';
+        $event->time = '2016-07-25 16:40:00';
+        $event->place = 'Kolo';
+        $event->description = 'Iltakokous';
+        
+        $event->save();
+        
+        $event_id = DB::table('events')->where('name', 'Kokous')->value('id');
+        
+        $this->action('GET','EventController@edit', ['id' => $event_id]);
+        
+        $this->see('Muokkaa tapahtumaa');
+        
+    }
+    
+    public function testDestroy(){
+        $event = new Event();
+        $event->name = 'Iltakokous';
+        $event->time = '2016-03-25 16:45:00';
+        $event->place = 'Kolo';
+        $event->description = 'Viikottainen kokous';
+        
+        $event->save();
+        
+        $this->seeInDatabase('events', ['name'=>'Iltakokous','time'=>'2016-03-25 16:45:00','place'=>'Kolo', 'description'=>'Viikottainen kokous']);
+        
+        $event_id = DB::table('events')->where('name', 'Iltakokous')->value('id');
+        
+        $this->action('GET','EventController@destroy', ['id' => $event_id]);
+        
+        $this->seeInDatabase('events', ['name'=>'Iltakokous','time'=>'2016-03-25 16:45:00','place'=>'Kolo', 'description'=>'Viikottainen kokous']);
     }
     
     /*public function testEventIsSavedIntoDatabaseWhenInputIsValid(){

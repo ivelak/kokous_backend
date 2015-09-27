@@ -1,5 +1,6 @@
 <?php
 
+use App\Event;
 use App\Activity;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -27,13 +28,13 @@ class ActivityViewTest extends TestCase {
     }
 
     public function testActivityCanBeAddedToAnEvent() {
-        $this->visit('/events/new')
-                ->type('Kokous', 'name')
-                ->type('25.07.2016', 'date')
-                ->type('16:40', 'time')
-                ->type('Munkkiniemi', 'place')
-                ->type('Melontaretki', 'description')
-                ->press('Lisää tapahtuma');
+        $event = new Event();
+        $event->name = 'Kokous';
+        $event->time = '2016-07-25 16:40:00';
+        $event->place = 'Kolo';
+        $event->description = 'Iltakokous';
+        
+        $event->save();
 
         $activity = new Activity();
         $activity->name = 'Äänestys';
