@@ -11,11 +11,15 @@
         <tr>
             <td><strong>Aktiviteetti</strong></td>
         </tr>
-        @foreach($activities as $activity)
+        @forelse($activities as $activity)
         <tr>
             <td>{{ $activity->name }}</td>
         </tr>
-        @endforeach
+        @empty
+        <tr>
+            <td colspan="4">Ei aktiviteetteja</td>
+        </tr>
+        @endforelse
     </table>
 </div>
 @endsection

@@ -21,10 +21,15 @@ class ActivityViewTest extends TestCase {
         $activity->guid = 'Guid';
 
         $activity->save();
-
+        
         $this->seeInDatabase('activities', ['name' => 'Juoksu'])
                 ->visit('/activities')
                 ->see('Juoksu');
+    }
+    
+    public function testCorrectViewWhenNoActivitiesAdded() {
+        $this->visit('/activities')
+             ->see('Ei aktiviteetteja');
     }
 
     public function testActivityCanBeAddedToAnEvent() {
