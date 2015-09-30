@@ -35,6 +35,12 @@ Route::group(['prefix' => 'events'], function () {
     
 });
 
+Route::group(['prefix' => 'groups'], function () {
+    Route::get('/', "GroupController@index");
+    Route::get('/new', "GroupController@create");
+    Route::post('/new', "GroupController@store");
+});
+
 Route::group(['prefix' => 'activities'], function () {
     Route::get('/', "ActivityController@index");
     Route::get('/new', "ActivityController@create");

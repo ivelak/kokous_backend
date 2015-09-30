@@ -29,6 +29,14 @@ $factory->define(App\Activity::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Group::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'scout_group' => $faker->company,
+        'age_group' => $faker->name
+    ];
+});
+
 $factory->define(App\Event::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
