@@ -35,6 +35,12 @@ Route::group(['prefix' => 'events'], function () {
     
 });
 
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/{id}/activities', 'UserActivityController@index')->where('id', '[0-9]+');
+    Route::post('/{id}/activities', 'UserActivityController@add')->where('id', '[0-9]+');
+    Route::delete('/{id}/activities', 'UserActivityController@remove')->where('id', '[0-9]+');
+});
+
 Route::group(['prefix' => 'groups'], function () {
     Route::get('/', "GroupController@index");
     Route::get('/new', "GroupController@create");
