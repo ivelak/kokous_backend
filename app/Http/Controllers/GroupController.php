@@ -59,6 +59,8 @@ class GroupController extends Controller
      */
     public function show($id)
     {
+        $group = Group::findOrFail($id);
+        return view('group', compact('group'));
         //
     }
 
@@ -70,6 +72,8 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
+        $group = Group::findOrFail($id);
+        return view('editGroup', compact('group'));
         //
     }
 
@@ -82,6 +86,18 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => 'required|max:64',
+            'scout_group' => 'required|max:64',
+            'age_group' => 'required|max:64',
+        ]);       
+        $group = Group::findOrFail($id);
+        $group->name = $request->input('name');
+        $group->scout_group = $request->input('scout_group');
+        $group->age_group = $request->input('age_group');
+        $group->save();
+        
+        return redirect()->action('GroupController@show', [$group]);  
         //
     }
 
@@ -93,6 +109,8 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
+        Group::destroy($id);
+        return redirect('groups');
         //
     }
 }
