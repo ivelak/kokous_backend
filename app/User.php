@@ -33,4 +33,8 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['remember_token'];
+    
+    public function activities(){
+        return $this->belongsToMany('App\Activity');
+    }
 }

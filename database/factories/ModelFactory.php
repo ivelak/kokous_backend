@@ -24,24 +24,32 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Activity::class, function (Faker\Generator $faker) {
     return [
-        'guid' => rand(0, 1000000),
-        'name' => $faker->name
+        'guid' => $faker->unique()->randomNumber,
+        'name' => 'Activity ' . $faker->unique()->randomNumber
     ];
 });
 
 $factory->define(App\Group::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'name' => 'Group ' . $faker->unique()->randomNumber,
         'scout_group' => $faker->company,
-        'age_group' => $faker->name
+        'age_group' => 'Age group ' . $faker->randomNumber
     ];
 });
 
 $factory->define(App\Event::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'description' => str_random(20),
+        'name' => 'Event ' . $faker->unique()->randomNumber,
+        'description' => $faker->word,
         'time' => Carbon::parse("10.11.2015 20:00:00"),
-        'place' => str_random(10)
+        'place' => $faker->word
     ];
 });
+
+$factory->define(App\User::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'partio_id' => $faker->unique()->randomNumber
+    ];
+});
+
