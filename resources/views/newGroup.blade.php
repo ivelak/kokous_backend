@@ -11,7 +11,7 @@
     @if( isset($errors))
     <ul class="list-group">
         @foreach($errors->all() as $error)
-             <li class="list-group-item list-group-item-danger">{{$error}}</li>
+        <li class="list-group-item list-group-item-danger">{{$error}}</li>
         @endforeach
     </ul>
     @endif
@@ -33,6 +33,14 @@
             {!!Form::text('age_group', old('age_group'), ['class'=>'form-control', 'placeholder'=>'Ikäryhmä'])!!}
         </div>
 
+        <div class="form-group">
+            {!!Form::label('participants', 'Lisää ryhmäläisiä:')!!}
+            {!!Form::select('participants', ['jaakko', 'kake', 'asd', 'dafs'], null, ['class'=>'form-control', 'multiple'=>'multiple'])!!}
+        </div>
+        <div class="form-group">
+            {!!Form::label('participants', 'Lisää ryhmänjohtajat:')!!}
+            {!!Form::select('participants', ['jaakko', 'kake', 'asd', 'dafs'], null, ['class'=>'form-control', 'multiple'=>'multiple'])!!}
+        </div>
         {!!Form::submit('Lisää ryhmä', ['class' => 'btn btn-default'])!!}
         {!!link_to_action('GroupController@index', $title = 'Peruuta', [], $attributes = array('class'=>'btn btn-default pull-right'))!!}
         {!! Form::close() !!}
