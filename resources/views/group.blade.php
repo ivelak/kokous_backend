@@ -43,8 +43,13 @@
         </div>
         <div id="collapse2" class="panel-collapse collapse">
             <ul class="list-group">
+                @forelse($group->events()->get() as $event)
+                <li class="list-group-item">{{$event -> name}}</li>
+                @empty
+                <li class="list-group-item"><p><strong> Ei lisättyjä tapahtumia</strong></p></li>
+                @endforelse
             </ul>
-        </div> 
+        </div>
     </div>
 
     @endsection

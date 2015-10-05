@@ -13,6 +13,10 @@ class Event extends Model
         return $this->belongsToMany('App\Activity');
     }
     
+    public function groups(){
+        return $this->belongsToMany('App\Group');
+    }
+    
     public function getTimeAttribute($value)
     {
         return Carbon::parse($value);
