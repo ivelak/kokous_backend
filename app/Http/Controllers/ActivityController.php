@@ -14,10 +14,16 @@ class ActivityController extends Controller
      *
      * @return Response
      */
-    public function index()
+    /*public function index()
     {
         $activities = Activity::all();
         return view('activity.activities', ['activities' => $activities]);
+    }*/
+    
+    public function index(Request $request) {
+        //
+        $activities = Activity::paginate($request->input('perpage', 15));
+        return view('activity.activities', compact('activities'));
     }
 
     /**
