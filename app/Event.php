@@ -10,7 +10,7 @@ class Event extends Model
     protected $appends = ['time_string','date_string'];
     
     public function activities(){
-        return $this->belongsToMany('App\Activity');
+        return $this->belongsToMany('App\Activity')->withPivot('occurrence');
     }
     
     public function groups(){
