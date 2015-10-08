@@ -48,8 +48,15 @@ $factory->define(App\Event::class, function (Faker\Generator $faker) {
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'partio_id' => $faker->unique()->randomNumber
+        'username' => $faker->unique()->username,
+        'partio_id' => $faker->unique()->randomNumber,
+        'firstname' => $faker->firstname,
+        'lastname' => $faker->lastname,
+        'membernumber' => $faker->unique()->randomNumber,
+        'postalcode' => '00550',
+        'is_scout' => true,
+        'email' => $faker->email
+        
     ];
 });
 

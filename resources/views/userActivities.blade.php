@@ -3,7 +3,7 @@
 @section('title', 'Muuta suorituksia')
 @section('content')
 <div class="container">
-    <h1>{{ $user->name }} - Suoritukset</h1>
+    <h1>{{ $user->username }} - Suoritukset</h1>
     <hr>
     <div class="panel">
         <div class="form-group">
