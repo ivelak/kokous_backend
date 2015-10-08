@@ -37,4 +37,8 @@ class User extends Model implements AuthenticatableContract,
     public function activities(){
         return $this->belongsToMany('App\Activity');
     }
+    
+    public function groups(){
+        return $this->belongsToMany('App\Group');
+    }
 }

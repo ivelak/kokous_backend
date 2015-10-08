@@ -11,4 +11,8 @@ class Group extends Model
     public function events(){
         return $this->belongsToMany('App\Event');
     }
+    
+    public function users(){
+        return $this->belongsToMany('App\User');
+    }
 }

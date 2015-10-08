@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Group;
+use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +27,8 @@ class GroupController extends Controller
      * @return Response
      */
     public function create() {
-        return view('newGroup');
+        $users = User::all();
+        return view('newGroup', compact('users'));
     }
 
     /**
@@ -46,6 +48,14 @@ class GroupController extends Controller
         $group->scout_group = $request->input('scout_group');
         $group->age_group = $request->input('age_group');
         $group->save();
+        
+        // Jäsenet
+        $participants = $request->input('participants');
+        foreach($participants as $participant)
+        {
+            $group->users()->attach($participant, ['role' => 'user']);
+            
+        }
 
         return redirect('groups');
     }
@@ -60,7 +70,8 @@ class GroupController extends Controller
     public function show($id)
     {
         $group = Group::with('events')->findOrFail($id);
-        return view('group', compact('group'));
+        $users = $group->users;
+        return view('group', compact('group'), compact('users'));
         //
     }
 

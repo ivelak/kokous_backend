@@ -31,8 +31,9 @@
         </div>
         <div id="collapse1" class="panel-collapse collapse">
             <ul class="list-group">
-                <li class="list-group-item">Jeee</li>
-                <li class="list-group-item">Jeee1</li>
+                @foreach($users as $user)
+                    <li class="list-group-item">{{ $user->username }}</li>
+                @endforeach
             </ul>
         </div> 
     </div>
