@@ -1,6 +1,9 @@
 
 @extends('templates.master')
 @section('title', 'Muuta aktiviteetteja')
+@section('scripts')
+@include('templates.linkRow')
+@endsection
 @section('content')
 <div class="container">
     <h1>{{ $event->name }} - Aktiviteetit</h1>
@@ -18,9 +21,9 @@
         <div class="panel-heading"><strong>Aktiviteetit:</strong></div>
         <table class="table">
             @forelse($event->activities()->get() as $activity)
-            <tr>
+            <tr id="{{$activity->id}}" class="tr-link">
                 <td>
-                   {!!Form::open(array('action' => ['EventActivityController@remove', $event], 'method'=>'delete', 'class'=>'form-inline'))!!}
+                    {!!Form::open(array('action' => ['EventActivityController@remove', $event], 'method'=>'delete', 'class'=>'form-inline'))!!}
                     {{$activity->name}}
                     {!!Form::hidden('activityId', $activity->id)!!}
                     {!!Form::submit('Poista', ['class' => 'btn btn-default btn-xs pull-right'])!!}

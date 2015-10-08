@@ -1,6 +1,9 @@
 
 @extends('templates.master')
 @section('title', 'Lisätyt tapahtumat')
+@section('scripts')
+@include('templates.linkRow')
+@endsection
 @section('content')
 <div class="container">
     <h1> Kaikki tapahtumat </h1> <hr />
@@ -21,7 +24,7 @@
                         <td><strong>Aika</strong></td>
                     </tr>
                     @forelse($events as $event)
-                    <tr onclick="location.href='{!!url('events/'.$event -> id)!!}'">
+                    <tr id="{{$event->id}}" class="tr-link">
                         <td>{{$event->name}}</td>
                         <td>{{$event->place}}</td>
                         <td>{{$event->time->format('d.m.Y')}}</td>
