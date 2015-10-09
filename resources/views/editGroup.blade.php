@@ -32,10 +32,10 @@
             {!!Form::label('age_group', 'Ikäryhmä:')!!}
             {!!Form::text('age_group', old('age_group'), ['class'=>'form-control', 'placeholder'=>'Ikäryhmä'])!!}
         </div>
-
+        
         {!!Form::submit('Tallenna muutokset', ['class' => 'btn btn-default'])!!}
         {!!link_to_action('GroupController@show', $title = 'Peruuta', ['id' => $group->id], $attributes = array('class'=>'btn btn-default pull-right'))!!}
         {!! Form::close() !!}
-    </div>
+    </div>   
 </div>
 @endsection

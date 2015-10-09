@@ -62,7 +62,7 @@
             <div class="input-group">
 
                 <span class=""><input type="radio" name="ending" value="until"> Päivänä </span>
-                {!!Form::text('date', old('date'), ['class'=>'form-control', 'placeholder'=>Carbon\Carbon::now()->addMonth()->format('d.m.Y')])!!}
+                {!!Form::text('endDate', old('endDate'), ['class'=>'form-control', 'placeholder'=>Carbon\Carbon::now()->addMonth()->format('d.m.Y')])!!}
             </div>
         </div>
 
