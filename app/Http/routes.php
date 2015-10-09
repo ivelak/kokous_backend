@@ -50,6 +50,11 @@ Route::group(['prefix' => 'groups'], function () {
     Route::get('/{id}/edit', 'GroupController@edit')->where('id', '[0-9]+');
     Route::put('/{id}', 'GroupController@update')->where('id', '[0-9]+');
     Route::delete('/{id}', 'GroupController@destroy')->where('id', '[0-9]+');
+    
+    Route::get('/{id}/users', 'GroupUserController@index')->where('id', '[0-9]+');
+    Route::post('/{id}/users','GroupUserController@add')->where('id', '[0-9]+');
+    Route::delete('/{id}/users', 'GroupUserController@remove')->where('id', '[0-9]+');
+    
 });
 
 Route::group(['prefix' => 'activities'], function () {
