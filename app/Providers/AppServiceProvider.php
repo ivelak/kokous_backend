@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\POFBackend;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,8 @@ class AppServiceProvider extends ServiceProvider
 			$this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
 			$this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
 		}
+                $this->app->bind('pof', function($app){
+                return new POFBackend();                
+                });
     }
 }
