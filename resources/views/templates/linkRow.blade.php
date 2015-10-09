@@ -1,6 +1,6 @@
 <script>
     $(document).ready(function () {
-        $("tr").on({
+        $("tr.tr-link").on({
             mouseenter: function () {
                 $(this).css('cursor', 'pointer');
             },
