@@ -8,7 +8,7 @@
                 $(this).css('cursor', 'auto');
             },
             click: function () {
-                document.location.href = "/groups/" + $(this).attr("id");
+                document.location.href = "/{{Request::path()}}/" + $(this).attr("id");
             }
         });
     });
