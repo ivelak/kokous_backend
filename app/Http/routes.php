@@ -55,6 +55,8 @@ Route::group(['prefix' => 'groups'], function () {
 Route::group(['prefix' => 'activities'], function () {
     Route::get('/', "ActivityController@index");
     Route::get('/new', "ActivityController@create");
+    
+     Route::post('/sync', "ActivityController@sync");
 });
 
 Route::group(['prefix' => 'api/dev'], function () {

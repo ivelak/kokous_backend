@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Activity;
 use App\Http\Controllers\Controller;
+use App\Jobs\SynchronizeWithPOF;
 
 class ActivityController extends Controller
 {
+    
+    protected $pofSyncer;
+            
+    public function __construct(SynchronizeWithPOF $pofSyncer) {
+        $this->pofSyncer = $pofSyncer;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +31,11 @@ class ActivityController extends Controller
         //
         $activities = Activity::paginate($request->input('perpage', 15));
         return view('activity.activities', compact('activities'));
+    }
+    
+    public function sync(Request $request) {
+        $this->dispatch($this->pofSyncer);       
+        return redirect('/activities');
     }
 
     /**

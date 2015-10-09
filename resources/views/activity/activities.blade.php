@@ -6,7 +6,10 @@
 <div class="container">
     <h1> Kaikki aktiviteetit </h1> <hr />
     <div class="panel">
+        {!!Form::open(array('action' => ['ActivityController@sync'], 'class'=>'form-inline'))!!}
         {!!link_to_action('ActivityController@create', $title = 'Uusi aktiviteetti', [], $attributes = array('class'=>'btn btn-default'))!!}
+        {!!Form::submit('Hae POFista', ['class' => 'btn btn-default'])!!}
+        {!!Form::close()!!}
     </div>
     <div class="panel">
         <div class="panel panel-default">
@@ -19,7 +22,7 @@
                         <td><strong>Aktiviteetti</strong></td>
                     </tr>
                     @forelse($activities as $activity)
-                    <tr onclick="location.href='{!!url('activities/'.$activity -> id)!!}'">
+                    <tr onclick="location.href = '{!!url('activities / '.$activity -> id)!!}'">
                         <td>{{$activity->name}}</td>
                     </tr>
                     @empty
