@@ -31,9 +31,11 @@
         </div>
         <div id="collapse1" class="panel-collapse collapse">
             <ul class="list-group">
-                @foreach($users as $user)
-                    <li class="list-group-item">{{ $user->username }}</li>
-                @endforeach
+                @forelse($group->users()->get() as $user)
+                <li class="list-group-item">{{$user -> name}}</li>
+                @empty
+                <li class="list-group-item"><p><strong> Ei lisättyjä jäseniä</strong></p></li>
+                @endforelse
             </ul>
         </div> 
     </div>
