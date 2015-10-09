@@ -25,6 +25,22 @@
             </ul>
         </div>
     </div>
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a data-toggle="collapse" href="#collapse1"><strong>Ryhmänjohtajat: </strong></a>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse">
+            <ul class="list-group">
+                @forelse($group->users()->get() as $user)
+                <li class="list-group-item">{{$user -> name}}</li>
+                @empty
+                <li class="list-group-item"><p><strong> Ei lisättyjä ryhmänjohtajia</strong></p></li>
+                @endforelse
+            </ul>
+        </div> 
+    </div>
+    
     <div class="panel panel-default">
         <div class="panel-heading">
             <a data-toggle="collapse" href="#collapse1"><strong>Jäsenet: </strong></a>
