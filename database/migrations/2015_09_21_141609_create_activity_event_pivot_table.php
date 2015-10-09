@@ -17,7 +17,7 @@ class CreateActivityEventPivotTable extends Migration
             $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
             $table->integer('event_id')->unsigned()->index();
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
-            $table->timestamp('occurrence');
+            $table->timestamp('occurrence')->nullable();
         });
     }
 

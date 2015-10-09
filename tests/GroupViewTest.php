@@ -31,5 +31,18 @@ class GroupViewTest extends TestCase {
         $this->visit('/groups')
              ->see('Ei ryhmiä');
     }
+    
+    public function testCorrectlyCreatedGroupSeenOnView1() {
+        $group = new Group();
+        $group->name = 'Sudenpennut';
+        $group->scout_group = 'Test_ScoutGroup';
+        $group->age_group = 'Test_AgeGroup';
 
+        $group->save();
+        
+        $this->visit('/groups/1')
+                ->see('Sudenpennut')
+                ->see('Test_ScoutGroup')
+                ->see('Test_AgeGroup');
+    }
 }
