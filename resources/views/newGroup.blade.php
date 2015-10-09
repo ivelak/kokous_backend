@@ -35,17 +35,28 @@
 
         <div class="form-group">
             
-            {!!Form::label('participants', 'Lisää ryhmäläisiä:')!!}
+            {!!Form::label('participants', 'Valitse ryhmäläisiä:')!!}
             <select multiple="multiple" class="form-control" name="participants[]" id="participants">
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->username }}</option>
-                @endforeach
+                @forelse($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->username }}</option>             
+                @empty
+                <option disabled value=""> Ei käyttäjiä</option>
+                    @endforelse
             </select>
         </div>
+        
         <div class="form-group">
-            {!!Form::label('participants2', 'Lisää ryhmänjohtajat:')!!}
-            {!!Form::select('participants2[]', ['jaakko', 'kake', 'asd', 'dafs'], null, ['class'=>'form-control', 'multiple'=>'multiple'])!!}
+            
+            {!!Form::label('leaders', 'Valitse ryhmänjohtajia:')!!}
+            <select multiple="multiple" class="form-control" name="leaders[]" id="leaders">
+                @forelse($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->username }}</option>             
+                @empty
+                <option disabled value=""> Ei käyttäjiä</option>
+                    @endforelse
+            </select>
         </div>
+        
         {!!Form::submit('Lisää ryhmä', ['class' => 'btn btn-default'])!!}
         {!!link_to_action('GroupController@index', $title = 'Peruuta', [], $attributes = array('class'=>'btn btn-default pull-right'))!!}
         {!! Form::close() !!}

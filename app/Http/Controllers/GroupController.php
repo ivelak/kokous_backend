@@ -56,7 +56,7 @@ class GroupController extends Controller {
             }
         }
         //Ryhmänjohtajat
-        $leaders = $request->input('participants2');
+        $leaders = $request->input('leaders');
         if (isset($leaders)) {
             foreach ($leaders as $leader) {
                 $group->users()->attach($leader, ['role' => 'leader']);
