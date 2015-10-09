@@ -43,9 +43,9 @@
     
     <div class="panel panel-default">
         <div class="panel-heading">
-            <a data-toggle="collapse" href="#collapse1"><strong>Jäsenet: </strong></a>
+            <a data-toggle="collapse" href="#collapse2"><strong>Jäsenet: </strong></a>
         </div>
-        <div id="collapse1" class="panel-collapse collapse">
+        <div id="collapse2" class="panel-collapse collapse">
             <ul class="list-group">
                 @forelse($group->users()->get() as $user)
                 <li class="list-group-item">{{$user -> name}}</li>
@@ -58,9 +58,9 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <a data-toggle="collapse" href="#collapse2"><strong>Tulevat tapahtumat: </strong></a>
+            <a data-toggle="collapse" href="#collapse3"><strong>Tulevat tapahtumat: </strong></a>
         </div>
-        <div id="collapse2" class="panel-collapse collapse">
+        <div id="collapse3" class="panel-collapse collapse">
             <ul class="list-group">
                 @forelse($group->events()->get() as $event)
                 <li class="list-group-item">{{$event -> name}}</li>
