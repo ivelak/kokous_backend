@@ -45,4 +45,37 @@ class GroupViewTest extends TestCase {
                 ->see('Test_ScoutGroup')
                 ->see('Test_AgeGroup');
     }
+    
+     public function testCorrectFieldsSeenInTheView() {
+        $group = new Group();
+        $group->name = 'RyhmäA';
+        $group->scout_group = 'Lippulaiset';
+        $group->age_group = 'Vuotiaat';
+
+        $group->save();
+        
+        $this->visit('/groups/1')
+                ->see('Ryhmän nimi:')
+                ->see('Lippukunta:')
+                ->see('Ikäryhmä:')
+                ->see('Tulevat tapahtumat:')
+                ->see('RyhmäA')
+                ->see('Lippulaiset')
+                ->see('Vuotiaat');
+    }
+    
+    public function testGroupCanBeDeleted() {
+        $group = new Group();
+        $group->name = 'RyhmäA';
+        $group->scout_group = 'Lippulaiset';
+        $group->age_group = 'Vuotiaat';
+
+        $group->save();
+        
+        $this->visit('/groups/1')
+                ->press('Poista')
+                ->seePageIs('/groups')
+                ->dontSee('RyhmäA');      
+    }
+    
 }
