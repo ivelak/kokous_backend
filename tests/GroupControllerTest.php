@@ -41,11 +41,11 @@ class GroupControllerTest extends TestCase
         $group->scout_group = 'Test_group123';
         $group->age_group = 'Test_age_group123';
         $group->save();
-        $group_id = DB::table('groups')->where('name', 'Test123')->value('id');
+        $group_id = $group->save();
         return $group_id;
     }
     
-    /*public function testShow(){
+    public function testShow(){
         $group_id = self::createTestGroup();
         
         $this->action('GET','GroupController@show',['id' => $group_id]);
@@ -72,7 +72,7 @@ class GroupControllerTest extends TestCase
         $this->action('GET','GroupController@destroy', ['id' => $group_id]);
         
         $this->notSeeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'Test_age_group123']);
-    }*/
+    }
 
     public function testGroupIsNotCreatedWithoutName(){
         $this->visit('/groups/new')
