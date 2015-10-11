@@ -8,8 +8,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
 		"laravelcollective/html": "5.1.*",
-		"aacotroneo/laravel-saml2": "*",
-        "barryvdh/laravel-ide-helper": "^2.1"
+		"aacotroneo/laravel-saml2": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -17,6 +16,7 @@
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1",
 		"laracasts/generators": "^1.1",
+		"barryvdh/laravel-ide-helper": "^2.1",
 		"doctrine/dbal": "2.5.1"
     },
     "autoload": {

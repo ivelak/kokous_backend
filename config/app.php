@@ -148,7 +148,6 @@ return [
 		/*
 		 * 3rd Party Service Providers. Some may be defined in app/providers/AppServiceProvider.php.
 		 */
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 		 Collective\Html\HtmlServiceProvider::class,
 		 Aacotroneo\Saml2\Saml2ServiceProvider::class,
     ],

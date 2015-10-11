@@ -42,7 +42,6 @@ class EventController extends Controller {
             'name' => 'required|max:64',
             'date' => 'required|date_format:d.m.Y|after:' . Carbon::now(),
             'time' => 'required|date_format:H:i',
-//            'endDate' => 'required|date_format:d.m.Y|after:' . Carbon::now(),
             'place' => 'required|max:128'
         ]);
 
@@ -50,7 +49,6 @@ class EventController extends Controller {
         $event->name = $request->input('name');
         $event->time = Carbon::createFromFormat('d.m.Y H:i', $request->input('date') . ' ' . $request->input('time'));
         $event->place = $request->input('place');
-        $event->endDate = Carbon::createFromFormat('d.m.Y', $request->input('endDate'));
         $event->description = $request->input('description');
         $event->save();
 
@@ -91,14 +89,12 @@ class EventController extends Controller {
             'name' => 'required|max:64',
             'date' => 'required|date_format:d.m.Y|after:' . Carbon::now(),
             'time' => 'required|date_format:H:i',
-            'endDate' => 'required|date_format:d.m.Y|after:' . Carbon::now(),
             'place' => 'required|max:128'
         ]);
         $event = Event::findOrFail($id);
         $event->name = $request->input('name');
         $event->time = Carbon::createFromFormat('d.m.Y H:i', $request->input('date') . ' ' . $request->input('time'));
         $event->place = $request->input('place');
-        $event->endDate = Carbon::createFromFormat('d.m.Y', $request->input('endDate') . ' ' . $request->input('endDate'));
         $event->description = $request->input('description');
         $event->save();
 
