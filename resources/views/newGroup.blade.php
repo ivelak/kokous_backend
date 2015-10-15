@@ -30,33 +30,33 @@
 
         <div class="form-group">
             {!!Form::label('age_group', 'Ikäryhmä:')!!}<br/>
-            {!!Form::text('age_group', old('age_group'), ['class'=>'form-control', 'placeholder'=>'Ikäryhmä'])!!}
+            {!!Form::select('age_group', ['sudenpennut' => 'Sudenpennut','seikkailijat' => 'Seikkailijat','tarpojat' => 'Tarpojat','samoajat' => 'Samoajat','vaeltajat' => 'Vaeltajat'])!!}
         </div>
 
         <div class="form-group">
-            
+
             {!!Form::label('participants', 'Valitse ryhmäläisiä:')!!}
             <select multiple="multiple" class="form-control sieve" name="participants[]" id="participants">
                 @forelse($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->username }}</option>             
+                <option value="{{ $user->id }}">{{ $user->username }}</option>             
                 @empty
                 <option disabled value=""> Ei käyttäjiä</option>
-                    @endforelse
+                @endforelse
             </select>
         </div>
-        
+
         <div class="form-group">
-            
+
             {!!Form::label('leaders', 'Valitse ryhmänjohtajia:')!!}
             <select multiple="multiple" class="form-control sieve" name="leaders[]" id="leaders">
                 @forelse($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->username }}</option>             
+                <option value="{{ $user->id }}">{{ $user->username }}</option>             
                 @empty
                 <option disabled value=""> Ei käyttäjiä</option>
-                    @endforelse
+                @endforelse
             </select>
         </div>
-        
+
         {!!Form::submit('Lisää ryhmä', ['class' => 'btn btn-default'])!!}
         {!!link_to_action('GroupController@index', $title = 'Peruuta', [], $attributes = array('class'=>'btn btn-default pull-right'))!!}
         {!! Form::close() !!}
