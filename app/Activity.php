@@ -11,7 +11,7 @@ class Activity extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'guid'];
+    protected $fillable = ['name', 'guid', 'age_group'];
     
     public function events(){
         return $this->belongsToMany('App\Event')->withPivot('occurrence');

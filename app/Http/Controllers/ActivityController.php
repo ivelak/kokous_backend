@@ -29,7 +29,7 @@ class ActivityController extends Controller
     
     public function index(Request $request) {
         //
-        $activities = Activity::paginate($request->input('perpage', 15));
+      $activities = Activity::paginate($request->input('perpage', 15));
         return view('activity.activities', compact('activities'));
     }
     
