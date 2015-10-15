@@ -55,7 +55,7 @@
 
         <div class="form-group">
             {!!Form::label('ending', 'Päättyy:')!!}<br/>
-            <input type="radio" name="ending" value="never" checked> Ei koskaan
+            <input type="radio" name="ending" value="afterYear" checked> Vuoden päästä
 
             <div class="input-group">
 
