@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: kokous-backend-dev
+    environment: kokousBackend-env
 global:
   application_name: kokous_backend
   default_ec2_keyname: aws-eb

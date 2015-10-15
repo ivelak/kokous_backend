@@ -51,7 +51,7 @@ return [
             'database' => storage_path('database.sqlite'),
             'prefix'   => '',
         ],
-		
+
 		'sqliteTest' => [
             'driver'   => 'sqlite',
             'database' => ':memory:',
@@ -76,6 +76,17 @@ return [
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
+            'charset'  => 'utf8',
+            'prefix'   => '',
+            'schema'   => 'public',
+        ],
+
+        'rds-db' => [
+            'driver'   => 'pgsql',
+            'host'     => env('DB_HOST', $_SERVER['RDS_HOSTNAME']),
+            'database' => env('DB_DATABASE', $_SERVER['RDS_DB_NAME']),
+            'username' => env('DB_USERNAME', $_SERVER['RDS_USERNAME']),
+            'password' => env('DB_PASSWORD', $_SERVER['RDS_PASSWORD']),
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
