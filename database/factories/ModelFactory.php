@@ -23,9 +23,11 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Activity::class, function (Faker\Generator $faker) {
+    $agegroups = ['sudenpennut', 'samoajat', 'tarpojat', 'seikkailijat', 'vaeltajat'];
     return [
         'guid' => $faker->unique()->randomNumber,
-        'name' => 'Activity ' . $faker->unique()->randomNumber
+        'name' => 'Activity ' . $faker->unique()->randomNumber,
+        'age_group' => $faker->randomElement($agegroups)
     ];
 });
 
@@ -56,7 +58,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'postalcode' => '00550',
         'is_scout' => true,
         'email' => $faker->email
-        
+
     ];
 });
-
