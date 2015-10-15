@@ -15,8 +15,8 @@ use Carbon\Carbon;
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'partio_id' => $faker->unique()->regexify('[A-Z0-9]{10}'),
-        'membernumber' => $faker->unique()->regexify('[A-Z0-9]{10}'),
+        'partio_id' => $faker->unique()->regexify('[A-Z0-9]{10,10}'),
+        'membernumber' => $faker->unique()->regexify('[A-Z0-9]{10,10}'),
         'name' => $faker->name,
         'email' => $faker->email,
         'password' => bcrypt(str_random(10)),
