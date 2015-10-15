@@ -34,6 +34,7 @@ class EventActivityController extends Controller
         $event = Event::findOrFail($id);
         $activity = Activity::findOrFail($request->input('activityId'));
         $event->activities()->attach($activity);
+        // Tähän tulee lisätä tieto siitä kuka suorituksen merkkasi!!
         $event->save();
         return redirect()->back();
     }

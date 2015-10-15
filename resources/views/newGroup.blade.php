@@ -63,9 +63,8 @@
     </div>
 </div>
 <script>
-    $(document).ready(function () {
-        $("select.sieve").sieve({itemSelector: "option"});
-        //$("select").css("display","none");
+    $(document).ready(function() {
+        $("select.sieve").sieve({ itemSelector: "option" });
     });
 </script>
 @endsection

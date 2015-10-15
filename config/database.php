@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -26,7 +25,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'rds-db'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +50,7 @@ return [
             'database' => storage_path('database.sqlite'),
             'prefix'   => '',
         ],
-		
+
 		'sqliteTest' => [
             'driver'   => 'sqlite',
             'database' => ':memory:',
@@ -80,6 +79,18 @@ return [
             'prefix'   => '',
             'schema'   => 'public',
         ],
+
+        'rds-db' => [
+            'driver'   => 'pgsql',
+            'host'     => isset($_server)? $_SERVER['RDS_HOSTNAME']:'',
+            'database' => isset($_server)? $_SERVER['RDS_DB_NAME']:'',
+            'username' => isset($_server)? $_SERVER['RDS_USERNAME']:'',
+            'password' => isset($_server)? $_SERVER['RDS_PASSWORD']:'',
+            'charset'  => 'utf8',
+            'prefix'   => '',
+            'schema'   => 'public',
+        ],
+
 
         'sqlsrv' => [
             'driver'   => 'sqlsrv',
