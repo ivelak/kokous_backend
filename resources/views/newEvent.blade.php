@@ -22,6 +22,11 @@
             {!!Form::label('name', 'Tapahtuman nimi:')!!}<br/>
             {!!Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Nimi tapahtumalle'])!!}
         </div>
+        
+        @if($id)
+            {!!Form::hidden('groupId', $id)!!}
+        @else
+        @endif
 
         <div class="form-group"> 
             {!!Form::label('date', 'Päiväys:')!!}<br/>

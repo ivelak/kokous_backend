@@ -30,6 +30,10 @@ class EventController extends Controller {
     public function create() {
         return view('newEvent');
     }
+    
+    public function createForGroup($id) {
+        return view('newEvent',compact('id'));
+    }
 
     /**
      * Store a newly created resource in storage.

@@ -12,7 +12,7 @@
         {!!Form::open(array('action' => ['GroupController@destroy', $group], 'method'=>'delete', 'class'=>'form-inline'))!!}
         {!!link_to_action('GroupController@edit', $title = 'Muokkaa ryhmää', ['id' => $group->id], $attributes = array('class'=>'btn btn-default'))!!}
         {!!link_to_action('GroupUserController@index', $title = 'Lisää / Poista ryhmäläisiä', ['id' => $group->id], $attributes = array('class'=>'btn btn-default'))!!}
-        {!!link_to_action('EventController@create', $title = 'Lisää tapahtuma', [], $attributes = array('class'=>'btn btn-default'))!!}
+        {!!link_to_action('EventController@createForGroup', $title = 'Lisää tapahtuma', ['id' => $group->id], $attributes = array('class'=>'btn btn-default'))!!}
         {!!Form::submit('Poista', ['onclick'=>'return confirm("Haluatko varmasti poistaa ryhmän?")', 'class' => 'btn btn-default pull-right'])!!}
         {!!Form::close()!!}
 

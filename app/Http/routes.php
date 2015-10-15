@@ -55,6 +55,8 @@ Route::group(['prefix' => 'groups'], function () {
     Route::post('/{id}/users','GroupUserController@add')->where('id', '[0-9]+');
     Route::delete('/{id}/users', 'GroupUserController@remove')->where('id', '[0-9]+');
     
+    Route::get('/{id}/newEvent','EventController@createForGroup')->where('id','[0-9]+');
+    
 });
 
 Route::group(['prefix' => 'activities'], function () {
