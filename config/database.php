@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -83,14 +82,15 @@ return [
 
         'rds-db' => [
             'driver'   => 'pgsql',
-            'host'     => env('DB_HOST', $_SERVER['RDS_HOSTNAME']),
-            'database' => env('DB_DATABASE', $_SERVER['RDS_DB_NAME']),
-            'username' => env('DB_USERNAME', $_SERVER['RDS_USERNAME']),
-            'password' => env('DB_PASSWORD', $_SERVER['RDS_PASSWORD']),
+            'host'     => isset($_server)? $_SERVER['RDS_HOSTNAME']:'',
+            'database' => isset($_server)? $_SERVER['RDS_DB_NAME']:'',
+            'username' => isset($_server)? $_SERVER['RDS_USERNAME']:'',
+            'password' => isset($_server)? $_SERVER['RDS_PASSWORD']:'',
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
         ],
+
 
         'sqlsrv' => [
             'driver'   => 'sqlsrv',
