@@ -17,6 +17,10 @@ class CreateActivityUserPivotTable extends Migration
             $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('marked_by_user_id')->unsigned()->index()->nullable();
+            $table->foreign('marked_by_user_id')->references('id')->on('users');
+            $table->timestamps();
+            $table->date('event_date');
         });
     }
 
