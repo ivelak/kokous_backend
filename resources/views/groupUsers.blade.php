@@ -20,7 +20,7 @@
         <div class="panel-heading"><strong>Ryhmän jäsenet:</strong></div>
         <table class="table">
             @forelse($group->users()->where('role','member')->get() as $user)
-            <tr id="{{$user->id}}" class="tr-link">
+            <tr id="{{$user->id}}">
                 <td>
                     {!!Form::open(array('action' => ['GroupUserController@remove', $group], 'method'=>'delete', 'class'=>'form-inline'))!!}
                     {{$user->username}}

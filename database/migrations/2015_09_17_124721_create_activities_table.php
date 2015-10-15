@@ -17,6 +17,7 @@ class CreateActivitiesTable extends Migration
             $table->increments('id');
             $table->integer('guid');
             $table->string('name');
+            $table->string('age_group');
             $table->timestamps();
         });
         

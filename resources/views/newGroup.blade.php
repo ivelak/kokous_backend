@@ -36,7 +36,7 @@
         <div class="form-group">
             
             {!!Form::label('participants', 'Valitse ryhmäläisiä:')!!}
-            <select multiple="multiple" class="form-control" name="participants[]" id="participants">
+            <select multiple="multiple" class="form-control sieve" name="participants[]" id="participants">
                 @forelse($users as $user)
                     <option value="{{ $user->id }}">{{ $user->username }}</option>             
                 @empty
@@ -48,7 +48,7 @@
         <div class="form-group">
             
             {!!Form::label('leaders', 'Valitse ryhmänjohtajia:')!!}
-            <select multiple="multiple" class="form-control" name="leaders[]" id="leaders">
+            <select multiple="multiple" class="form-control sieve" name="leaders[]" id="leaders">
                 @forelse($users as $user)
                     <option value="{{ $user->id }}">{{ $user->username }}</option>             
                 @empty
@@ -62,4 +62,10 @@
         {!! Form::close() !!}
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $("select.sieve").sieve({ itemSelector: "option" });
+        //$("select").css("display","none");
+    });
+</script>
 @endsection

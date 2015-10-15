@@ -13,6 +13,7 @@ and open the template in the editor.
         @yield('styles')     
         {!! Html::script('js/jquery-2.1.4.js', [], Request::secure()) !!}
         {!! Html::script('js/bootstrap.min.js', [], Request::secure()) !!}
+        {!! Html::script('js/jquery.sieve.js', [], Request::secure()) !!}
         @yield('scripts')
         <title>@yield('title')</title>
     </head>
