@@ -82,10 +82,10 @@ return [
 
         'rds-db' => [
             'driver'   => 'pgsql',
-            'host'     => isset($_server)? $_SERVER['RDS_HOSTNAME']:'',
-            'database' => isset($_server)? $_SERVER['RDS_DB_NAME']:'',
-            'username' => isset($_server)? $_SERVER['RDS_USERNAME']:'',
-            'password' => isset($_server)? $_SERVER['RDS_PASSWORD']:'',
+            'host'     => isset($_SERVER)? $_SERVER['RDS_HOSTNAME']:'',
+            'database' => isset($_SERVER)? $_SERVER['RDS_DB_NAME']:'',
+            'username' => isset($_SERVER)? $_SERVER['RDS_USERNAME']:'',
+            'password' => isset($_SERVER)? $_SERVER['RDS_PASSWORD']:'',
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
