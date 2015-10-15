@@ -12,6 +12,7 @@
         {!!Form::open(array('action' => ['GroupController@destroy', $group], 'method'=>'delete', 'class'=>'form-inline'))!!}
         {!!link_to_action('GroupController@edit', $title = 'Muokkaa ryhmää', ['id' => $group->id], $attributes = array('class'=>'btn btn-default'))!!}
         {!!link_to_action('GroupUserController@index', $title = 'Lisää / Poista ryhmäläisiä', ['id' => $group->id], $attributes = array('class'=>'btn btn-default'))!!}
+        {!!link_to_action('EventController@create', $title = 'Lisää tapahtuma', [], $attributes = array('class'=>'btn btn-default'))!!}
         {!!Form::submit('Poista', ['onclick'=>'return confirm("Haluatko varmasti poistaa ryhmän?")', 'class' => 'btn btn-default pull-right'])!!}
         {!!Form::close()!!}
 
@@ -26,7 +27,7 @@
             </ul>
         </div>
     </div>
-    
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <a data-toggle="collapse" href="#collapse1"><strong>Ryhmänjohtajat: </strong></a>
@@ -41,7 +42,7 @@
             </ul>
         </div> 
     </div>
-    
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <a data-toggle="collapse" href="#collapse2"><strong>Jäsenet: </strong></a>
@@ -64,7 +65,7 @@
         <div id="collapse3" class="panel-collapse collapse">
             <ul class="list-group">
                 @forelse($group->events()->get() as $event)
-                <li class="list-group-item">{{$event -> name}}</li>
+                <li class="list-group-item"><a href= "/events/{{$event->id}}">{{$event -> name}}</a></li>
                 @empty
                 <li class="list-group-item"><p><strong> Ei lisättyjä tapahtumia</strong></p></li>
                 @endforelse
