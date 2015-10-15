@@ -11,17 +11,17 @@ class GroupEventTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()       
+    public function run()
     {
         $faker = Faker\Factory::create();
-        
+
         $groups = Group::all();
         $events = Event::all()->toArray();
-        
+
         foreach ($groups as $group) {
-            
+
             foreach($faker->randomElements($events,$faker->randomDigit) as $event){
-                $group->events()->attach($event);
+                $group->events()->attach($event->id);
             }
                 //Group::find($group->id)->events()->saveMany($faker->randomElements($events,$faker->randomDigit));
                     //->events->saveMany($faker->randomElements($events,$faker->randomDigit));
