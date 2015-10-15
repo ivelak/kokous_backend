@@ -65,7 +65,6 @@
 <script>
     $(document).ready(function() {
         $("select.sieve").sieve({ itemSelector: "option" });
-        //$("select").css("display","none");
     });
 </script>
 @endsection
