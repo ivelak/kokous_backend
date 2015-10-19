@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Event;
 use App\EventOccurrence;
+use App\Group;
 use Carbon\Carbon;
 
 class EventController extends Controller {
@@ -29,7 +30,8 @@ class EventController extends Controller {
      * @return Response
      */
     public function create() {
-        return view('newEvent');
+        $groups = Group::all();
+        return view('newEvent', compact('groups'));
     }
     
     public function createForGroup($id) {
