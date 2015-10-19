@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActivityEventPivotTable extends Migration
+class CreateEventOccurrencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,16 @@ class CreateActivityEventPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('activity_event', function(Blueprint $table) {
-            $table->integer('activity_id')->unsigned()->index();
-            $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
+        Schema::create('event_occurrences', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->boolean ('cancelled')->default(false);
+            $table->date('date');
+            $table->time('time')->nullable();
+            $table->string('place')->nullable();
+            $table->text('notes')->nullable();
             $table->integer('event_id')->unsigned()->index();
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
-            $table->timestamp('occurrence')->nullable();
         });
     }
 
@@ -28,6 +32,6 @@ class CreateActivityEventPivotTable extends Migration
      */
     public function down()
     {
-        Schema::drop('activity_event');
+        Schema::drop('event_occurrences');
     }
 }

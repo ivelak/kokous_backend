@@ -9,12 +9,12 @@ class Event extends Model
 {   
     protected $appends = ['time_string','date_string'];
     
-    public function activities(){
-        return $this->belongsToMany('App\Activity')->withPivot('occurrence');
+    public function group(){
+        return $this->belongsTo('App\Group');
     }
     
-    public function groups(){
-        return $this->belongsToMany('App\Group');
+    public function eventOccurrences(){
+        return $this->hasMany('App\EventOccurrence');
     }
     
     public function getTimeAttribute($value)

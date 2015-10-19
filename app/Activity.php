@@ -13,8 +13,8 @@ class Activity extends Model
      */
     protected $fillable = ['name', 'guid', 'age_group'];
     
-    public function events(){
-        return $this->belongsToMany('App\Event')->withPivot('occurrence');
+    public function eventOccurences(){
+        return $this->belongsToMany('App\EventOccurrence');
     }
     
     public function users(){

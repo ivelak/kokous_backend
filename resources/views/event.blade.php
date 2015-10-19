@@ -33,15 +33,15 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>Aktiviteetit:</strong></div>
+        <div class="panel-heading"><strong>Tapahtuman toistot:</strong></div>
         <table class="table">
-            @forelse($event->activities()->get() as $activity)
+            @forelse($event->eventOccurrences()->get() as $eventOccurrence)
             <tr>
-                <td>{{$activity->name}}</td>
+                <td>{{$eventOccurrence->date->format('d.m.Y')}}</td>
             </tr>
             @empty
             <tr>
-                <td>Ei merkittyjä aktiviteetteja</td>
+                <td>Ei merkittyjä toistoja</td>
             </tr>
             @endforelse</tr>
         </table>

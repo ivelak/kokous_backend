@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Event;
+use App\EventOccurrence;
 use Carbon\Carbon;
 
 class EventController extends Controller {
@@ -54,7 +55,27 @@ class EventController extends Controller {
         $event->time = Carbon::createFromFormat('d.m.Y H:i', $request->input('date') . ' ' . $request->input('time'));
         $event->place = $request->input('place');
         $event->description = $request->input('description');
+        $event->group_id = $request->input('groupId');
         $event->save();
+        
+        $days = collect($request->input('days'));          
+        $date = Carbon::createFromFormat('d.m.Y',$request->input('date'));
+        $endDate = $date->copy();
+        
+            if($request->input('repeat') != NULL){
+                $ending = $request->input('ending');
+                $endDate = $ending=="afterYear"? $endDate->addYear():$request->input('endDate');               
+            }          
+            do {
+                if ($days->contains($date->dayOfWeek)) {
+                   $occurrence = new EventOccurrence();
+                   $occurrence->event_id = $event->id;
+                   $occurrence->date=$date;
+                   $occurrence->save();
+                }
+                $date->addDay();
+            } while ($date < $endDate); 
+       
 
         return redirect('events');
     }

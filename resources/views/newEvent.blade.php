@@ -23,7 +23,7 @@
             {!!Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Nimi tapahtumalle'])!!}
         </div>
         
-        @if($id)
+        @if(isset ($id))
             {!!Form::hidden('groupId', $id)!!}
         @else
         @endif
