@@ -22,10 +22,20 @@
             {!!Form::label('name', 'Tapahtuman nimi:')!!}<br/>
             {!!Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Nimi tapahtumalle'])!!}
         </div>
-        
-        @if($id)
-            {!!Form::hidden('groupId', $id)!!}
+        @if(isset($id))
+        {!!Form::hidden('groupId', $id)!!}
         @else
+        <div class="form-group">
+
+            {!!Form::label('groups', 'Valitse ryhmä:')!!}
+            <select class="form-control sieve" name="groups[]" id="groups">
+                @forelse($groups as $group)
+                <option value="{{ $group->id }}">{{ $group->name }}</option>             
+                @empty
+                <option disabled value=""> Ei ryhmiä</option>
+                @endforelse
+            </select>
+        </div>
         @endif
 
         <div class="form-group"> 
@@ -86,4 +96,9 @@
         {!! Form::close() !!}
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("select.sieve").sieve({itemSelector: "option"});
+    });
+</script>
 @endsection
