@@ -12,13 +12,21 @@ class EventOccurrence extends Model {
     }
 
     public function event() {
-        return $this->hasOne('App\Event');
+        return $this->belongsTo('App\Event');
     }
 
     public function getDateAttribute($value) {
         return Carbon::parse($value);
     }
-    public function getTimeAttribute(){        
-        return isset($this->time) ? Carbon::parse($this->time) : $this->event->time->copy()->setDate(0,0,0);
+    public function getTimeAttribute($time){        
+        return isset($time) ? Carbon::parse($time) : $this->event->time->copy()->setDate(0,0,0);
+    }
+    
+    public function getNameAttribute(){
+        return $this->event->name;
+    }
+    
+    public function getPlaceAttribute(){
+        return $this->event->place;
     }
 }
