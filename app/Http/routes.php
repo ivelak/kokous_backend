@@ -25,16 +25,21 @@ Route::group(['prefix' => 'events'], function () {
     Route::get('/', "EventController@index");
     Route::get('/new', "EventController@create");
     Route::post('/new', "EventController@store");
-    
+
     Route::get('/{id}', "EventController@show")->where('id', '[0-9]+');
     Route::get('/{id}/edit', 'EventController@edit')->where('id', '[0-9]+');
     Route::put('/{id}', 'EventController@update')->where('id', '[0-9]+');
     Route::delete('/{id}', 'EventController@destroy')->where('id', '[0-9]+');
-    
+
     Route::get('/{id}/activities', 'EventActivityController@index')->where('id', '[0-9]+');
     Route::post('/{id}/activities', 'EventActivityController@add')->where('id', '[0-9]+');
     Route::delete('/{id}/activities', 'EventActivityController@remove')->where('id', '[0-9]+');
-    
+
+    Route::group(['prefix' => '/{eventId}/occurrences'], function () {
+        Route::get('/', "EventOccurrenceController@index");
+        Route::get('/{id}', "EventOccurenceController@show")->where('id', '[0-9]+');
+        Route::get('/{id}', "EventOccurenceCOntroller@edit")->where('id', '[0-9]+');
+    });
 });
 
 Route::post('/login', function() {
@@ -53,27 +58,26 @@ Route::group(['prefix' => 'groups'], function () {
     Route::get('/', "GroupController@index");
     Route::get('/new', "GroupController@create");
     Route::post('/new', "GroupController@store");
-    
+
     Route::get('/{id}', "GroupController@show")->where('id', '[0-9]+');
     Route::get('/{id}/edit', 'GroupController@edit')->where('id', '[0-9]+');
     Route::put('/{id}', 'GroupController@update')->where('id', '[0-9]+');
     Route::delete('/{id}', 'GroupController@destroy')->where('id', '[0-9]+');
-    
+
     Route::get('/{id}/users', 'GroupUserController@index')->where('id', '[0-9]+');
-    Route::post('/{id}/users','GroupUserController@add')->where('id', '[0-9]+');
+    Route::post('/{id}/users', 'GroupUserController@add')->where('id', '[0-9]+');
     Route::delete('/{id}/users', 'GroupUserController@remove')->where('id', '[0-9]+');
-    
-    Route::get('/{id}/newEvent','EventController@createForGroup')->where('id','[0-9]+');
-    
+
+    Route::get('/{id}/newEvent', 'EventController@createForGroup')->where('id', '[0-9]+');
 });
 
 Route::group(['prefix' => 'activities'], function () {
     Route::get('/', "ActivityController@index");
     Route::get('/new', "ActivityController@create");
-    
-     Route::post('/sync', "ActivityController@sync");
+
+    Route::post('/sync', "ActivityController@sync");
 });
 
 Route::group(['prefix' => 'api/dev'], function () {
-    Route::resource('events', 'EventRestController',  ['only' => ['index', 'show']]);
+    Route::resource('events', 'EventRestController', ['only' => ['index', 'show']]);
 });

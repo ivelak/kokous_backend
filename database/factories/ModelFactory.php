@@ -42,11 +42,14 @@ $factory->define(App\Group::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Event::class, function (Faker\Generator $faker) {
+    $time = Carbon::instance($faker->dateTimeBetween(Carbon::now()->subMonths(6), Carbon::now()->addYear()));
+    
     return [
         'name' => 'Event ' . $faker->unique()->randomNumber,
         'description' => $faker->word,
-        'time' => Carbon::parse("10.11.2015 20:00:00"),
-        'place' => $faker->word
+        'time' => $time,
+        'place' => $faker->word,
+        'endDate' =>$faker->dateTimeBetween($time,$time->copy()->addYear())
     ];
 });
 

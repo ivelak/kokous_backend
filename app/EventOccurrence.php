@@ -18,5 +18,7 @@ class EventOccurrence extends Model {
     public function getDateAttribute($value) {
         return Carbon::parse($value);
     }
-
+    public function getTimeAttribute(){        
+        return isset($this->time) ? Carbon::parse($this->time) : $this->event()->time->copy()->setDate(0,0,0);
+    }
 }

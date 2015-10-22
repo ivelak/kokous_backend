@@ -33,9 +33,9 @@ class EventController extends Controller {
         $groups = Group::all();
         return view('newEvent', compact('groups'));
     }
-    
+
     public function createForGroup($id) {
-        return view('newEvent',compact('id'));
+        return view('newEvent', compact('id'));
     }
 
     /**
@@ -58,26 +58,28 @@ class EventController extends Controller {
         $event->place = $request->input('place');
         $event->description = $request->input('description');
         $event->group_id = $request->input('groupId');
-        $event->save();
-        
-        $days = collect($request->input('days'));          
-        $date = Carbon::createFromFormat('d.m.Y',$request->input('date'));
+
+        $days = collect($request->input('days'));
+        $date = Carbon::createFromFormat('d.m.Y', $request->input('date'));
         $endDate = $date->copy();
-        
-            if($request->input('repeat') != NULL){
-                $ending = $request->input('ending');
-                $endDate = $ending=="afterYear"? $endDate->addYear():$request->input('endDate');               
-            }          
-            do {
-                if ($days->contains($date->dayOfWeek)) {
-                   $occurrence = new EventOccurrence();
-                   $occurrence->event_id = $event->id;
-                   $occurrence->date=$date;
-                   $occurrence->save();
-                }
-                $date->addDay();
-            } while ($date < $endDate); 
-       
+
+        if ($request->input('repeat') != NULL) {
+            $ending = $request->input('ending');
+            $endDate = $ending == "afterYear" ? $endDate->addYear() : $request->input('endDate');
+        }
+        $event->endDate = $endDate;
+        $event->save();
+
+        do {
+            if ($days->contains($date->dayOfWeek)) {
+                $occurrence = new EventOccurrence();
+                $occurrence->event_id = $event->id;
+                $occurrence->date = $date;
+                $occurrence->save();
+            }
+            $date->addDay();
+        } while ($date < $endDate);
+
 
         return redirect('events');
     }
