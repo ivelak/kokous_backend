@@ -38,7 +38,7 @@
                 </table>
             </div>
         </div>
-        {!! $events->render() !!}
+        {!! $eventOccurrences->render() !!}
 
     </div>
 </div>
