@@ -3,6 +3,9 @@
 @extends('templates.master')
 @section('title', 'Aktiviteetit')
 @section('content')
+@section('scripts')
+@include('templates.linkRow')
+@endsection
 <div class="container">
     <h1> Kaikki aktiviteetit </h1> <hr />
     <div class="panel">
@@ -22,7 +25,7 @@
                         <td><strong>Aktiviteetti</strong></td>
                     </tr>
                     @forelse($activities as $activity)
-                    <tr onclick="location.href = '{!!url('activities / '.$activity -> id)!!}'">
+                    <tr id="{{$activity->id}}" class="tr-link">
                         <td>{{$activity->name}}</td>
                     </tr>
                     @empty
