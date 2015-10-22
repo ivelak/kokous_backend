@@ -25,6 +25,7 @@ class NewUserActivityViewTest extends TestCase {
         $activity = new Activity();
         $activity->guid = 1;
         $activity->name = 'Activity 1';
+        $activity->age_group = 'sudenpennut';
         $activity->save();
         
         

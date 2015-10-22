@@ -18,7 +18,7 @@ class NewGroupViewTest extends TestCase {
         $this->visit('/groups/new')
                 ->type('Test123','name')
                 ->type('Test_group123','scout_group')
-                ->type('Test_age_group123','age_group')
+                ->type('sudenpennut','age_group')
                 ->press('Lisää ryhmä')
                 
                 ->seePageIs('/groups');
@@ -62,12 +62,12 @@ class NewGroupViewTest extends TestCase {
         $this->visit('/groups/new')
                 ->type('Test123','name')
                 ->type('Test_group123','scout_group')
-                ->type('Test_age_group123','age_group')
+                ->type('sudenpennut','age_group')
                 ->select('1', 'participants')
                 ->select('2', 'leaders')
                 ->press('Lisää ryhmä');
         
-        $this->seeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'Test_age_group123']);
+        $this->seeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'sudenpennut']);
         $this->seeInDatabase('group_user', ['group_id' => 1, 'user_id' => 1, 'role' => 'member']);
         $this->seeInDatabase('group_user', ['group_id' => 1, 'user_id' => 2, 'role' => 'leader']);
     }
@@ -76,7 +76,7 @@ class NewGroupViewTest extends TestCase {
         $this->visit('/groups/new')
                 ->type('','name')
                 ->type('Test_group123','scout_group')
-                ->type('Test_age_group123','age_group')
+                ->type('sudenpennut','age_group')
                 ->press('Lisää ryhmä')
                 
                 ->seePageIs('/groups/new')
@@ -87,22 +87,12 @@ class NewGroupViewTest extends TestCase {
         $this->visit('/groups/new')
                 ->type('Test123','name')
                 ->type('','scout_group')
-                ->type('Test_age_group123','age_group')
+                ->type('sudenpennut','age_group')
                 ->press('Lisää ryhmä')
                 
                 ->seePageIs('/groups/new')
                 ->see('The scout group field is required');
     }
-    
-    public function testShowsErrorMessageWhenInvalidAgeGroupInput(){
-        $this->visit('/groups/new')
-                ->type('Test123','name')
-                ->type('Test_group123','scout_group')
-                ->type('','age_group')
-                ->press('Lisää ryhmä')
-                
-                ->seePageIs('/groups/new')
-                ->see('The age group field is required');
-    }
+
 
 }

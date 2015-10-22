@@ -10,26 +10,16 @@ class ActivityViewTest extends TestCase {
 
     use DatabaseMigrations;
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testCorrectlyCreatedActivitySeenOnView() {
-        $activity = new Activity();
-        $activity->name = 'Juoksu';
-        $activity->guid = 'Guid';
 
-        $activity->save();
-        
-        $this->seeInDatabase('activities', ['name' => 'Juoksu'])
-                ->visit('/activities')
-                ->see('Juoksu');
-    }
-    
     public function testCorrectViewWhenNoActivitiesAdded() {
         $this->visit('/activities')
              ->see('Ei aktiviteetteja');
+    }
+    
+    public function testActivitiesRetrievedFromPOF() {
+        $this->visit('/activities')
+             ->press('Hae POFista')
+             ->dontSee('Ei aktiviteetteja');
     }
 
     public function testActivityCanBeAddedToAnEvent() {
@@ -44,6 +34,7 @@ class ActivityViewTest extends TestCase {
         $activity = new Activity();
         $activity->name = 'Äänestys';
         $activity->guid = 'Guid';
+        $activity->age_group = 'sudenpennut';
 
         $activity->save();
 

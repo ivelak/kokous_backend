@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+
 /*
   |--------------------------------------------------------------------------
   | Application Routes
@@ -33,6 +35,12 @@ Route::group(['prefix' => 'events'], function () {
     Route::post('/{id}/activities', 'EventActivityController@add')->where('id', '[0-9]+');
     Route::delete('/{id}/activities', 'EventActivityController@remove')->where('id', '[0-9]+');
     
+});
+
+Route::post('/login', function() {
+    $user = User::where('username', 'admin')->first();
+    Auth::login($user);
+    dd(Auth::user());
 });
 
 Route::group(['prefix' => 'users'], function () {

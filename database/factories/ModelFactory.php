@@ -63,3 +63,17 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
     ];
 });
+
+$factory->defineAs(App\User::class, 'admin', function (Faker\Generator $faker) {
+    return [
+        'username' => 'admin',
+        'partio_id' => '55000',
+        'firstname' => 'admin',
+        'lastname' => 'admin',
+        'membernumber' => '1000',
+        'postalcode' => '00550',
+        'is_scout' => true,
+        'email' => 'admin@admin.fi'
+
+    ];
+});

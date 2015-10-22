@@ -18,11 +18,11 @@ class GroupControllerTest extends TestCase
         $this->visit('/groups/new')
              ->type('Test123','name')
              ->type('Test_group123','scout_group')
-             ->type('Test_age_group123','age_group')
+             ->type('sudenpennut','age_group')
              ->press('Lisää ryhmä')
              ->seePageIs('/groups')
         
-             ->seeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'Test_age_group123']);   
+             ->seeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'sudenpennut']);   
     }
     
     public function testIndex(){
@@ -39,7 +39,7 @@ class GroupControllerTest extends TestCase
         $group = new Group();
         $group->name = 'Test123';
         $group->scout_group = 'Test_group123';
-        $group->age_group = 'Test_age_group123';
+        $group->age_group = 'sudenpennut';
         $group->save();
         $group_id = $group->save();
         return $group_id;
@@ -67,23 +67,23 @@ class GroupControllerTest extends TestCase
         
         $group_id = self::createTestGroup();
         
-        $this->seeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'Test_age_group123']);   
+        $this->seeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'sudenpennut']);   
         
         $this->action('GET','GroupController@destroy', ['id' => $group_id]);
         
-        $this->notSeeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'Test_age_group123']);
+        $this->notSeeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'sudenpennut']);
     }
 
     public function testGroupIsNotCreatedWithoutName(){
         $this->visit('/groups/new')
              ->type('','name')
              ->type('Test_group123','scout_group')
-             ->type('Test_age_group123','age_group')
+             ->type('sudenpennut','age_group')
              ->press('Lisää ryhmä')
                 
              ->seePageIs('/groups/new')
         
-             ->notSeeInDatabase('groups', ['scout_group'=>'Test_group123','age_group'=>'Test_age_group123']);
+             ->notSeeInDatabase('groups', ['scout_group'=>'Test_group123','age_group'=>'sudenpennut']);
              
     }
     
@@ -91,24 +91,12 @@ class GroupControllerTest extends TestCase
         $this->visit('/groups/new')
              ->type('Test123','name')
              ->type('','scout_group')
-             ->type('Test_age_group123','age_group')
+             ->type('sudenpennut','age_group')
              ->press('Lisää ryhmä')
                 
              ->seePageIs('/groups/new')
         
-             ->notSeeInDatabase('groups', ['name'=>'Test123','age_group'=>'Test_age_group123']);
-    }
-    
-    public function testGroupIsNotCreatedWithoutAgeGroup(){
-        $this->visit('/groups/new')
-             ->type('Test123','name')
-             ->type('Test_group123','scout_group')
-             ->type('','age_group')
-             ->press('Lisää ryhmä')
-                
-             ->seePageIs('/groups/new')
-        
-             ->notSeeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123']);
+             ->notSeeInDatabase('groups', ['name'=>'Test123','age_group'=>'sudenpennut']);
     }
    
 }

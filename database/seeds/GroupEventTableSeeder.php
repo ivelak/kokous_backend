@@ -21,10 +21,8 @@ class GroupEventTableSeeder extends Seeder
         foreach ($groups as $group) {
 
             foreach($faker->randomElements($events,$faker->randomDigit) as $event){
-                $group->events()->attach($event->id);
+                $group->events()->attach($event['id']);
             }
-                //Group::find($group->id)->events()->saveMany($faker->randomElements($events,$faker->randomDigit));
-                    //->events->saveMany($faker->randomElements($events,$faker->randomDigit));
         }
         //
     }
