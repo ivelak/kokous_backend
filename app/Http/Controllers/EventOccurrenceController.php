@@ -49,6 +49,8 @@ class EventOccurrenceController extends Controller
     public function show($id)
     {
         //
+        $eventOccurrence = EventOccurrence::find(id);
+        return view('eventOccurrence', compact('eventOccurrence'));
     }
 
     /**
