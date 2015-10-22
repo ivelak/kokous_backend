@@ -36,11 +36,12 @@ Route::group(['prefix' => 'events'], function () {
     Route::delete('/{id}/activities', 'EventActivityController@remove')->where('id', '[0-9]+');
 
     Route::group(['prefix' => '/{eventId}/occurrences'], function () {
-        Route::get('/', "EventOccurrenceController@index");
-        Route::get('/{id}', "EventOccurenceController@show")->where('id', '[0-9]+');
-        Route::get('/{id}', "EventOccurenceCOntroller@edit")->where('id', '[0-9]+');
+        Route::get('/{id}', "EventOccurrenceController@show")->where('id', '[0-9]+');
+        Route::get('/{id}', "EventOccurrenceController@edit")->where('id', '[0-9]+');
     });
 });
+
+ Route::get('/event-occurrences',"EventOccurrenceController@index");
 
 Route::post('/login', function() {
     $user = User::where('username', 'admin')->first();

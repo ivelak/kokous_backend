@@ -26,13 +26,13 @@
                     <tr id="{{$event->id}}" class="tr-link">
                         <td>{{$event->name}}</td>
                         <td>{{$event->place}}</td>
-                        <td>{{$event->time->format('d.m.Y')}}</td>
+                        <td>{{$event->date->format('d.m.Y')}}</td>
                         <td>{{$event->time->format('H:i')}}</td>
 
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4">Ei tapahtumia</td>
+                        <td colspan="4">Ei tulevia tapahtumia</td>
                     </tr>
                     @endforelse
                 </table>
