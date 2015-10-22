@@ -40,8 +40,15 @@ Route::group(['prefix' => 'events'], function () {
 Route::post('/login', function() {
     $user = User::where('username', 'admin')->first();
     Auth::login($user);
-    dd(Auth::user());
+    return Redirect::to('/groups');
 });
+
+Route::post('/logout', function() {
+    Auth::logout();
+    return Redirect::to('/groups');
+});
+
+
 
 Route::group(['prefix' => 'users'], function () {
     Route::get('/{id}/activities', 'UserActivityController@index')->where('id', '[0-9]+');
