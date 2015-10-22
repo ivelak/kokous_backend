@@ -29,7 +29,7 @@
         <div class="form-group">
 
             {!!Form::label('groups', 'Valitse ryhmä:')!!}
-            <select class="form-control sieve" name="groups[]" id="groups">
+            <select class="form-control sieve" name="groupId" id="groups">
                 @forelse($groups as $group)
                 <option value="{{ $group->id }}">{{ $group->name }}</option>             
                 @empty
