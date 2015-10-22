@@ -50,7 +50,8 @@ class EventOccurrenceController extends Controller
     public function show($id)
     {
         //
-        $eventOccurrence = EventOccurrence::find(id);
+        $eventOccurrence = EventOccurrence::find($id);
+        dd('Hello, world!');
         return view('eventOccurrence', compact('eventOccurrence'));
     }
 
