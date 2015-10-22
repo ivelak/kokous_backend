@@ -16,7 +16,7 @@ class EventOccurrenceController extends Controller
      */
     public function index(Request $request)
     {
-        $eventOccurrences = EventOccurrence::with('event')->paginate($request->input('perpage', 15));
+        $eventOccurrences = EventOccurrence::with('event')->orderBy('date', 'asc')->paginate($request->input('perpage', 15));
         return view('eventOccurrences', compact('eventOccurrences'));
     }
 
