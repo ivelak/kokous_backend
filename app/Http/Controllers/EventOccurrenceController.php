@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\EventOccurrence;
 
 class EventOccurrenceController extends Controller
 {
@@ -15,7 +16,7 @@ class EventOccurrenceController extends Controller
      */
     public function index(Request $request)
     {
-        $eventOccurrences = EventOccurrence::paginate($request->input('perpage', 15));
+        $eventOccurrences = EventOccurrence::with('event')->paginate($request->input('perpage', 15));
         return view('eventOccurrences', compact('eventOccurrences'));
     }
 
