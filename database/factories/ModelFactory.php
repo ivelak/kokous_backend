@@ -46,7 +46,7 @@ $factory->define(App\Event::class, function (Faker\Generator $faker) {
         'name' => 'Event ' . $faker->unique()->randomNumber,
         'description' => $faker->word,
         'time' => Carbon::parse("10.11.2015 20:00:00"),
-        'place' => $faker->word
+        'place' => $faker->word,
     ];
 });
 
