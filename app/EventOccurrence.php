@@ -31,7 +31,7 @@ class EventOccurrence extends Model {
         return $this->event->place;
     }
 
-    public function scopeUppComing($query) {
+    public function scopeUpComing($query) {
         $events = EventOccurrence::all()
                         ->filter(function ($events) {
                             return Carbon::Parse($events['date']) > Carbon::yesterday();

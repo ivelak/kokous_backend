@@ -19,7 +19,7 @@ class EventController extends Controller {
      */
     public function index(Request $request) {
         //
-        $events = Event::uppComingEvents()->paginate($request->input('perpage', 15));
+        $events = EventOccurrence::upComing()->paginate($request->input('perpage', 15));
 
         return view('events', compact('events'));
     }
