@@ -31,6 +31,9 @@ class Saml2LoginEventListener {
             'attributes' => $user->getAttributes(),
             'assertion' => $user->getRawSamlAssertion()
         ];
+		//Debugaukseen. Poistakaa jossain kohtaa.
+		dd($userData)
+		
         $laravelUser = User::firstOrCreate(['partio_id' => $userData->id]);
         Auth::login($laravelUser);
     }
