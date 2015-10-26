@@ -8,6 +8,7 @@ use Carbon\Carbon;
 class Event extends Model {
 
     protected $appends = ['time_string', 'date_string'];
+    protected $dates = ['time','endDate','modified_at','created_at'];
 
     public function group() {
         return $this->belongsTo('App\Group');
@@ -15,10 +16,6 @@ class Event extends Model {
 
     public function eventOccurrences() {
         return $this->hasMany('App\EventOccurrence');
-    }
-
-    public function getTimeAttribute($value) {
-        return Carbon::parse($value);
     }
 
     public function getTimeStringAttribute() {
