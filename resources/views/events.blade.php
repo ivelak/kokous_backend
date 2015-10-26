@@ -18,22 +18,32 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tr>
-                        <td><strong>Nimi</strong></td>
-                        <td><strong>Paikka</strong></td>
-                        <td><strong>Päivä</strong></td>
-                        <td><strong>Aika</strong></td>
+                        <th>Nimi</th>
+                        <th>Ryhmä</th>
+                        <th>Paikka</th>
+                        <th>Päivä</th>
+                        <th>Aika</th>
+                        
                     </tr>
                     @forelse($events as $event)
                     <tr id="{{$event->id}}" class="tr-link">
                         <td>{{$event->name}}</td>
+                        <td>{{$event->group->name}}</td>
                         <td>{{$event->place}}</td>
+                        
+                        @if($event->time->isSameDay($event->endDate))
                         <td>{{$event->time->format('d.m.Y')}}</td>
+                        
+                        @else
+                        <td>{{$event->time->format('d.m.Y').' - '.$event->endDate->format('d.m.Y')}}</td>
+                        @endif
+                        
                         <td>{{$event->time->format('H:i')}}</td>
 
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4">Ei tapahtumia</td>
+                        <td colspan="5">Ei tapahtumia</td>
                     </tr>
                     @endforelse
                 </table>

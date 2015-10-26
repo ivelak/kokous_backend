@@ -19,7 +19,7 @@ class EventController extends Controller {
      */
     public function index(Request $request) {
         //
-        $events = Event::paginate($request->input('perpage', 15));
+        $events = Event::with('group')->paginate($request->input('perpage', 15));
 
         return view('events', compact('events'));
     }
@@ -91,8 +91,9 @@ class EventController extends Controller {
      * @return Response
      */
     public function show($id) {
-        $event = Event::findOrFail($id);
-        return view('event', compact('event'));
+        $event = Event::with(['group','eventOccurrences'])->findOrFail($id);
+        $eventOccurrences = EventOccurrence::where('event_id',$id)->paginate();
+        return view('event', compact('event','eventOccurrences'));
     }
 
     /**
