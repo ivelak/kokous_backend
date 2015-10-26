@@ -34,12 +34,12 @@ Route::group(['prefix' => 'events'], function () {
     Route::get('/{id}/activities', 'EventActivityController@index')->where('id', '[0-9]+');
     Route::post('/{id}/activities', 'EventActivityController@add')->where('id', '[0-9]+');
     Route::delete('/{id}/activities', 'EventActivityController@remove')->where('id', '[0-9]+');
-
-    Route::group(['prefix' => '/{eventId}/occurrences'], function () {
-        Route::get('/{id}', "EventOccurrenceController@show")->where('id', '[0-9]+');
-        Route::get('/{id}', "EventOccurrenceController@edit")->where('id', '[0-9]+');
-    });
 });
+
+Route::group(['prefix' => '/events/{eventId}/occurrences'], function () {
+        Route::get('/{id}', "EventOccurrenceController@show")->where('eventId', '[0-9]+');
+        Route::get('/{id}', "EventOccurrenceController@edit")->where('eventId', '[0-9]+');
+    });
 
  Route::get('/event-occurrences',"EventOccurrenceController@index");
 
