@@ -1,5 +1,5 @@
 @extends('templates.master')
-@section('title', 'Lisätyt tapahtumat')
+@section('title', 'Kalenterinäkymä')
 @section('scripts')
 @include('templates.linkRow')
 @endsection
