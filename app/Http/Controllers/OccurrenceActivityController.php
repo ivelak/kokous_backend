@@ -19,7 +19,7 @@ class OccurrenceActivityController extends Controller
     {
         $eventOccurrence = EventOccurrence::where('event_id', $id)->findOrFail($occId);
         //refaktoroikaa tää :D
-        $activities = Activity::whereNotIn('id', $eventOccurrence->activities()->get()->map(function ($item, $key) {return $item->id;}))->get();
+        $activities = Activity::where('age_group', $eventOccurrence->event->group->age_group)->whereNotIn('id', $eventOccurrence->activities()->get()->map(function ($item, $key) {return $item->id;}))->get();
         return view('eventActivities', compact('eventOccurrence', 'activities'));
     }
 
