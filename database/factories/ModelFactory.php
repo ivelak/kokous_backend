@@ -12,6 +12,7 @@
 */
 
 use Carbon\Carbon;
+use App\Group;
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
@@ -43,13 +44,14 @@ $factory->define(App\Group::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Event::class, function (Faker\Generator $faker) {
     $time = Carbon::instance($faker->dateTimeBetween(Carbon::now()->subMonths(6), Carbon::now()->addYear()));
-    
+    $groups = Group::all()->toArray();
     return [
         'name' => 'Event ' . $faker->unique()->randomNumber,
         'description' => $faker->word,
         'time' => $time,
         'place' => $faker->word,
-        'endDate' =>$faker->dateTimeBetween($time,$time->copy()->addYear())
+        'endDate' =>$faker->dateTimeBetween($time,$time->copy()->addYear()),
+        'group_id' => $faker->randomElement($groups)['id']
     ];
 });
 

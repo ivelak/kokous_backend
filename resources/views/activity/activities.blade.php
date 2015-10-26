@@ -10,7 +10,7 @@
     <h1> Kaikki aktiviteetit </h1> <hr />
     <div class="panel">
         {!!Form::open(array('action' => ['ActivityController@sync'], 'class'=>'form-inline'))!!}
-        {!!link_to_action('ActivityController@create', $title = 'Uusi aktiviteetti', [], $attributes = array('class'=>'btn btn-default'))!!}
+        {!!link_to_action('ActivityController@create', $title = 'Uusi aktiviteetti', [], $attributes = array('class'=>'btn btn-default'), Request::secure())!!}
         {!!Form::submit('Hae POFista', ['class' => 'btn btn-default'])!!}
         {!!Form::close()!!}
     </div>
