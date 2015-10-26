@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Event;
+use App\Group;
 
 class EventControllerTest extends TestCase
 {   
@@ -15,12 +16,15 @@ class EventControllerTest extends TestCase
      */
     public function testEventCreatedWithCorrectRequirements()
     {   
-        //$this->call('POST','events/new',['name'=>'Marko','date'=>'27.03.2016','time'=>'23:45','place'=>'Onkalo', 'description'=>'Kaikilla on kivaa', '_token'=>'csrf_token()']);
-        //echo dd($response);
-        //$this->seeInDatabase('events',['name'=>'Marko']);
+        factory(App\Activity::class, 5)->create();
+        factory(App\User::class, 5)->create();
+        factory(App\Group::class, 5)->create();
+        factory(App\Event::class, 5)->create();
         
         $this->visit('/events/new')
              ->type('Hippa','name')
+             ->select('1', 'groupId')
+             ->uncheck('repeat')
              ->type('27.03.2016','date')
              ->type('23:45','time')
              ->type('Onkalo','place')
@@ -29,6 +33,15 @@ class EventControllerTest extends TestCase
              ->seePageIs('/events')
         
              ->seeInDatabase('events', ['name'=>'Hippa','time'=>'2016-03-27 23:45:00','place'=>'Onkalo', 'description'=>'Kuvaus']);   
+    }
+    
+    private static function createTestGroup(){
+        $group = new Group();
+        $group->name = 'Test123';
+        $group->scout_group = 'Test_group123';
+        $group->age_group = 'sudenpennut';
+        $group_id = $group->save();
+        return $group_id;
     }
     
     public function testIndex(){
@@ -47,7 +60,8 @@ class EventControllerTest extends TestCase
         $event->time = '2018-06-25 16:40:00';
         $event->place = 'Rauma';
         $event->description = 'Onginta';
-        
+        $event->endDate = '2018-07-25 16:20:00';
+        $event->group_id = self::createTestGroup();
         $event->save();
         
         $event_id = DB::table('events')->where('name', 'Leiri')->value('id');
@@ -63,7 +77,8 @@ class EventControllerTest extends TestCase
         $event->time = '2016-07-25 16:40:00';
         $event->place = 'Kolo';
         $event->description = 'Iltakokous';
-        
+        $event->endDate = '2018-07-25 16:20:00';
+        $event->group_id = self::createTestGroup();
         $event->save();
         
         $event_id = DB::table('events')->where('name', 'Kokous')->value('id');
@@ -80,7 +95,8 @@ class EventControllerTest extends TestCase
         $event->time = '2016-03-25 16:45:00';
         $event->place = 'Kolo';
         $event->description = 'Viikottainen kokous';
-        
+        $event->endDate = '2018-07-25 16:20:00';
+        $event->group_id = self::createTestGroup();
         $event->save();
         
         $this->seeInDatabase('events', ['name'=>'Iltakokous','time'=>'2016-03-25 16:45:00','place'=>'Kolo', 'description'=>'Viikottainen kokous']);
@@ -129,17 +145,22 @@ class EventControllerTest extends TestCase
     }
     
     public function testEventIsCreatedWithoutDescription(){
+        factory(App\Activity::class, 5)->create();
+        factory(App\User::class, 5)->create();
+        factory(App\Group::class, 5)->create();
+        factory(App\Event::class, 5)->create();
+        
         $this->visit('/events/new')
-             ->type('Ilmakitaraturnaus','name')
-             ->type('25.06.2018','date')
-             ->type('16:20','time')
-             ->type('Helsinki','place')
-             ->type('','description')
+             ->type('Hippa','name')
+             ->select('1', 'groupId')
+             ->uncheck('repeat')
+             ->type('27.03.2016','date')
+             ->type('23:45','time')
+             ->type('Onkalo','place')
              ->press('Lisää tapahtuma')
-                
              ->seePageIs('/events')
         
-             ->SeeInDatabase('events', ['name'=>'Ilmakitaraturnaus','place'=>'Helsinki','time'=>'2018-06-25 16:20:00', 'description'=>'']);
+             ->seeInDatabase('events', ['name'=>'Hippa','time'=>'2016-03-27 23:45:00','place'=>'Onkalo']); 
     }
    
 }
