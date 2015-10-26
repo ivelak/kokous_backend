@@ -117,13 +117,12 @@ class EventController extends Controller {
     public function update(Request $request, $id) {
         $this->validate($request, [
             'name' => 'required|max:64',
-            'date' => 'required|date_format:d.m.Y|after:' . Carbon::now(),
             'time' => 'required|date_format:H:i',
             'place' => 'required|max:128'
         ]);
         $event = Event::findOrFail($id);
         $event->name = $request->input('name');
-        $event->time = Carbon::createFromFormat('d.m.Y H:i', $request->input('date') . ' ' . $request->input('time'));
+        $event->time = Carbon::createFromFormat('d.m.Y H:i', $event->time->format('d.m.Y') . ' ' . $request->input('time'));
         $event->place = $request->input('place');
         $event->description = $request->input('description');
         $event->save();
