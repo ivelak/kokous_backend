@@ -5,9 +5,8 @@
 @endsection
 @section('content')
 <div class="container">
-    <h1> Tulevat tapahtumat </h1> <hr />
+    <h1> Kalenterinäkymä </h1> <hr />
     <div class="panel">
-        {!!link_to_action('EventController@create', $title = 'Uusi tapahtuma', [], $attributes = array('class'=>'btn btn-default'))!!}
     </div>
     <div class="panel">
         <div class="panel panel-default">
@@ -23,7 +22,7 @@
                         <td><strong>Aika</strong></td>
                     </tr>
                     @forelse($eventOccurrences as $event)
-                    <tr id="{{$event->id}}" class="tr-link">
+                    <tr id="{{$event->id}}">
                         <td>{{$event->name}}</td>
                         <td>{{$event->place}}</td>
                         <td>{{$event->date->format('d.m.Y')}}</td>
