@@ -47,10 +47,10 @@ class EventOccurrenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $occId)
     {
         //
-        $eventOccurrence = EventOccurrence::find($id);
+        $eventOccurrence = EventOccurrence::where('event_id', $id)->findOrFail($occId);
         return view('eventOccurrence', compact('eventOccurrence'));
     }
 

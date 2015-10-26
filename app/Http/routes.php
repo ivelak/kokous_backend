@@ -19,7 +19,6 @@ use App\User;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/{id}', 'EventOccurrenceController@show');
 
 
 Route::group(['prefix' => 'events'], function () {
@@ -31,15 +30,15 @@ Route::group(['prefix' => 'events'], function () {
     Route::get('/{id}/edit', 'EventController@edit')->where('id', '[0-9]+');
     Route::put('/{id}', 'EventController@update')->where('id', '[0-9]+');
     Route::delete('/{id}', 'EventController@destroy')->where('id', '[0-9]+');
-
-    Route::get('/{id}/activities', 'EventActivityController@index')->where('id', '[0-9]+');
-    Route::post('/{id}/activities', 'EventActivityController@add')->where('id', '[0-9]+');
-    Route::delete('/{id}/activities', 'EventActivityController@remove')->where('id', '[0-9]+');
 });
 
-Route::group(['prefix' => '/events/{eventId}/occurrences'], function () {
-    Route::get('/{id}', "EventOccurrenceController@show")->where('id', '[0-9]+')->where('eventId', '[0-9]+');
-    Route::get('/{id}', "EventOccurrenceController@edit")->where('id', '[0-9]+');
+Route::group(['prefix' => '/events/{id}/occurrences'], function () {
+    Route::get('/{occId}', "EventOccurrenceController@show")->where('occId', '[0-9]+');
+    //Route::get('/{id}', "EventOccurrenceController@edit")->where('id', '[0-9]+');
+
+    Route::get('/{occId}/activities', 'OccurrenceActivityController@index')->where('occId', '[0-9]+');
+    Route::post('/{occId}/activities', 'OccurrenceActivityController@add')->where('occId', '[0-9]+');
+    Route::delete('/{occId}/activities', 'OccurrenceActivityController@remove')->where('occId', '[0-9]+');
 });
 
  Route::get('/event-occurrences',"EventOccurrenceController@index");
