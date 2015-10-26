@@ -3,11 +3,18 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Http\Controllers\GroupController;
 use App\Group;
 
 class GroupControllerTest extends TestCase
 {   
     use DatabaseMigrations;
+    
+    public function setUp() 
+    {
+        parent::setUp();
+        $this->controller = new GroupController();
+    }
     /**
      * A basic test example.
      *
@@ -40,7 +47,6 @@ class GroupControllerTest extends TestCase
         $group->name = 'Test123';
         $group->scout_group = 'Test_group123';
         $group->age_group = 'sudenpennut';
-        $group->save();
         $group_id = $group->save();
         return $group_id;
     }
@@ -69,7 +75,7 @@ class GroupControllerTest extends TestCase
         
         $this->seeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'sudenpennut']);   
         
-        $this->action('GET','GroupController@destroy', ['id' => $group_id]);
+        $this->controller->destroy($group_id);
         
         $this->notSeeInDatabase('groups', ['name'=>'Test123','scout_group'=>'Test_group123','age_group'=>'sudenpennut']);
     }

@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Database\Seeder;
 
 class EventsViewTest extends TestCase
 {
@@ -25,10 +26,17 @@ class EventsViewTest extends TestCase
     }
     
     public function testCorrectlyAddedEventShowsOnTheEventsList(){
+        factory(App\Activity::class, 5)->create();
+        factory(App\User::class, 5)->create();
+        factory(App\Group::class, 5)->create();
+        factory(App\Event::class, 5)->create();
+        
         $this->visit('/events/new')
              ->type('Hippa','name')
              ->type('23.07.2019','date')
              ->type('16:20','time')
+             ->select('1', 'groupId')
+             ->uncheck('repeat')
              ->type('Helsinki','place')
              ->type('Hauskaa','description')
              ->press('Lisää tapahtuma')
@@ -43,33 +51,13 @@ class EventsViewTest extends TestCase
     }
     
     public function testClickingOnEventLeadsToEventView(){
-        $this->visit('/events/new')
-             ->type('Jumppa','name')
-             ->type('22.01.2016','date')
-             ->type('16:25','time')
-             ->type('Helsinki','place')
-             ->type('Hauskaa','description')
-             ->press('Lisää tapahtuma')
-             
-          
-             ->seePageIs('/events');
-        
-        $event_id = DB::table('events')->where('name', 'Jumppa')->value('id');
-        
-        /*
-        
-        $this->seePageIs('/events')
-             ->click($event_id)
-             ->seePageIs('/events/'.'$event_id')
-             ->see('Kuvaus:')
-             ->see('Hauskaa');
-       */      
-        
-        //Tulisi klikata taulukon riviä ja nähdä, että siirtyy oikealle sivulle.
-    
-        $this->visit('/events/'. $event_id)
-             ->see('Kuvaus:')
-             ->see('Hauskaa');
+        factory(App\Activity::class, 5)->create();
+        factory(App\User::class, 5)->create();
+        factory(App\Group::class, 5)->create();
+        factory(App\Event::class, 5)->create();
+
+        $this->visit('/events/1')
+             ->seePageIs('/events/1'); // Muuttakaa klikattavaksi jos osaatte
     }
     
 }
