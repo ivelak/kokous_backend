@@ -60,9 +60,10 @@ class EventOccurrenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, $occId)
     {
-        //
+        $eventOccurrence = EventOccurrence::where('event_id', $id)->findOrFail($occId);
+        return view('editEventOccurrence', compact('eventOccurrence'));
     }
 
     /**

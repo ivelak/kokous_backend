@@ -9,6 +9,7 @@
     <hr>
     <div class="panel">
         {!!link_to_action('OccurrenceActivityController@index', $title = 'Muuta aktiviteetteja', ['occId' => $eventOccurrence->id, 'id' => $eventOccurrence->event->id], $attributes = array('class'=>'btn btn-default'))!!}
+        {!!link_to_action('EventOccurrenceController@edit', $title = 'edit', ['id' => $eventOccurrence->event, 'occId' => $eventOccurrence], $attributes = array('class'=>'btn btn-default'))!!}
     </div>
     <div class="panel panel-default">
         <div class="panel-heading"><strong>Tiedot:</strong></div>

@@ -27,8 +27,8 @@ class EventOccurrence extends Model {
         return $this->event->name;
     }
 
-    public function getPlaceAttribute() {
-        return $this->event->place;
+    public function getPlaceAttribute($place) {
+        return isset($place) ? $place : $this->event->place;
     }
 
     public function scopeUpcoming($query) {
