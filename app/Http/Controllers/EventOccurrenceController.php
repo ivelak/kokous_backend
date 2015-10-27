@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\EventOccurrence;
+use Carbon\Carbon;
 
 class EventOccurrenceController extends Controller
 {
@@ -47,9 +48,11 @@ class EventOccurrenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $occId)
     {
         //
+        $eventOccurrence = EventOccurrence::where('event_id', $id)->findOrFail($occId);
+        return view('eventOccurrence', compact('eventOccurrence'));
     }
 
     /**
@@ -58,9 +61,10 @@ class EventOccurrenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, $occId)
     {
-        //
+        $eventOccurrence = EventOccurrence::where('event_id', $id)->findOrFail($occId);
+        return view('editEventOccurrence', compact('eventOccurrence'));
     }
 
     /**
@@ -70,9 +74,18 @@ class EventOccurrenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $occId)
     {
-        //
+        $this->validate($request, [
+            'time' => 'required|date_format:H:i',
+            'place' => 'required|max:128'
+        ]);
+        $event = EventOccurrence::where('event_id', $id)->findOrFail($occId);
+        $event->time = Carbon::createFromFormat('H:i', $request->input('time'));
+        $event->place = $request->input('place');
+        $event->save();
+
+        return redirect()->action('EventOccurrenceController@show', [$id, $occId]);
     }
 
     /**

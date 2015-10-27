@@ -42,7 +42,7 @@
             <tr>
                 <td>Ei merkittyjä toistoja</td>
             </tr>
-            
+
             @endforelse</tr>
 
         </table>

@@ -23,21 +23,21 @@
                         <th>Paikka</th>
                         <th>Päivä</th>
                         <th>Aika</th>
-                        
+
                     </tr>
                     @forelse($events as $event)
                     <tr id="{{$event->id}}" class="tr-link">
                         <td>{{$event->name}}</td>
                         <td>{{$event->group->name}}</td>
                         <td>{{$event->place}}</td>
-                        
+
                         @if($event->time->isSameDay($event->endDate))
                         <td>{{$event->time->format('d.m.Y')}}</td>
-                        
+
                         @else
                         <td>{{$event->time->format('d.m.Y').' - '.$event->endDate->format('d.m.Y')}}</td>
                         @endif
-                        
+
                         <td>{{$event->time->format('H:i')}}</td>
 
                     </tr>
