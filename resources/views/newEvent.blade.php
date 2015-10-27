@@ -56,8 +56,8 @@
 
         <div class="form-group">
 
-            @foreach (array( 0 => 'Ma', 1 => 'Ti', 2 => 'Ke', 
-            3 => 'To', 4 => 'Pe', 5 => 'La', 6 => 'Su' )as $i => $weekday)
+            @foreach (array( 1 => 'Ma', 2 => 'Ti', 3 => 'Ke', 
+            4 => 'To', 5 => 'Pe', 6 => 'La', 7 => 'Su' )as $i => $weekday)
 
             {!!Form::label($weekday, $weekday)!!}
             <input type="checkbox" name="days[]" value="{{$i}}" id="{{$weekday}}" class="checkbox-inline"/>

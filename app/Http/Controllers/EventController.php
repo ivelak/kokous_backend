@@ -65,7 +65,7 @@ class EventController extends Controller {
 
         if ($request->input('repeat') != NULL) {
             $ending = $request->input('ending');
-            $endDate = $ending == "afterYear" ? $endDate->addYear() : $request->input('endDate');
+            $endDate = $ending == "afterYear" ? $endDate->addYear() : Carbon::createFromFormat('d.m.Y',$request->input('endDate'));
         }
         $event->endDate = $endDate;
         $event->save();
