@@ -35,7 +35,7 @@
         <div class="panel-heading"><strong>Tapahtuman toistot:</strong></div>
         <table class="table">
             @forelse($eventOccurrences as $eventOccurrence)
-            <tr>
+            <tr data-target="{{'/events/' . $eventOccurrence->event->id . '/occurrences/' . $eventOccurrence->id}}" class="tr-link">
                 <td>{{$eventOccurrence->date->format('d.m.Y')}}</td>
             </tr>
             @empty

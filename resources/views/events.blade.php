@@ -1,9 +1,6 @@
 
 @extends('templates.master')
 @section('title', 'Lisätyt tapahtumat')
-@section('scripts')
-@include('templates.linkRow')
-@endsection
 @section('content')
 <div class="container">
     <h1> Kaikki tapahtumat </h1> <hr />
@@ -26,7 +23,7 @@
 
                     </tr>
                     @forelse($events as $event)
-                    <tr id="{{$event->id}}" class="tr-link">
+                    <tr data-target="{{'/events/' . $event->id}}" class="tr-link">
                         <td>{{$event->name}}</td>
                         <td>{{$event->group->name}}</td>
                         <td>{{$event->place}}</td>

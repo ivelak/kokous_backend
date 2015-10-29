@@ -3,9 +3,7 @@
 @extends('templates.master')
 @section('title', 'Aktiviteetit')
 @section('content')
-@section('scripts')
-@include('templates.linkRow')
-@endsection
+
 <div class="container">
     <h1> Kaikki aktiviteetit </h1> <hr />
     <div class="panel">
@@ -22,10 +20,10 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <tr>
-                        <td><strong>Aktiviteetti</strong></td>
+                        <th>Aktiviteetti</th>
                     </tr>
                     @forelse($activities as $activity)
-                    <tr id="{{$activity->id}}" class="tr-link">
+                    <tr data-target="{{'/activities/' . $activity->id}}">
                         <td>{{$activity->name}}</td>
                     </tr>
                     @empty

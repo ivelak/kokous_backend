@@ -10,10 +10,11 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {!!Html::style('css/bootstrap.min.css', [], Request::secure())!!}
         {!!Html::style('css/bootstrap-theme.min.css', [], Request::secure())!!}
-        @yield('styles')     
+        @yield('styles')
         {!! Html::script('js/jquery-2.1.4.js', [], Request::secure()) !!}
         {!! Html::script('js/bootstrap.min.js', [], Request::secure()) !!}
         {!! Html::script('js/jquery.sieve.js', [], Request::secure()) !!}
+        {!! Html::script('js/app.js', [], Request::secure()) !!}
         @yield('scripts')
         <title>@yield('title')</title>
     </head>

@@ -1,9 +1,6 @@
 
 @extends('templates.master')
 @section('title', 'Ryhmät')
-@section('scripts')
-@include('templates.linkRow')
-@endsection
 @section('content')
 <div class="container">
     <h1> Kaikki ryhmät </h1> <hr />
@@ -23,7 +20,7 @@
                         <td><strong>Ikäryhmä</strong></td>
                     </tr>
                     @forelse($groups as $group)
-                    <tr id="{{$group->id}}" class="tr-link">
+                    <tr data-target="{{'/groups/' . $group->id}}" class="tr-link">
                         <td>{{$group->name}}</td>
                         <td>{{$group->scout_group}}</td>
                         <td>{{$group->age_group}}</td>

@@ -30,14 +30,14 @@ class SynchronizeWithPOF extends Job implements SelfHandling {
         $tree = $this->pof->getFullTree();
         foreach ($tree['program'][0]['agegroups'] as $agegroup) {
             $tasks = $this->extractTasks($agegroup);
-            $age = $agegroup['title'];
+            $age = strtolower($agegroup['title']);
 
 
             foreach ($tasks as $task) {
 
 
                 Activity::updateOrCreate(['guid' => $task['guid'], 'name' => $task['title'], 'age_group' => $age]);
-                
+
             }
         }
     }

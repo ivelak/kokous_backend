@@ -71,7 +71,7 @@ class EventController extends Controller {
         $event->save();
 
         do {
-            if ($days->contains($date->dayOfWeek)) {
+            if ($days->contains($date->dayOfWeek) || $request->input('repeat') == NULL) {
                 $occurrence = new EventOccurrence();
                 $occurrence->event_id = $event->id;
                 $occurrence->date = $date;
