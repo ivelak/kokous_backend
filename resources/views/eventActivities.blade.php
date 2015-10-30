@@ -1,9 +1,6 @@
 
 @extends('templates.master')
 @section('title', 'Muuta aktiviteetteja')
-@section('scripts')
-@include('templates.linkRow')
-@endsection
 @section('content')
 <div class="container">
     <h1>{{ $eventOccurrence->name }} - Aktiviteetit</h1>
