@@ -1,7 +1,6 @@
 @extends('templates.master')
 @section('title', 'Kalenterinäkymä')
 @section('scripts')
-@include('templates.linkRow')
 @endsection
 @section('content')
 <div class="container">
@@ -22,7 +21,7 @@
                         <td><strong>Aika</strong></td>
                     </tr>
                     @forelse($eventOccurrences as $event)
-                    <tr id="{{$event->id}}">
+                    <tr id="{{$event->id}}" data-target="{{'/events/' . $event->event->id . '/occurrences/' . $event->id}}" class="tr-link">
                         <td>{{$event->name}}</td>
                         <td>{{$event->place}}</td>
                         <td>{{$event->date->format('d.m.Y')}}</td>

@@ -5,6 +5,7 @@
 @section('content')
 
 <div class="container">
+    {!! Form::open(['action' => ['UserActivityController@addMany', 'id' => $eventOccurrence->event->id, 'occId' => $eventOccurrence->id, 'class'=>'form-inline']])!!}
     <h1>{{ $eventOccurrence->event->name }}</h1>
     <hr>
     <div class="panel">
@@ -27,6 +28,66 @@
             {{ empty($eventOccurrence->event->description) ? 'Ei kuvausta' : $eventOccurrence->event->description}}
         </div>
     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Suoritusten merkiseminen:</strong></div>
+        <div class="panel-body">
+            @if(count($eventOccurrence->activities) == 0)
+            <p>Tapahtumaan ei sisälly aktiviteettejä</p>
+            @else
+            {!! Form::select('activityId', $eventOccurrence->activities->keyBy('id')->map(function ($item, $key) {return $item->name; }), null, ['class'=>'form-control']) !!}
+            <br>
+            
+            @foreach($eventOccurrence->activities as $activity)
+            <div id="{{$activity->id}}" style="display:none" name="activityBox">
+                <ul class="list-group">
+                    @foreach($eventOccurrence->event->group->users as $user)
+                        @if($user->activities->contains($activity))
+                        <li class="list-group-item list-group-item-success">
+                            {{ $user->username }}
+                        </li>
+                        @else
+                        <li class="list-group-item">
+                            {{ $user->username }}<input type="checkbox" name="{{$user->id}}" class="pull-right">
+                        </li>
+                        @endif
+                    @endforeach
+                </ul>
+            </div>
+            @endforeach
+            @endif
+        </div>
+        @if(count($eventOccurrence->activities) > 0)
+        <div class="panel-footer">
+            {!! Form::hidden('group', $eventOccurrence->event->group->id)!!}
+            {!! Form::submit('Merkitse suoritetuiksi', ['class'=>'btn btn-primary pull-right']) !!}
+            {!! Form::close()!!}
+            <div class="clearfix"></div>
+        </div>
+        @endif
+    </div>
 </div>
+
+<script>
+    function toggle(source) {
+        checkboxes = $("input:checkbox")
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = source;
+        }
+    }
+    
+    $(document).ready(function(){
+        var id = document.getElementsByName('activityId')[0].value;
+        document.getElementById(id).style.display = 'block';
+    });
+    
+    $('select').on('change', function() {
+        toggle(false);
+        var activities = document.getElementsByName('activityBox');
+        [].forEach.call(activities, function(a){
+             a.style.display = 'none';
+        });
+        document.getElementById(this.value).style.display = 'block';
+    });
+</script>
 
 @endsection

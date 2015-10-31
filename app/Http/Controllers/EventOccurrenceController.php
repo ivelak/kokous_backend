@@ -52,7 +52,18 @@ class EventOccurrenceController extends Controller
     {
         //
         $eventOccurrence = EventOccurrence::where('event_id', $id)->findOrFail($occId);
-        return view('eventOccurrence', compact('eventOccurrence'));
+        $activitiesCompleted = collect([]);
+        foreach($eventOccurrence->activities as $activity)
+        {
+            $usersWhoHaveCompleted = collect([]);
+            foreach($eventOccurrence->event->group->users as $user)
+            {
+                $usersWhoHaveCompleted->push($user->id);
+            }
+            $activitiesCompleted->put($activity->id, $usersWhoHaveCompleted);
+        }
+        
+        return view('eventOccurrence', compact('eventOccurrence'), compact('activitiesCompleted'));
     }
 
     /**
