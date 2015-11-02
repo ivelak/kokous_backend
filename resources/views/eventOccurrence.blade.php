@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>Suoritusten merkiseminen:</strong></div>
+        <div class="panel-heading"><strong>Suoritusten merkitseminen:</strong></div>
         <div class="panel-body">
             @if(count($eventOccurrence->activities) == 0)
             <p>Tapahtumaan ei sisälly aktiviteettejä</p>
