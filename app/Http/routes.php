@@ -41,6 +41,8 @@ Route::group(['prefix' => '/events/{id}/occurrences'], function () {
     Route::get('/{occId}/activities', 'OccurrenceActivityController@index')->where('occId', '[0-9]+');
     Route::post('/{occId}/activities', 'OccurrenceActivityController@add')->where('occId', '[0-9]+');
     Route::delete('/{occId}/activities', 'OccurrenceActivityController@remove')->where('occId', '[0-9]+');
+    
+    Route::post('/{occId}', 'UserActivityController@addMany');
 });
 
  Route::get('/event-occurrences',"EventOccurrenceController@index");
