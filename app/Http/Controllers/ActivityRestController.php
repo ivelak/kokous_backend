@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Event;
-use App\EventOccurrence;
-class EventRestController extends Controller
+use App\Activity;
+use App\POF;
+
+class ActivityRestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class EventRestController extends Controller
      */
     public function index()
     {
-        return EventOccurrence::with('activities')->get();
+        return Activity::all();
     }
 
     /**
@@ -48,7 +49,7 @@ class EventRestController extends Controller
      */
     public function show($id)
     {
-        return Event::with('activities')->findOrFail($id);
+        return POF::getItemJson(Activity::findOrFail($id)->guid);
     }
 
     /**
