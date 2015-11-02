@@ -49,6 +49,7 @@ class UserActivityController extends Controller
         return false;
     }
     
+    
     public function addMany(Request $request) {
         $group = Group::findOrFail($request->input('group'));
         $users = $group->users;

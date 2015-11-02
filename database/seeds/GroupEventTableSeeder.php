@@ -15,7 +15,7 @@ class GroupEventTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        $groups = Group::all();
+        /*$groups = Group::all();
         $events = Event::all()->toArray();
 
         foreach ($groups as $group) {
@@ -23,7 +23,17 @@ class GroupEventTableSeeder extends Seeder
             foreach($faker->randomElements($events,$faker->randomDigit) as $event){
                 $group->events()->attach($event['id']);
             }
+        }*/
+        
+        $groups = Group::all()->toArray();
+        $events = Event::all();
+        
+        foreach($events as $event)
+        {
+            foreach($faker->randomElements($groups, $faker-randomDigit) as $group)
+            {
+                $event->group = $group;
+            }
         }
-        //
     }
 }
