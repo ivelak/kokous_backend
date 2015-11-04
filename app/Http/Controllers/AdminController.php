@@ -13,7 +13,7 @@ class AdminController extends Controller {
             $request->session()->put('admin', '1');
             return redirect('/');
         } else {
-            abort(403);
+            abort(403, 'No you don\'t');
         }
     }
 

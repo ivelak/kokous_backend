@@ -5,12 +5,15 @@
         <title></title>
     </head>
     <body>
-        {!!Form::open({'action' => 'AdminController@login'!!}
+        {!!Form::open(['action' => 'AdminController@login'])!!}
         <input type="hidden" id="password" name="password" />
-        {!!FormClose!!}
+        {!!Form::close()!!}
         
         <script>
-        $(#'password').value = prompt('salasana');
+        var x = window.prompt('Syötä salasana:');
+		document.querySelector("#password").value = x;
+		document.forms[0].submit();
+		
         </script>
     </body>
 </html>
