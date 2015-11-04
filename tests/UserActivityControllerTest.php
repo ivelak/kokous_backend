@@ -5,6 +5,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\UserActivityController;
 use App\Group;
+use App\Activity;
 
 class UserActivityControllerTest extends TestCase
 {   
@@ -18,26 +19,36 @@ class UserActivityControllerTest extends TestCase
     
     public function testManyActivitiesCanBeAddedToUsers()
     {
-        factory(App\Group::class, 10)->create()->each(function($g) {
+        factory(App\Group::class, 4)->create()->each(function($g) {
             for($i = 0; $i < 5; $i++)
             {
                 $g->users()->save(factory(App\User::class)->make(), ['role' => 'member']);
             }
             $g->users()->save(factory(App\User::class)->make(), ['role' => 'leader']);
         });
+        factory(App\Activity::class, 5)->create();
         
         $group = Group::find(1);
+        $activity = Activity::find(1);
         
         
         $stuff = array(
-            'activityId' => 1,
-            'group' => $group
+            'activityId' => $activity->id,
+            'group' => $group->id
         );
         
-        $this->action('POST', 'UserActivityController@addMany', null, $stuff);
         foreach($group->users as $user)
         {
-            $this->seeInDatabase('activity_user', ['activityId' => 1, 'user_id' => (int)$user->id]);
+            $stuff[$user->id] = 'true';
+        }
+        
+        
+        $request = Request::create('/', 'POST', $stuff);
+        $this->controller->addMany($request);
+        
+        foreach($group->users as $user)
+        {
+            $this->seeInDatabase('activity_user', ['activity_id' => $activity->id, 'user_id' => $user->id]);
         }
     }
    
