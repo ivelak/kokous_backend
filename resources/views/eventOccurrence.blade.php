@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>Suoritusten merkiseminen:</strong></div>
+        <div class="panel-heading"><strong>Suoritusten merkitseminen:</strong></div>
         <div class="panel-body">
             @if(count($eventOccurrence->activities) == 0)
             <p>Tapahtumaan ei sisälly aktiviteettejä</p>
@@ -59,6 +59,7 @@
         @if(count($eventOccurrence->activities) > 0)
         <div class="panel-footer">
             {!! Form::hidden('group', $eventOccurrence->event->group->id)!!}
+            <button class="btn btn-default pull-left" onclick="selectAll()" type="button">Valitse kaikki</button>
             {!! Form::submit('Merkitse suoritetuiksi', ['class'=>'btn btn-primary pull-right']) !!}
             {!! Form::close()!!}
             <div class="clearfix"></div>
@@ -73,6 +74,19 @@
         for(var i=0, n=checkboxes.length;i<n;i++) {
           checkboxes[i].checked = source;
         }
+    }
+    
+    function selectAll() {
+        var activities = document.getElementsByName('activityBox');
+        [].forEach.call(activities, function(a){
+            if(a.style.display === 'block')
+            {
+                var checkboxes = a.getElementsByTagName('input');
+                for(var i=0, n=checkboxes.length;i<n;i++) {
+                    checkboxes[i].checked = true;
+                }
+            }
+        });
     }
     
     $(document).ready(function(){

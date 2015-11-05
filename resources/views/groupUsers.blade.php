@@ -1,8 +1,5 @@
 @extends('templates.master')
 @section('title', 'Lisää jäseniä')
-@section('scripts')
-@include('templates.linkRow')
-@endsection
 @section('content')
 <div class="container">
     <h1>{{ $group->name }} - Jäsenet</h1>

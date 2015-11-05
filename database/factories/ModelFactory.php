@@ -35,12 +35,14 @@ $factory->define(App\Activity::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Group::class, function (Faker\Generator $faker) {
+    $agegroups = ['sudenpennut', 'samoajat', 'tarpojat', 'seikkailijat', 'vaeltajat'];
     return [
         'name' => 'Group ' . $faker->unique()->randomNumber,
         'scout_group' => $faker->company,
-        'age_group' => 'Age group ' . $faker->randomNumber
+        'age_group' => $faker->randomElement($agegroups)
     ];
 });
+
 
 $factory->define(App\Event::class, function (Faker\Generator $faker) {
     $time = Carbon::instance($faker->dateTimeBetween(Carbon::now()->subMonths(6), Carbon::now()->addYear()));

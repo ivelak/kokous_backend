@@ -94,3 +94,7 @@ Route::group(['prefix' => 'api/dev'], function () {
     Route::resource('events', 'EventRestController', ['only' => ['index', 'show']]);
     Route::resource('activities', 'ActivityRestController', ['only' => ['index', 'show']]);
 });
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', 'AdminController@show');
+	Route::post('/', 'AdminController@login');
+});
