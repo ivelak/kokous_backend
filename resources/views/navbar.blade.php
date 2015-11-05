@@ -17,12 +17,13 @@
                 <li class="{{ Request::is('groups') ? 'active' : '' }}">{!!link_to('/groups', $title = 'Ryhmät')!!}</li>    
 
             </ul>
-            @if(!Auth::check())
-            {!!Form::open(array('url' => '/login', 'method'=>'post', 'class'=>'navbar-form navbar-right'))!!}
-            {!!Form::submit('Kirjaudu', ['class' => 'btn btn-default'])!!}
+            @if(!Request::session()->has('admin'))
+            {!!Form::open(['action' => 'AdminController@login'])!!}
+            <input type="hidden" id="password" name="password"/>
             {!!Form::close()!!}
+            <button onclick="adminLogin()" class="btn btn-default navbar-btn navbar-right">Hallinnointi</button>
             @else
-            {!!Form::open(array('url' => '/logout', 'method'=>'post', 'class'=>'navbar-form navbar-right'))!!}
+            {!!Form::open(array('action' => 'AdminController@logout', 'method'=>'post', 'class'=>'navbar-form navbar-right'))!!}
             {!!Form::submit('Kirjaudu ulos', ['class' => 'btn btn-default'])!!}
             {!!Form::close()!!}
             @endif

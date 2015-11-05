@@ -20,6 +20,11 @@ and open the template in the editor.
     </head>
     <body>
         @include('navbar')
+        @if(Session::has('message'))
+        <div class="container alert alert-success">
+            {{ Session::get('message') }}
+        </div>
+        @endif
         @yield('content')
     </body>
 </html>

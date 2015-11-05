@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\POFBackend;
+use App\Services\AdminAuthService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,8 +29,13 @@ class AppServiceProvider extends ServiceProvider
 			$this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
 			$this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
 		}
+                
                 $this->app->bind('pof', function($app){
-                return new POFBackend();                
+                    return new POFBackend();                
+                });
+                
+                $this->app->bind('admin', function($app){
+                    return new AdminAuthService();
                 });
     }
 }

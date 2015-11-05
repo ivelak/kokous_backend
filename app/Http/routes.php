@@ -47,17 +47,6 @@ Route::group(['prefix' => '/events/{id}/occurrences'], function () {
 
  Route::get('/event-occurrences',"EventOccurrenceController@index");
 
-Route::post('/login', function() {
-    $user = User::where('username', 'admin')->first();
-    Auth::login($user);
-    return Redirect::to('/groups');
-});
-
-Route::post('/logout', function() {
-    Auth::logout();
-    return Redirect::to('/groups');
-});
-
 
 
 Route::group(['prefix' => 'users'], function () {
@@ -68,26 +57,25 @@ Route::group(['prefix' => 'users'], function () {
 
 Route::group(['prefix' => 'groups'], function () {
     Route::get('/', "GroupController@index");
-    Route::get('/new', "GroupController@create");
-    Route::post('/new', "GroupController@store");
-
     Route::get('/{id}', "GroupController@show")->where('id', '[0-9]+');
-    Route::get('/{id}/edit', 'GroupController@edit')->where('id', '[0-9]+');
-    Route::put('/{id}', 'GroupController@update')->where('id', '[0-9]+');
-    Route::delete('/{id}', 'GroupController@destroy')->where('id', '[0-9]+');
-
     Route::get('/{id}/users', 'GroupUserController@index')->where('id', '[0-9]+');
+    Route::get('/{id}/newEvent', 'EventController@createForGroup')->where('id', '[0-9]+');
     Route::post('/{id}/users', 'GroupUserController@add')->where('id', '[0-9]+');
     Route::delete('/{id}/users', 'GroupUserController@remove')->where('id', '[0-9]+');
-
-    Route::get('/{id}/newEvent', 'EventController@createForGroup')->where('id', '[0-9]+');
+    Route::get('/{id}/edit', 'GroupController@edit')->where('id', '[0-9]+');
+    Route::put('/{id}', 'GroupController@update')->where('id', '[0-9]+');
+    
+    Route::group(['middleware' => 'admin'], function() {
+        Route::get('/new', "GroupController@create");
+        Route::post('/new', "GroupController@store");
+        Route::delete('/{id}', 'GroupController@destroy')->where('id', '[0-9]+');
+    });
 });
 
 Route::group(['prefix' => 'activities'], function () {
     Route::get('/', "ActivityController@index");
     Route::get('/new', "ActivityController@create");
-
-    Route::post('/sync', "ActivityController@sync");
+    Route::post('/sync', ['uses' => "ActivityController@sync", 'middleware' => "admin"]);
 });
 
 Route::group(['prefix' => 'api/dev'], function () {
@@ -95,6 +83,6 @@ Route::group(['prefix' => 'api/dev'], function () {
     Route::resource('activities', 'ActivityRestController', ['only' => ['index', 'show']]);
 });
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', 'AdminController@show');
-	Route::post('/', 'AdminController@login');
+    Route::post('/login', 'AdminController@login');
+    Route::post('/logout', 'AdminController@logout');
 });
