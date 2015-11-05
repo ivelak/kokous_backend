@@ -8,15 +8,14 @@ use App\Http\Controllers\Controller;
 use App\Activity;
 use App\POF;
 
-class ActivityRestController extends Controller
-{
+class ActivityRestController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         return Activity::all();
     }
 
@@ -25,8 +24,7 @@ class ActivityRestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -36,8 +34,7 @@ class ActivityRestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -47,9 +44,22 @@ class ActivityRestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        return POF::getItemJson(Activity::findOrFail($id)->guid);
+    public function show($id) {
+        $actArray = POF::getItem(Activity::findOrFail($id)->guid);
+
+        return ['title' => $actArray['title'],
+            'guid' => $actArray['guid'],
+            'content' => $actArray['content'],
+            'pakollisuus' => $actArray['tags']['pakollisuus'][0]['name'],
+            'pakollisuusikoni' => $actArray['tags']['pakollisuus'][0]['icon'],
+            'ryhmakoko' => $actArray['tags']['ryhmakoko'][0]['name'],
+            'paikka' => $actArray['tags']['paikka'][0]['name'],
+            'suoritus_kesto' => $actArray['tags']['suoritus_kesto']['name']];
+
+//             ,
+//            'pakollisuus' => $actArray->tags->pakollisuus->name, 'ryhmakoko' => $actArray->tags->ryhmakoko->name,
+//            'paikka' => $actArray->tags->paikka->name, 'suoritus_kesto' => $actArray->tags->suoritus_kesto->name];
+        //return POF::getItemJson(Activity::findOrFail($id)->guid);
     }
 
     /**
@@ -58,8 +68,7 @@ class ActivityRestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -70,8 +79,7 @@ class ActivityRestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -81,8 +89,8 @@ class ActivityRestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
 }
