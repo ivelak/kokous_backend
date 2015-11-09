@@ -1,8 +1,8 @@
 branch-defaults:
   master:
-    environment: kokousBackend-env
+    environment: kokousBackendEnv-env
 global:
-  application_name: kokous_backend
+  application_name: kokousBackend-env
   default_ec2_keyname: aws-eb
   default_platform: PHP 5.6
   default_region: eu-central-1
