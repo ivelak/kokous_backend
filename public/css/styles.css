@@ -1,0 +1,24 @@
+html,body {
+height:100%;
+}
+
+#background {
+height:100%;
+width: 100%;
+position: fixed; 
+top: 0px;
+left:0px;
+background-image: url("http://www.bigfoto.com/themes/nature/forest/autumn-tree-90i1.jpg");
+background-size: cover;
+-webkit-filter: blur(4px);
+  -moz-filter: blur(4px);
+  -o-filter: blur(4px);
+  -ms-filter: blur(4px);
+  filter: blur(4px);
+  z-index: -1;
+
+}
+
+.jumbotron {
+    opacity: 0.91;
+}

@@ -86,3 +86,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/login', 'AdminController@login');
     Route::post('/logout', 'AdminController@logout');
 });
+
+Route::group(['prefix' => 'dev'], function() {
+    Route::post('/login', 'DevLoginController@login');
+    Route::post('logout', 'DevLoginController@logout');
+});
