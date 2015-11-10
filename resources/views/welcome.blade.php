@@ -1,45 +1,29 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>kokous_backend</title>
+@extends('templates.master')
+@section('title', 'Tapahtuman lisäys')
+@section('styles')
+<style>
+    .alert {
+        position:absolute;
+        top:70px;
+        z-index: 100;
+        right:5%;
+        left:auto;
+    }
+</style>
+@endsection
+@section('content')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+    <div class="container">
+        <div id="background"></div>
+        <div class="jumbotron">
 
-        <style>
-            html, body {
-                height: 100%;
-            }
-
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">kokous_backend</div>
-            </div>
-        </div>
-    </body>
-</html>
+        <h1>Kokous backend</h1>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor.</p>
+        <br>
+        {!!Form::open(['action' => 'DevLoginController@login'])!!}
+        <button class='btn btn-primary btn-lg' type='button'>Kirjaudu partion kautta</button>
+        <button class='btn btn-primary btn-lg' type='submit'>Kirjaudu ilman partiota</button>
+        {!!Form::close()!!}
+    </div>
+</div>
+@endsection

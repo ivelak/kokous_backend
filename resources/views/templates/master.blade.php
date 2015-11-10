@@ -10,6 +10,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {!!Html::style('css/bootstrap.min.css', [], Request::secure())!!}
         {!!Html::style('css/bootstrap-theme.min.css', [], Request::secure())!!}
+        {!!Html::style('css/styles.css', [], Request::secure())!!}
         @yield('styles')
         {!! Html::script('js/jquery-2.1.4.js', [], Request::secure()) !!}
         {!! Html::script('js/bootstrap.min.js', [], Request::secure()) !!}
@@ -21,7 +22,8 @@ and open the template in the editor.
     <body>
         @include('navbar')
         @if(Session::has('message'))
-        <div class="container alert alert-success">
+        <div class="container alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             {{ Session::get('message') }}
         </div>
         @endif
