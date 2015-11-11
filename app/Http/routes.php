@@ -25,6 +25,11 @@ Route::group(['prefix' => 'dev'], function() {
     Route::post('logout', 'DevLoginController@logout');
 });
 
+Route::group(['prefix' => 'api/dev'], function () {
+    Route::resource('events', 'EventRestController', ['only' => ['index', 'show']]);
+    Route::resource('activities', 'ActivityRestController', ['only' => ['index', 'show']]);
+});
+
 Route::group(['middleware' => 'auth'], function() {
 
 
@@ -86,10 +91,7 @@ Route::group(['prefix' => 'activities'], function () {
     Route::post('/sync', ['uses' => "ActivityController@sync", 'middleware' => "admin"]);
 });
 
-Route::group(['prefix' => 'api/dev'], function () {
-    Route::resource('events', 'EventRestController', ['only' => ['index', 'show']]);
-    Route::resource('activities', 'ActivityRestController', ['only' => ['index', 'show']]);
-});
+
 Route::group(['prefix' => 'admin'], function () {
     Route::post('/login', 'AdminController@login');
     Route::post('/logout', 'AdminController@logout');
