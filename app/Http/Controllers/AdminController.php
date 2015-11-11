@@ -14,10 +14,10 @@ class AdminController extends Controller {
             $request->session()->put('admin', '1');
             return back()->with('message', 'Kirjautuminen hallintopaneeliin onnistui!');
         } else {
-            abort(403, 'No you don\'t');
+            abort(401);
         }
     }
-    
+
     public function logout(Request $request) {
         $request->session()->forget('admin');
         return back()->with('message', 'Uloskirjautuminen hallintopaneelista onnistui!');

@@ -17,9 +17,9 @@ class AdminAuthMiddleware
     public function handle($request, Closure $next)
     {
         if(Admin::notAdmin()) {
-            return redirect('/');
+            abort(403);
         }
-            
+
         return $next($request);
     }
 }

@@ -13,8 +13,9 @@ $(document).ready(function () {
 });
 
 function adminLogin() {
-    var x = window.prompt('Syötä salasana:');
-    document.querySelector("#password").value = x;
-    document.forms[0].submit();
+    var x;
+    if(x = window.prompt('Syötä salasana:')){
+        document.querySelector("#password").value = x;
+        document.forms[0].submit();
+    }
 }
-		

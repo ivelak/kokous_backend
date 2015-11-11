@@ -20,6 +20,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['prefix' => 'dev'], function() {
+    Route::post('/login', 'DevLoginController@login');
+    Route::post('logout', 'DevLoginController@logout');
+});
+
+Route::group(['middleware' => 'auth'], function() {
+
+
 
 Route::group(['prefix' => 'events'], function () {
     Route::get('/', "EventController@index");
@@ -41,7 +49,7 @@ Route::group(['prefix' => '/events/{id}/occurrences'], function () {
     Route::get('/{occId}/activities', 'OccurrenceActivityController@index')->where('occId', '[0-9]+');
     Route::post('/{occId}/activities', 'OccurrenceActivityController@add')->where('occId', '[0-9]+');
     Route::delete('/{occId}/activities', 'OccurrenceActivityController@remove')->where('occId', '[0-9]+');
-    
+
     Route::post('/{occId}', 'UserActivityController@addMany');
 });
 
@@ -64,7 +72,7 @@ Route::group(['prefix' => 'groups'], function () {
     Route::delete('/{id}/users', 'GroupUserController@remove')->where('id', '[0-9]+');
     Route::get('/{id}/edit', 'GroupController@edit')->where('id', '[0-9]+');
     Route::put('/{id}', 'GroupController@update')->where('id', '[0-9]+');
-    
+
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/new', "GroupController@create");
         Route::post('/new', "GroupController@store");
@@ -87,7 +95,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/logout', 'AdminController@logout');
 });
 
-Route::group(['prefix' => 'dev'], function() {
-    Route::post('/login', 'DevLoginController@login');
-    Route::post('logout', 'DevLoginController@logout');
+
+
 });

@@ -38,7 +38,8 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return SAML2::login(URL::full());
+
+                return redirect('/')->with(['message'=>'Ei oikeuksia. Kirjaudu sisään.']);
             }
         }
 
