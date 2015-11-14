@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\Aacotroneo\Saml2\Events\Saml2LoginEvent;
+use Aacotroneo\Saml2\Events\Saml2LoginEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
@@ -34,7 +34,16 @@ class Saml2LoginEventListener {
 		//Debugaukseen. Poistakaa jossain kohtaa.
 		dd($userData);
 		
-        $laravelUser = User::firstOrCreate(['partio_id' => $userData->id]);
+        $laravelUser = User::updateOrCreate(
+			['partio_id' => $userData['attributes']['id']],
+			['username' => $userData['attributes']['username'],
+            'membernumber' => $userData['attributes']['username'],
+            'postalcode' => $userData['attributes']['postalcode'],
+            'is_scout' => $userData['attributes']['is_scout'],
+            'email' => $userData['attributes']['email'],
+            'firstname' => $userData['attributes']['firstname'],
+            'lastname' => $userData['attributes']['lastname']]
+			);
         Auth::login($laravelUser);
     }
 
