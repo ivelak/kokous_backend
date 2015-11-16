@@ -17,6 +17,10 @@ class Activity extends Model
         return $this->belongsToMany('App\EventOccurrence');
     }
     
+    public function eventPatterns(){
+        return $this->belongsToMany('App\EventPattern');
+    }
+    
     public function users(){
         return $this->belongsToMany('App\User');
     }
