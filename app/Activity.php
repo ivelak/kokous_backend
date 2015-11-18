@@ -24,4 +24,8 @@ class Activity extends Model
     public function users(){
         return $this->belongsToMany('App\User');
     }
+    
+    public function comments(){
+        return $this->morphMany('App\Comment','imageable');
+    }
 }

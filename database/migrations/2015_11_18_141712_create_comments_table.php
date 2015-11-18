@@ -15,6 +15,9 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->boolean('public');
+            $table->integer('imageable_id');
+            $table->string('imageable_type');
         });
     }
 

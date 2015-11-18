@@ -67,7 +67,7 @@
 
         <div class="form-group">
             {!!Form::label('interval', 'Toistoväli:')!!}           
-            {!!Form::select('interval', array('1','2','3','4'), ['class'=>'form-control'])!!}
+            {!!Form::select('interval', array(1=>'1',2=>'2',3=>'3',4=>'4'), ['class'=>'form-control'])!!}
             {!!Form::label('interval', 'viikon välein.')!!}   
         </div>
 

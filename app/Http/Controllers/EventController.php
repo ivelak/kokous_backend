@@ -62,6 +62,9 @@ class EventController extends Controller {
         $days = collect($request->input('days'));
         $date = Carbon::createFromFormat('d.m.Y', $request->input('date'));
         $endDate = $date->copy();
+        $startDate = $date->copy();
+        
+        $interval = $request->input('interval');
 
         if ($request->input('repeat') != NULL) {
             $ending = $request->input('ending');
@@ -71,7 +74,7 @@ class EventController extends Controller {
         $event->save();
 
         do {
-            if ($days->contains($date->dayOfWeek) || $request->input('repeat') == NULL) {
+            if (($days->contains($date->dayOfWeek) && (($startDate->diffInWeeks($date)) % $interval)==0) || $request->input('repeat') == NULL) {
                 $occurrence = new EventOccurrence();
                 $occurrence->event_id = $event->id;
                 $occurrence->date = $date;

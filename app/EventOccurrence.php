@@ -42,5 +42,9 @@ class EventOccurrence extends Model {
         ;
         return $query->whereIn('id', $events);
     }
+    
+    public function comments(){
+        return $this->morphMany('App\Comment','imageable');
+    }
 
 }
