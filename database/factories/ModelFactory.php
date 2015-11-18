@@ -18,10 +18,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'partio_id' => $faker->unique()->regexify('[A-Z0-9]{10,10}'),
         'membernumber' => $faker->unique()->regexify('[A-Z0-9]{10,10}'),
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'firstname' => $faker->firstName(),
+        'lastname' => $faker->lastName,
     ];
 });
 
@@ -59,28 +57,16 @@ $factory->define(App\Event::class, function (Faker\Generator $faker) {
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'username' => $faker->unique()->username,
-        'partio_id' => $faker->unique()->randomNumber,
         'firstname' => $faker->firstname,
         'lastname' => $faker->lastname,
         'membernumber' => $faker->unique()->randomNumber,
-        'postalcode' => '00550',
-        'is_scout' => true,
-        'email' => $faker->email
-
     ];
 });
 
 $factory->defineAs(App\User::class, 'admin', function (Faker\Generator $faker) {
     return [
-        'username' => 'admin',
-        'partio_id' => '55000',
         'firstname' => 'admin',
         'lastname' => 'admin',
         'membernumber' => '1000',
-        'postalcode' => '00550',
-        'is_scout' => true,
-        'email' => 'admin@admin.fi'
-
     ];
 });
