@@ -7,7 +7,7 @@
     <div class="panel">
         <div class="form-group">
             {!! Form::open(['action' => ['GroupUserController@add', $group], 'class'=>'form-inline'])!!}
-            {!! Form::select('userId', $users->keyBy('id')->map(function ($item, $key) {return $item->username; }), null, ['class'=>'form-control']) !!}
+            {!! Form::select('userId', $users->keyBy('id')->map(function ($item, $key) {return $item->firstname . ' '  . $item->lastname; }), null, ['class'=>'form-control']) !!}
             {!! Form::submit('Lisää ryhmän jäsen', ['class'=>'btn btn-default', 'name'=> 'addLeader']) !!}
             {!!link_to_action('GroupController@show', $title = 'Takaisin', ['id' => $group->id], $attributes = array('class'=>'btn btn-default pull-right'))!!}
             {!! Form::close() !!}
@@ -20,7 +20,7 @@
             <tr id="{{$user->id}}">
                 <td>
                     {!!Form::open(array('action' => ['GroupUserController@remove', $group], 'method'=>'delete', 'class'=>'form-inline'))!!}
-                    {{$user->username}}
+                    {{$user -> firstname . ' '  . $user -> lastname}}
                     {!!Form::hidden('userId', $user->id)!!}
                     {!!Form::submit('Poista', ['class' => 'btn btn-default btn-xs pull-right'])!!}
                     {!!Form::close()!!}

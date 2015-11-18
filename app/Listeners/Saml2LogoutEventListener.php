@@ -26,6 +26,7 @@ class Saml2LogoutEventListener {
      * @return void
      */
     public function handle(Saml2LogoutEvent $event) {
+        Session::forget('admin');
         Auth::logout();
         Session::save();
     }

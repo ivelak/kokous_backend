@@ -13,12 +13,7 @@ class DevLoginController extends Controller {
 
     public function login() {
         $user = User::firstOrCreate([
-            'username'=>'dev',
-            'partio_id'=>'0000000',
             'membernumber'=>'0000000',
-            'postalcode'=>'00000',
-            'is_scout'=>'true',
-            'email'=>'spudrospadre@jonne.es',
             'firstname'=>'Jonne',
             'lastname'=>'Partiolainen'
         ]);

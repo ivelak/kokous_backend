@@ -35,7 +35,7 @@
         <div id="collapse1" class="panel-collapse collapse">
             <ul class="list-group">
                 @forelse($group->users()->where('role','leader')->get() as $user)
-                <li class="list-group-item">{{$user -> username}}</li>
+                <li class="list-group-item">{{$user -> firstname . ' ' . $user -> lastname}}</li>
                 @empty
                 <li class="list-group-item"><p><strong> Ei lisättyjä ryhmänjohtajia</strong></p></li>
                 @endforelse
@@ -50,7 +50,7 @@
         <div id="collapse2" class="panel-collapse collapse">
             <ul class="list-group">
                 @forelse($group->users()->where('role','member')->get() as $user)
-                <li class="list-group-item">{{$user -> username}}</li>
+                <li class="list-group-item">{{$user -> firstname . ' '  . $user -> lastname}}</li>
                 @empty
                 <li class="list-group-item"><p><strong> Ei lisättyjä jäseniä</strong></p></li>
                 @endforelse
