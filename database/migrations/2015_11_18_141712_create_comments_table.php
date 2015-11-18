@@ -18,6 +18,7 @@ class CreateCommentsTable extends Migration
             $table->boolean('public');
             $table->integer('imageable_id');
             $table->string('imageable_type');
+            $table->string('comment');
         });
     }
 
