@@ -10,8 +10,4 @@ class EventPattern extends Model {
         return $this->belongsToMany('App\Activity');
     }
 
-    public function getNameAttribute() {
-        return $this->name;
-    }
-
 }
