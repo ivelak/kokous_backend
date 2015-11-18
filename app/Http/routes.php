@@ -97,6 +97,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/logout', 'AdminController@logout');
 });
 
+Route::group(['prefix' => 'event_patterns'], function () {
+    Route::get('/new', "EventPatternController@create");
+});
+
 
 
 });
