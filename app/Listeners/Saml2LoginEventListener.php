@@ -36,9 +36,9 @@ class Saml2LoginEventListener {
 		//dd($userData);
 		
         $laravelUser = User::updateOrCreate(
-                ['membernumber' => array_get($userData, 'attributes.membernumber.0')],
-                ['firstname' => array_get($userData, 'attributes.firstname.0'),
-                'lastname' => array_get($userData, 'attributes.lastname.0')]);
+                ['membernumber' => array_get($userData, 'attributes.membernumber')],
+                ['firstname' => array_get($userData, 'attributes.firstname'),
+                'lastname' => array_get($userData, 'attributes.lastname')]);
         Auth::login($laravelUser);
     }
 
