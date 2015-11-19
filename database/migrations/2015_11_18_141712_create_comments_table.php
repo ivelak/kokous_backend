@@ -19,6 +19,8 @@ class CreateCommentsTable extends Migration
             $table->integer('imageable_id');
             $table->string('imageable_type');
             $table->string('comment');
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -101,6 +101,10 @@ Route::group(['prefix' => 'event_patterns'], function () {
     Route::get('/new', "EventPatternController@create");
 });
 
+Route::group(['prefix' => '/events/{id}/occurrences/{occId}'], function () {
+    Route::post('/newComment', "CommentController@storeOccComment");
+});
+
 
 
 });

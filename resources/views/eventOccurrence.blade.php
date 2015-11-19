@@ -1,5 +1,4 @@
 
-<!DOCTYPE html>
 @extends('templates.master')
 @section('title', 'Tapahtuma')
 @section('content')
@@ -36,20 +35,20 @@
             @else
             {!! Form::select('activityId', $eventOccurrence->activities->keyBy('id')->map(function ($item, $key) {return $item->name; }), null, ['class'=>'form-control']) !!}
             <br>
-            
+
             @foreach($eventOccurrence->activities as $activity)
             <div id="{{$activity->id}}" style="display:none" name="activityBox">
                 <ul class="list-group">
                     @foreach($eventOccurrence->event->group->users as $user)
-                        @if($user->activities->contains($activity))
-                        <li class="list-group-item list-group-item-success">
-                            {{ $user->username }}
-                        </li>
-                        @else
-                        <li class="list-group-item">
-                            {{ $user->username }}<input type="checkbox" name="{{$user->id}}" class="pull-right">
-                        </li>
-                        @endif
+                    @if($user->activities->contains($activity))
+                    <li class="list-group-item list-group-item-success">
+                        {{ $user->username }}
+                    </li>
+                    @else
+                    <li class="list-group-item">
+                        {{ $user->username }}<input type="checkbox" name="{{$user->id}}" class="pull-right">
+                    </li>
+                    @endif
                     @endforeach
                 </ul>
             </div>
@@ -61,44 +60,46 @@
             {!! Form::hidden('group', $eventOccurrence->event->group->id)!!}
             <button class="btn btn-default pull-left" onclick="selectAll()" type="button">Valitse kaikki</button>
             {!! Form::submit('Merkitse suoritetuiksi', ['class'=>'btn btn-primary pull-right']) !!}
-            {!! Form::close()!!}
+
             <div class="clearfix"></div>
         </div>
         @endif
-    </div>
+        {!! Form::close()!!}
+    </div> 
+    @include('newComment')
 </div>
 
 <script>
     function toggle(source) {
         checkboxes = $("input:checkbox")
-        for(var i=0, n=checkboxes.length;i<n;i++) {
-          checkboxes[i].checked = source;
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source;
         }
     }
-    
+
     function selectAll() {
         var activities = document.getElementsByName('activityBox');
-        [].forEach.call(activities, function(a){
-            if(a.style.display === 'block')
+        [].forEach.call(activities, function (a) {
+            if (a.style.display === 'block')
             {
                 var checkboxes = a.getElementsByTagName('input');
-                for(var i=0, n=checkboxes.length;i<n;i++) {
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
                     checkboxes[i].checked = true;
                 }
             }
         });
     }
-    
-    $(document).ready(function(){
+
+    $(document).ready(function () {
         var id = document.getElementsByName('activityId')[0].value;
         document.getElementById(id).style.display = 'block';
     });
-    
-    $('select').on('change', function() {
+
+    $('select').on('change', function () {
         toggle(false);
         var activities = document.getElementsByName('activityBox');
-        [].forEach.call(activities, function(a){
-             a.style.display = 'none';
+        [].forEach.call(activities, function (a) {
+            a.style.display = 'none';
         });
         document.getElementById(this.value).style.display = 'block';
     });
