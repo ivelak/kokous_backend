@@ -17,18 +17,34 @@
                 <li class="{{ Request::is('groups') ? 'active' : '' }}">{!!link_to('/groups', $title = 'Ryhmät')!!}</li>
 
             </ul>
-            @if(Auth::check())
-            <a href="/saml2/logout" class="btn btn-default navbar-btn navbar-right">Kirjaudu ulos</a>
-            @endif
+			<ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kirjautuminen<span class="caret"></span></a>
+			  <ul class="dropdown-menu">
+				<li>
+				@if(Auth::check())
+				<a href="/saml2/logout" >Kirjaudu ulos</a>
+				@else
+				<a href="/saml2/login">Kirjaudu sisään</a>
+				@endif	
+				</li>
+				<li>	
+				@if(!Request::session()->has('admin'))
+				<a id="adminloginbutton">Hallinnointi</a>
+				@else
+				<a id="adminlogoutbutton">Lopeta Hallinnointi</a>
+				@endif
+				</li>
+			  </ul>
+			</li>
+		  </ul>
             @if(!Request::session()->has('admin'))
-            {!!Form::open(['action' => 'AdminController@login'])!!}
+            {!!Form::open(['id'=>'adminlogin', 'action' => 'AdminController@login'])!!}
             <input type="hidden" id="password" name="password"/>
             {!!Form::close()!!}
-            <button onclick="adminLogin()" class="btn btn-default navbar-btn navbar-right">Hallinnointi</button>
 
             @else
-            {!!Form::open(array('action' => 'AdminController@logout', 'method'=>'post', 'class'=>'navbar-form navbar-right'))!!}
-            {!!Form::submit('Lopeta hallinnointi', ['class' => 'btn btn-default'])!!}
+            {!!Form::open(['id'=>'adminlogout', 'action' => 'AdminController@logout', 'method'=>'post'])!!}
             {!!Form::close()!!}
             @endif
         </div>

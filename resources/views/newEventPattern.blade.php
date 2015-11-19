@@ -7,6 +7,7 @@
 
 <div class="container">
 
+    {!! Form::open(array('action' => 'EventPatternController@store', 'role' => 'form')) !!}
     <h1> Tapahtumapohjan lisäys: </h1> <hr />
     @if( isset($errors))
     <ul class="list-group">
@@ -33,14 +34,28 @@
 
         <div class="form-group">
             {!!Form::label('name', 'Tapahtuma päivä:')!!}<br/>
-            {!!Form::text('date', old('date'), ['class'=>'form-control', 'placeholder'=>'dd.mm.yyyy', 'id'=>'date'])!!}
+            {!!Form::text('date', old('date'), ['class'=>'form-control', 'placeholder'=>'dd.mm', 'id'=>'date'])!!}
         </div>
         
         {!!Form::label('name', 'Aikaväli:')!!}
         <div class="input-group">
-            <input id="field1" name="start" type="text" class="form-control" placeholder="Alkamispäivä dd.mm.yyyy" disabled>
+            <input id="field1" name="start" type="text" class="form-control" placeholder="Alkamispäivä dd.mm" disabled>
             <span class="input-group-addon">-</span>
-            <input id="field2" name="end" type="text" class="form-control" placeholder="Loppumispäivä dd.mm.yyyy" disabled>
+            <input id="field2" name="end" type="text" class="form-control" placeholder="Loppumispäivä dd.mm" disabled>
+        </div>
+        
+        <br>
+        
+        {!!Form::label('name', 'Valitse ikäryhmät:')!!}
+        <div class="form-group">
+            <ul class="list-group" id="age_group_list" style="">
+            @foreach($age_groups as $age_group)
+            <li class="list-group-item">
+                {{ $age_group }}
+                <input type="checkbox" class="pull-right" value="{{ $age_group }}" name="selectedAgeGroups[]">
+            </li>
+            @endforeach
+            </ul>  
         </div>
         
         <br>
@@ -66,7 +81,9 @@
             </ul>
         </div>
         <hr/>
-         {!!Form::submit('Luo tapahtumapohja', ['class' => 'btn btn-primary'])!!}
+        {!!Form::submit('Luo tapahtumapohja', ['class' => 'btn btn-primary'])!!}
+        {!! Form::close() !!}
+         
     </div>
 </div>
 
@@ -102,7 +119,7 @@
         $('#selector option:selected').each(function () {
             $(this).removeAttr("selected");
             $(this).attr('disabled', true);
-            $('<li class="list-group-item" id=' + $(this).val() + '>'+ $(this).html() +'<span class="pull-right"><button class="btn btn-xs btn-warning" onclick="removeActivity(' + $(this).val() +')" type="button"><span class="glyphicon glyphicon-trash"></span></button></span></li>').appendTo('#activityList');
+            $('<li class="list-group-item" name="selected_activity[]" id=' + $(this).val() + '>'+ $(this).html() +'<span class="pull-right"><button class="btn btn-xs btn-warning" onclick="removeActivity(' + $(this).val() +')" type="button"><span class="glyphicon glyphicon-trash"></span></button></span></li>').appendTo('#activityList');
         });
     }
     

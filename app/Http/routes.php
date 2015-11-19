@@ -83,13 +83,15 @@ Route::group(['middleware' => 'auth'], function() {
             Route::delete('/{id}', 'GroupController@destroy')->where('id', '[0-9]+');
         });
     });
-
     Route::group(['prefix' => 'activities'], function () {
         Route::get('/', "ActivityController@index");
         Route::get('/new', "ActivityController@create");
         Route::post('/sync', ['uses' => "ActivityController@sync", 'middleware' => "admin"]);
     });
-
+Route::group(['prefix' => 'event_patterns'], function () {
+    Route::get('/new', "EventPatternController@create");
+    Route::post('/new', "EventPatternController@store");
+});
 
     Route::group(['prefix' => 'admin'], function () {
         Route::post('/login', 'AdminController@login');
