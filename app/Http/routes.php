@@ -99,6 +99,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::group(['prefix' => 'event_patterns'], function () {
     Route::get('/new', "EventPatternController@create");
+    Route::post('/new', "EventPatternController@store");
 });
 
 

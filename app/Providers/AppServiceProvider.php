@@ -15,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $age_groups = ['sudenpennut' => 'Sudenpennut','seikkailijat' => 'Seikkailijat','tarpojat' => 'Tarpojat','samoajat' => 'Samoajat','vaeltajat' => 'Vaeltajat'];
+        view()->share('age_groups', $age_groups);
     }
 
     /**
