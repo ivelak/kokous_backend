@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Activity;
 use App\POF;
+use Auth;
 
 class ActivityRestController extends Controller {
 
@@ -17,6 +18,10 @@ class ActivityRestController extends Controller {
      */
     public function index() {
         return Activity::all();
+    }
+
+    public function userActivities(Request $request) {
+        return Auth::user()->activities;
     }
 
     /**

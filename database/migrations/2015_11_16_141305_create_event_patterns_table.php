@@ -16,7 +16,7 @@ class CreateEventPatternsTable extends Migration {
             $table->increments('id');
             $table->timestamps();
             $table->date('date');
-            $table->date('endDate');
+            $table->date('endDate')->nullable();
             $table->string('ageGroups');            
             
         });

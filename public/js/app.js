@@ -10,12 +10,25 @@ $(document).ready(function () {
             document.location.href = $(this).data('target');
         }
     });
+	
+	$("#adminloginbutton").click(function(ev){
+		ev.preventDefault();
+		adminLogin();
+	});
+	$("#adminlogoutbutton").click(function(ev){
+		ev.preventDefault();
+		adminLogout();
+	});
 });
 
 function adminLogin() {
     var x;
     if(x = window.prompt('Syötä salasana:')){
-        document.querySelector("#password").value = x;
-        document.forms[0].submit();
+        $("#password").val(x);
+        $("#adminlogin").submit();
     }
+}
+
+function adminLogout() {
+        $("#adminlogout").submit();
 }

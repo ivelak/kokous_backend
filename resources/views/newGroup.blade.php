@@ -38,7 +38,7 @@
             {!!Form::label('participants', 'Valitse ryhmäläisiä:')!!}
             <select multiple="multiple" class="form-control sieve" name="participants[]" id="participants">
                 @forelse($users as $user)
-                <option value="{{ $user->id }}">{{ $user->username }}</option>             
+                <option value="{{ $user->id }}">{{$user -> firstname . ' ' . $user -> lastname}}</option>             
                 @empty
                 <option disabled value=""> Ei käyttäjiä</option>
                 @endforelse
@@ -50,7 +50,7 @@
             {!!Form::label('leaders', 'Valitse ryhmänjohtajia:')!!}
             <select multiple="multiple" class="form-control sieve" name="leaders[]" id="leaders">
                 @forelse($users as $user)
-                <option value="{{ $user->id }}">{{ $user->username }}</option>             
+                <option value="{{ $user->id }}">{{$user -> firstname . ' ' . $user -> lastname}}</option>             
                 @empty
                 <option disabled value=""> Ei käyttäjiä</option>
                 @endforelse
