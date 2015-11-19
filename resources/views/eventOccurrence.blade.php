@@ -64,8 +64,9 @@
             <div class="clearfix"></div>
         </div>
         @endif
-        {!! Form::close()!!}
+
     </div> 
+    {!! Form::close()!!}
     @include('newComment')
 </div>
 
