@@ -68,6 +68,7 @@
     </div> 
     {!! Form::close()!!}
     @include('newComment')
+    <br>
 </div>
 
 <script>
