@@ -67,7 +67,29 @@
 
     </div> 
     {!! Form::close()!!}
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Kommentit:</strong></div>
+        <div class="panel-body">
+            <div>
+                @foreach($eventOccurrence->comments as $comment)
+                <div class="well">
+                    <p>
+                        {{$comment->comment}}
+                    </p>
+                    <br>
+                    <p>
+                        {{$comment->user->firstname . ' ' . $comment->user->lastname . ' - ' . $comment->created_at->format('d.m.Y - H:i')}} 
+                    </p>
+                </div>
+                @endforeach
+
+            </div>
+        </div>
+    </div>
+
     @include('newComment')
+
     <br>
 </div>
 

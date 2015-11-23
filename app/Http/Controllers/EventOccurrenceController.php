@@ -51,7 +51,7 @@ class EventOccurrenceController extends Controller
     public function show($id, $occId)
     {
         //
-        $eventOccurrence = EventOccurrence::where('event_id', $id)->findOrFail($occId);
+        $eventOccurrence = EventOccurrence::with(['comments'])->where('event_id', $id)->findOrFail($occId);
         $activitiesCompleted = collect([]);
         foreach($eventOccurrence->activities as $activity)
         {
