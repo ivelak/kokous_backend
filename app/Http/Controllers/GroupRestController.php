@@ -5,19 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Event;
-use App\EventOccurrence;
 use App\Group;
-class EventRestController extends Controller
-{
+use App\User;
+
+class GroupRestController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return EventOccurrence::with(['activities', 'event.group'])->get();
+    public function index() {
+        
+        return Group::with('users')->get();
     }
 
     /**
@@ -25,8 +25,7 @@ class EventRestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -36,8 +35,7 @@ class EventRestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -47,10 +45,8 @@ class EventRestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        
-        return EventOccurrence::with('activities')->findOrFail($id);
+    public function show($id) {
+        return Group::with('users')->findOrFail($id);
     }
 
     /**
@@ -59,8 +55,7 @@ class EventRestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -71,8 +66,7 @@ class EventRestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -82,8 +76,8 @@ class EventRestController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
 }
