@@ -15,6 +15,7 @@
                 <li class="{{ Request::is('activities') ? 'active' : '' }}">{!!link_to('/activities', $title = 'Aktiviteetit')!!}</li>
                 <li class="{{ Request::is('users') ? 'active' : '' }}">{!!link_to('#', $title = 'Käyttäjät')!!}</li>
                 <li class="{{ Request::is('groups') ? 'active' : '' }}">{!!link_to('/groups', $title = 'Ryhmät')!!}</li>
+                <li class="{{ Request::is('activity_planning/*') ? 'active' : '' }}">{!!link_to('/activity_planning/activities', $title = 'Tapahtumien suunnittelu')!!}</li>
 
             </ul>
 			<ul class="nav navbar-nav navbar-right">

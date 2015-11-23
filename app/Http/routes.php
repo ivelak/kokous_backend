@@ -1,6 +1,7 @@
 <?php
 
 use App\User;
+use App\Activity;
 
 /*
   |--------------------------------------------------------------------------
@@ -101,5 +102,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'admin'], function () {
         Route::post('/login', 'AdminController@login');
         Route::post('/logout', 'AdminController@logout');
+    });
+    
+    Route::group(['prefix' => 'activity_planning'], function () {
+        Route::get('/activities', 'ActivityPlanningController@showActivitySelectView');
+        Route::get('/events', 'ActivityPlanningController@showEventSelectView');
+        Route::get('/planner', 'ActivityPlanningController@showActivityEventPlannerView');
+        Route::post('/activities', 'ActivityPlanningController@login');
+        Route::post('/events', 'ActivityPlanningController@logout');
+        Route::post('/planner', 'ActivityPlanningController@logout');
     });
 });
