@@ -42,11 +42,11 @@
                     @foreach($eventOccurrence->event->group->users as $user)
                     @if($user->activities->contains($activity))
                     <li class="list-group-item list-group-item-success">
-                        {{ $user->username }}
+                        {{ $user->firstname . ' ' . $user->lastname }}
                     </li>
                     @else
                     <li class="list-group-item">
-                        {{ $user->username }}<input type="checkbox" name="{{$user->id}}" class="pull-right">
+                        {{ $user->firstname . ' ' . $user->lastname }}<input type="checkbox" name="{{$user->id}}" class="pull-right">
                     </li>
                     @endif
                     @endforeach
