@@ -52,15 +52,15 @@ class ActivityRestController extends Controller {
     public function show($id) {
         $actArray = POF::getItem(Activity::findOrFail($id)->guid);
 
-        return ['title' => $actArray['title'],
-            'guid' => $actArray['guid'],
-            'content' => $actArray['content'],
-            'pakollisuus' => $actArray['tags']['pakollisuus'][0]['name'],
-            'pakollisuusikoni' => $actArray['tags']['pakollisuus'][0]['icon'],
-            'ryhmakoko' => $actArray['tags']['ryhmakoko'][0]['name'],
-            'paikka' => $actArray['tags']['paikka'][0]['name'],
-            'suoritus_kesto' => $actArray['tags']['suoritus_kesto']['name']];
-
+        return ['title' => array_get($actArray, 'title', 'ei määritetty'),
+            'guid' => array_get($actArray, 'guid', 'ei määritetty'),
+            'content' => array_get($actArray, 'content', 'ei määritetty'),
+            'pakollisuus' => array_get($actArray, 'tags.pakollisuus.name', 'ei määritetty'),
+            'pakollisuusikoni' => array_get($actArray, 'tags.pakollisuus.0.icon','ei määritetty'),
+            'ryhmakoko' => array_get($actArray, 'tags.ryhmakoko.0.name', 'ei määritetty'),
+            'paikka' => array_get($actArray,'tags.paikka.0.name','ei määritetty'),
+            'suoritus_kesto' => array_get($actArray, 'tags.suoritus_kesto.name', 'ei määritetty')];
+        
 //             ,
 //            'pakollisuus' => $actArray->tags->pakollisuus->name, 'ryhmakoko' => $actArray->tags->ryhmakoko->name,
 //            'paikka' => $actArray->tags->paikka->name, 'suoritus_kesto' => $actArray->tags->suoritus_kesto->name];
