@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Event;
 use App\EventOccurrence;
+use App\Group;
 class EventRestController extends Controller
 {
     /**
@@ -16,7 +17,7 @@ class EventRestController extends Controller
      */
     public function index()
     {
-        return EventOccurrence::with('activities')->get();
+        return EventOccurrence::with(['activities', 'event.group'])->get();
     }
 
     /**
@@ -48,7 +49,8 @@ class EventRestController extends Controller
      */
     public function show($id)
     {
-        return Event::with('activities')->findOrFail($id);
+        
+        return EventOccurrence::with('activities')->findOrFail($id);
     }
 
     /**

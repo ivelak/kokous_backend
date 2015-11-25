@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 class EventOccurrence extends Model {
+    protected $appends=['group'];
 
     public function activities() {
         return $this->belongsToMany('App\Activity');
+    }
+    public function getGroupAttribute() {
+        return $this->event->group;
     }
 
     public function event() {
