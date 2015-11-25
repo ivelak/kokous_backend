@@ -1,8 +1,33 @@
-<?php
+@extends('templates.master')
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+@section('title', 'Valitse tapahtumat')
 
+@section('content')
+
+<div class="container">
+    <div class="page-header">
+        <h1>Valitse Tapahtumat</h1>
+    </div>
+    {!! Form::open(['url' => '#', 'class' => '']) !!}
+    <div class="panel-group">
+        @foreach($eventPatterns as $eventPattern)
+        <div class="panel">
+            <div class="panel-heading">
+                <input type="checkbox" name="eventPatterns[]" value="{{ $eventPattern->id }}" class="pull-right">
+                <h3>{{ucfirst($eventPattern->name)}} <span class="small"><a data-toggle="collapse" href="#{{str_slug($eventPattern->name)}}">aktiviteetit</a></span></h3>
+            </div>
+            <div id="{{str_slug($eventPattern->name)}}" class="panel-collapse collapse">
+                <ul class="list-group">
+                    @foreach($eventPattern->activities as $activity)
+                    <li class="list-group-item">{{$activity->name}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    <button class="btn btn-default" onclick="confirm('Oletko varma?')">Nollaa valinnat</button>
+    <input type="submit" class="btn btn-primary" value="Seuraava"></button>
+    {!! Form::close() !!}
+</div>
+@endsection

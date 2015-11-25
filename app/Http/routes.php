@@ -117,8 +117,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/activities', 'ActivityPlanningController@showActivitySelectView');
         Route::get('/events', 'ActivityPlanningController@showEventSelectView');
         Route::get('/planner', 'ActivityPlanningController@showActivityEventPlannerView');
-        Route::post('/activities', 'ActivityPlanningController@login');
-        Route::post('/events', 'ActivityPlanningController@logout');
+        Route::post('/activities', 'ActivityPlanningController@selectActivities');
+        Route::post('/events', 'ActivityPlanningController@selectEvents');
         Route::post('/planner', 'ActivityPlanningController@logout');
     });
 });
