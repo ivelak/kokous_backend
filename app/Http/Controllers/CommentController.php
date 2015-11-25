@@ -43,6 +43,12 @@ class CommentController extends Controller
         EventOccurrence::findOrFail($occId)->comments()->create(['user_id'=>Auth::User()->id,'public'=>request('public'),'comment'=>request('comment')]);
         return back();
     }
+    
+    public function storeActComment(Request $request, $id)
+    {   
+        Activity::findOrFail($id)->comments()->create(['user_id'=>Auth::User()->id,'public'=>request('public'),'comment'=>request('comment')]);
+        return back();
+    }
 
     /**
      * Display the specified resource.

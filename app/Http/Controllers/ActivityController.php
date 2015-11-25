@@ -69,15 +69,20 @@ class ActivityController extends Controller
     public function show($id)
     {
         $actArray = POF::getItem(Activity::findOrFail($id)->guid);
+        $activity = Activity::findOrFail($id);
+        
 
-        return ['title' => $actArray['title'],
-            'guid' => $actArray['guid'],
-            'content' => $actArray['content'],
-            'pakollisuus' => $actArray['tags']['pakollisuus'][0]['name'],
-            'pakollisuusikoni' => $actArray['tags']['pakollisuus'][0]['icon'],
-            'ryhmakoko' => $actArray['tags']['ryhmakoko'][0]['name'],
-            'paikka' => $actArray['tags']['paikka'][0]['name'],
-            'suoritus_kesto' => $actArray['tags']['suoritus_kesto']['name']];
+        $singleActArray = ['title' => array_get($actArray, 'title', 'ei määritetty'),
+            'guid' => array_get($actArray, 'guid', 'ei määritetty'),
+            'content' => array_get($actArray, 'content', 'ei määritetty'),
+            'pakollisuus' => array_get($actArray, 'tags.pakollisuus.name', 'ei määritetty'),
+            'pakollisuusikoni' => array_get($actArray, 'tags.pakollisuus.0.icon','ei määritetty'),
+            'ryhmakoko' => array_get($actArray, 'tags.ryhmakoko.0.name', 'ei määritetty'),
+            'agegroup' =>  array_get($actArray, 'parents.1.title'),
+            'paikka' => array_get($actArray,'tags.paikka.0.name','ei määritetty'),
+            'suoritus_kesto' => array_get($actArray, 'tags.suoritus_kesto.name', 'ei määritetty')];
+        
+        return view('activity', compact('singleActArray','activity'));
 
     }
 

@@ -23,7 +23,7 @@
                         <th>Aktiviteetti</th>
                     </tr>
                     @forelse($activities as $activity)
-                    <tr data-target="{{'/activities/' . $activity->id}}">
+                    <tr data-target="{{'/activities/' . $activity->id}}" class="tr-link">
                         <td>{{$activity->name}}</td>
                     </tr>
                     @empty

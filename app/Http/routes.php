@@ -88,25 +88,31 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'activities'], function () {
         Route::get('/', "ActivityController@index");
         Route::get('/new', "ActivityController@create");
+        Route::get('/{id}', "ActivityController@show")->where('id', '[0-9]+');
         Route::post('/sync', ['uses' => "ActivityController@sync", 'middleware' => "admin"]);
     });
+
     Route::group(['prefix' => 'event_patterns'], function () {
         Route::get('/new', "EventPatternController@create");
         Route::post('/new', "EventPatternController@store");
     });
 
 
+    Route::group(['prefix' => '/activities/{id}'], function () {
+        Route::post('/newComment', "CommentController@storeActComment");
+    });
+
     Route::group(['prefix' => '/events/{id}/occurrences/{occId}'], function () {
         Route::post('/newComment', "CommentController@storeOccComment");
     });
-    
-    Route::delete('/comment',"CommentController@destroy");
+
+    Route::delete('/comment', "CommentController@destroy");
 
     Route::group(['prefix' => 'admin'], function () {
         Route::post('/login', 'AdminController@login');
         Route::post('/logout', 'AdminController@logout');
     });
-    
+
     Route::group(['prefix' => 'activity_planning'], function () {
         Route::get('/activities', 'ActivityPlanningController@showActivitySelectView');
         Route::get('/events', 'ActivityPlanningController@showEventSelectView');
