@@ -10,7 +10,7 @@
     </div>
     {!! Form::open(['url' => '#', 'class' => '']) !!}
     <div class="panel-group">
-        @foreach($eventPatterns as $eventPattern)
+        @forelse($eventPatterns as $eventPattern)
         <div class="panel">
             <div class="panel-heading">
                 <input type="checkbox" name="eventPatterns[]" value="{{ $eventPattern->id }}" class="pull-right">
@@ -24,7 +24,9 @@
                 </ul>
             </div>
         </div>
-        @endforeach
+        @empty
+        <h3>Ei tapahtumapohjia</h3>
+        @endforelse
     </div>
     <button class="btn btn-default" onclick="confirm('Oletko varma?')">Nollaa valinnat</button>
     <input type="submit" class="btn btn-primary" value="Seuraava"></button>

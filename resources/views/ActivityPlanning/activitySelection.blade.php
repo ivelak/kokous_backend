@@ -20,11 +20,11 @@
                     
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <a data-toggle="collapse" href="#{{str_slug($taskGroupName)}}" ><h4>{{ucfirst($taskGroupName)}}</h4></a>
+                                <a data-toggle="collapse" href="#{{str_slug($taskGroupName)}}" ><h4>{{ucfirst($taskGroupName)}}</a><input id="{{ucfirst($taskGroupName)}}-checkall" onchange="selectAllFromTaskGroup(this.id, '{{str_slug($taskGroupName)}}-list')" type="checkbox" class="pull-right"/></h4>
                             </div>
                             <div id="{{str_slug($taskGroupName)}}" class="panel-collapse collapse">
 
-                                <ul class="list-group">
+                                <ul class="list-group" id="{{str_slug($taskGroupName)}}-list">
                                     @foreach($taskGroup as $activity)
                                     @foreach($activity as $a)
                                     <li class="list-group-item">{{$a->name}} <input name="activities[]" value="{{$a->id}}" type="checkbox" class="pull-right"/></li>
@@ -46,4 +46,5 @@
     <input type="submit" class="btn btn-primary" value="Seuraava"></button>
     {!! Form::close() !!}
 </div>
+
 @endsection

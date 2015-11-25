@@ -94,6 +94,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['prefix' => 'event_patterns'], function () {
         Route::get('/new', "EventPatternController@create");
+        Route::get('/', "EventPatternController@index");
         Route::post('/new', "EventPatternController@store");
     });
 

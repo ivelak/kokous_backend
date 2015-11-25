@@ -6,8 +6,6 @@
 @section('content')
 
 <div class="container">
-
-    {!! Form::open(array('action' => 'EventPatternController@store', 'role' => 'form')) !!}
     <h1> Tapahtumapohjan lisäys: </h1> <hr />
     @if( isset($errors))
     <ul class="list-group">
@@ -17,8 +15,8 @@
     </ul>
     @endif
     
+    {!! Form::open(array('action' => 'EventPatternController@store', 'role' => 'form')) !!}
     <div class="well">
-        {!! Form::open(array('action' => 'EventController@store', 'role' => 'form')) !!}
 
         <div class="form-group">
             {!!Form::label('name', 'Tapahtumapohjan nimi:')!!}<br/>
@@ -87,70 +85,5 @@
     </div>
 </div>
 
-<script>
-    
-//    function addActivitiesToList()
-//    {
-//        var nodes = document.getElementById('selector');
-//        for(i=0; i<nodes.options.length; i++) {
-//            var node = nodes.options[i];
-//            if(node.selected === true)
-//            {
-//                var activityList = document.getElementById('activityList');
-//                node.disabled = true;
-//                node.selected = false;
-//                activityList.insertAdjacentHTML('beforeend', '<li class="list-group-item" name=' + node.value + '>'+ node.text +'<span class="pull-right"><button class="btn btn-xs btn-warning" onclick="removeActivity(' + node.value +')" type="button"><span class="glyphicon glyphicon-trash"></span></button></span></li>');
-//            }
-//        }
-//    }
-//    function select_option(i) {
-//        return $('span#span_id select option[value="' + i + '"]').html();
-//    }
-//    function removeActivity(activity) {
-//        var node = document.getElementById(activity);
-//        node.disabled = false;
-//        node.selected = false;
-//        return (elem=document.getElementsByName(activity)[0]).parentNode.removeChild(elem);
-//    }
-//    
-//JQueried verions
-    function addActivitiesToList()
-    {
-        $('#selector option:selected').each(function () {
-            $(this).removeAttr("selected");
-            $(this).attr('disabled', true);
-            $('<li class="list-group-item" name="selected_activity[]" id=' + $(this).val() + '>'+ $(this).html() +'<span class="pull-right"><button class="btn btn-xs btn-warning" onclick="removeActivity(' + $(this).val() +')" type="button"><span class="glyphicon glyphicon-trash"></span></button></span></li>').appendTo('#activityList');
-        });
-    }
-    
-    function removeActivity(activity) {
-        var elem = $("[value=" + activity + "]");
-        elem.removeAttr("disabled selected");
-        console.log("li #"+ activity);
-        $("#"+ activity).remove();
-    }
-    
-    $("#radio2").change(function () {
-        if (!$("#radio2").attr("checked")) {
-            $('#radio1').attr("checked", false);
-            $('#field1').removeAttr('disabled');
-            $('#field2').removeAttr('disabled');
-            $('#date').attr('disabled', 'yes');
-        }
-    });
-    
-    $("#radio1").change(function () {
-        if (!$("#radio1").attr("checked")) {
-            $('#radio1').attr("checked", true);
-            $('#radio2').attr("checked", false);
-            $('#field1').attr('disabled', 'yes');
-            $('#field2').attr('disabled', 'yes');
-            $('#date').removeAttr('disabled');
-        }
-    });
-    
-    $(document).ready(function() {
-        $("select.sieve").sieve({ itemSelector: "option" });
-    });
-</script>
+
 @endsection

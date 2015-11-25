@@ -20,6 +20,11 @@ class EventPatternController extends Controller {
         return view('newEventPattern', compact('activities'));
     }
     
+    public function index(Request $request) {
+        $eventPatterns = EventPattern::paginate($request->input('perpage', 15));
+        return view('eventPatterns', compact('eventPatterns'));
+    }
+    
     public function store(Request $request)
     {
         $messages = [
@@ -27,7 +32,7 @@ class EventPatternController extends Controller {
             'date.required' => 'Tapahtumapohjalla tulee olla aika',
             'start.required' => 'Tapahtumapohjalla tulee olla aika',
             'end.required' => 'Tapahtumapohjalla tulee olla aika',
-            'selectedAgeGroups.required' => 'Tapahtumapohjalla tulee olla ikäryhmä'
+            'selectedAgeGroups.required' => 'Tapahtumapohjalla tulee olla ikäryhmä',
         ];
         
         $validator = Validator::make($request->all(), [
@@ -35,7 +40,7 @@ class EventPatternController extends Controller {
             'date' => 'required_if:start,null',
             'start' => 'required_if:date,null',
             'end' => 'required_if:date,null',
-            'selectedAgeGroups' => 'required'
+            'selectedAgeGroups' => 'required',
         ], $messages);
         
         if ($validator->fails()) {
