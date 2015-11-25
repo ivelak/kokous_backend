@@ -98,6 +98,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => '/events/{id}/occurrences/{occId}'], function () {
         Route::post('/newComment', "CommentController@storeOccComment");
     });
+    
+    Route::delete('/comment',"CommentController@destroy");
 
     Route::group(['prefix' => 'admin'], function () {
         Route::post('/login', 'AdminController@login');

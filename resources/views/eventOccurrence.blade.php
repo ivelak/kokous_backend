@@ -78,10 +78,17 @@
                         {{$comment->comment}}
                     </p>
                     <br>
+
+                    {!! Form::open(['action' => ['CommentController@destroy'],'method'=>'delete'])!!}
+                    {!! Form::submit('poista',['class'=>'btn-link pull-right'])!!}
+                    {!! Form::hidden('id',$comment->id)!!}
+                    {!! Form::close()!!}
+
                     <p>
-                        {{$comment->user->firstname . ' ' . $comment->user->lastname . ' - ' . $comment->created_at->format('d.m.Y - H:i')}} 
+                        {{$comment->user->firstname . ' ' . $comment->user->lastname . ' - ' . $comment->created_at->format('d.m.Y - H:i')}}
                     </p>
                 </div>
+                
                 @endforeach
 
             </div>

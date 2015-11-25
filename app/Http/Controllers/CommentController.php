@@ -84,8 +84,9 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        Comment::destroy(request('id'));
+        return back()->with('message', 'Kommentti poistettu!');
     }
 }

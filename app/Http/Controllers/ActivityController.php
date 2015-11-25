@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Activity;
 use App\Http\Controllers\Controller;
 use App\Jobs\SynchronizeWithPOF;
+use App\POF;
 
 class ActivityController extends Controller
 {
@@ -67,7 +68,17 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        
+        $actArray = POF::getItem(Activity::findOrFail($id)->guid);
+
+        return ['title' => $actArray['title'],
+            'guid' => $actArray['guid'],
+            'content' => $actArray['content'],
+            'pakollisuus' => $actArray['tags']['pakollisuus'][0]['name'],
+            'pakollisuusikoni' => $actArray['tags']['pakollisuus'][0]['icon'],
+            'ryhmakoko' => $actArray['tags']['ryhmakoko'][0]['name'],
+            'paikka' => $actArray['tags']['paikka'][0]['name'],
+            'suoritus_kesto' => $actArray['tags']['suoritus_kesto']['name']];
+
     }
 
     /**
