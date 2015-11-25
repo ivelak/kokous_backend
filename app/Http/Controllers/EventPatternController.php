@@ -10,6 +10,7 @@ use App\Activity;
 use App\User;
 use Carbon\Carbon;
 use Session;
+use Validator;
 
 class EventPatternController extends Controller {
 
@@ -21,11 +22,29 @@ class EventPatternController extends Controller {
     
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $messages = [
+            'name.required' => 'Tapahtumapohjalla tulee olla nimi',
+            'date.required' => 'Tapahtumapohjalla tulee olla aika',
+            'start.required' => 'Tapahtumapohjalla tulee olla aika',
+            'end.required' => 'Tapahtumapohjalla tulee olla aika',
+            'selectedAgeGroups.required' => 'Tapahtumapohjalla tulee olla ikäryhmä'
+        ];
+        
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'date' => 'required',
+            'date' => 'required_if:start,null',
+            'start' => 'required_if:date,null',
+            'end' => 'required_if:date,null',
             'selectedAgeGroups' => 'required'
-        ]);
+        ], $messages);
+        
+        if ($validator->fails()) {
+            return redirect('event_patterns/new')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        
+        
         
         $selected_activities = $request->input('selected_activity');
         

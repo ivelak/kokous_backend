@@ -25,10 +25,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Activity::class, function (Faker\Generator $faker) {
     $agegroups = ['sudenpennut', 'samoajat', 'tarpojat', 'seikkailijat', 'vaeltajat'];
+    $task_groups = ['activity_group1', 'activity_group2', 'activity_group3'];
     return [
         'guid' => $faker->unique()->randomNumber,
         'name' => 'Activity ' . $faker->unique()->randomNumber,
-        'age_group' => $faker->randomElement($agegroups)
+        'age_group' => $faker->randomElement($agegroups),
+        'task_group' => $faker->randomElement($task_groups)
     ];
 });
 
