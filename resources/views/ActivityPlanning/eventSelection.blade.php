@@ -8,7 +8,7 @@
     <div class="page-header">
         <h1>Valitse tapahtumapohjat</h1>
     </div>
-    {!! Form::open(['url' => '#', 'class' => '']) !!}
+    {!! Form::open(['action' => 'ActivityPlanningController@selectEvents']) !!}
     <div class="panel-group">
         @forelse($eventPatterns as $eventPattern)
         <div class="panel">
