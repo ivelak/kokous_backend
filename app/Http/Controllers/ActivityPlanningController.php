@@ -38,14 +38,28 @@ class ActivityPlanningController extends Controller
     }
     
     public function selectEvents(){
-        session(['activities' => request('activities')]);
-        return redirect('activity_planning/events');
+        session(['eventPatterns' => request('eventPatterns')]);
+        return redirect('activity_planning/planner');
     }
 
 
     public function showActivityEventPlannerView()
     {
-        return view('ActivityPlanning/activityEventPlanner');
+        $activitiesIds = session('activities');
+        $activities = [];
+        foreach($activitiesIds as $id)
+        {
+            array_push($activities, Activity::find($id));
+        }
+        
+        $eventPatternIds = session('eventPatterns');
+        $eventPatterns = [];
+        foreach($eventPatternIds as $id)
+        {
+            array_push($eventPatterns, EventPattern::find($id));
+        }
+        
+        return view('ActivityPlanning/activityEventPlanner', compact('activities', 'eventPatterns'));
     }
 
 }

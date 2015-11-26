@@ -19,6 +19,27 @@ $(document).ready(function () {
 		ev.preventDefault();
 		adminLogout();
 	});
+        
+        $("#radio2").change(function () {
+        if (!$("#radio2").attr("checked")) {
+            $('#radio1').attr("checked", false);
+            $('#field1').removeAttr('disabled');
+            $('#field2').removeAttr('disabled');
+            $('#date').attr('disabled', 'yes');
+        }
+    });
+    
+    $("#radio1").change(function () {
+        if (!$("#radio1").attr("checked")) {
+            $('#radio1').attr("checked", true);
+            $('#radio2').attr("checked", false);
+            $('#field1').attr('disabled', 'yes');
+            $('#field2').attr('disabled', 'yes');
+            $('#date').removeAttr('disabled');
+        }
+    });
+    
+    $("select.sieve").sieve({ itemSelector: "option" });
 });
 
 function adminLogin() {
@@ -60,26 +81,3 @@ function addActivitiesToList()
         console.log("li #"+ activity);
         $("#"+ activity).remove();
     }
-    
-    $("#radio2").change(function () {
-        if (!$("#radio2").attr("checked")) {
-            $('#radio1').attr("checked", false);
-            $('#field1').removeAttr('disabled');
-            $('#field2').removeAttr('disabled');
-            $('#date').attr('disabled', 'yes');
-        }
-    });
-    
-    $("#radio1").change(function () {
-        if (!$("#radio1").attr("checked")) {
-            $('#radio1').attr("checked", true);
-            $('#radio2').attr("checked", false);
-            $('#field1').attr('disabled', 'yes');
-            $('#field2').attr('disabled', 'yes');
-            $('#date').removeAttr('disabled');
-        }
-    });
-    
-    $(document).ready(function() {
-        $("select.sieve").sieve({ itemSelector: "option" });
-    });

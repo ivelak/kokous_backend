@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="page-header">
-        <h1>Valitse Tapahtumat</h1>
+        <h1>Valitse tapahtumapohjat</h1>
     </div>
     {!! Form::open(['url' => '#', 'class' => '']) !!}
     <div class="panel-group">

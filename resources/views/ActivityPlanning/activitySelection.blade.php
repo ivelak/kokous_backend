@@ -20,7 +20,7 @@
                     
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <a data-toggle="collapse" href="#{{str_slug($taskGroupName)}}" ><h4>{{ucfirst($taskGroupName)}}</a><input id="{{ucfirst($taskGroupName)}}-checkall" onchange="selectAllFromTaskGroup(this.id, '{{str_slug($taskGroupName)}}-list')" type="checkbox" class="pull-right"/></h4>
+                                <a data-toggle="collapse" href="#{{str_slug($taskGroupName)}}" ><h4>{{ucfirst($taskGroupName)}}</a><input id="{{str_slug($taskGroupName)}}-checkall" onchange="selectAllFromTaskGroup(this.id, '{{str_slug($taskGroupName)}}-list')" type="checkbox" class="pull-right"/></h4>
                             </div>
                             <div id="{{str_slug($taskGroupName)}}" class="panel-collapse collapse">
 
