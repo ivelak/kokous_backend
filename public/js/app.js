@@ -56,14 +56,7 @@ function adminLogout() {
 
 function selectAllFromTaskGroup(id, pID)
     {
-        if($('#' + id).is(':checked'))
-        {
-            $('#'+pID + " :checkbox").prop('checked', true);
-        }
-        else
-        {
-            $('#'+pID + " :checkbox").prop('checked', false);
-        }
+        $('#'+pID + " :checkbox").prop('checked', $('#' + id).is(':checked'));
     }
     
 function addActivitiesToList()
