@@ -28,8 +28,11 @@
         <h3>Ei tapahtumapohjia</h3>
         @endforelse
     </div>
-    <button class="btn btn-default" onclick="confirm('Oletko varma?')">Nollaa valinnat</button>
-    <input type="submit" class="btn btn-primary" value="Seuraava"></button>
+    <hr>
+    <div class="btn-group pull-right" role="group">
+        <button class="btn btn-default" onclick="confirm('Oletko varma?')">Nollaa valinnat</button>
+        <input type="submit" class="btn btn-primary" value="Seuraava"></button>
+    </div>
     {!! Form::close() !!}
 </div>
 @endsection
