@@ -86,6 +86,49 @@ class EventController extends Controller {
 
         return redirect('events');
     }
+    
+    public function storeNoRedirect(Request $request) {
+        $this->validate($request, [
+            'name' => 'required|max:64',
+            'date' => 'required|date_format:d.m.Y|after:' . Carbon::now(),
+            'time' => 'required|date_format:H:i',
+            'place' => 'required|max:128'
+        ]);
+
+        $event = new Event();
+        $event->name = $request->input('name');
+        $event->time = Carbon::createFromFormat('d.m.Y H:i', $request->input('date') . ' ' . $request->input('time'));
+        $event->place = $request->input('place');
+        $event->description = $request->input('description');
+        $event->group_id = $request->input('groupId');
+
+        $days = collect($request->input('days'));
+        $date = Carbon::createFromFormat('d.m.Y', $request->input('date'));
+        $endDate = $date->copy();
+        $startDate = $date->copy();
+        
+        $interval = $request->input('interval');
+
+        if ($request->input('repeat') != NULL) {
+            $ending = $request->input('ending');
+            $endDate = $ending == "afterYear" ? $endDate->addYear() : Carbon::createFromFormat('d.m.Y',$request->input('endDate'));
+        }
+        $event->endDate = $endDate;
+        $event->save();
+
+        do {
+            if (($days->contains($date->dayOfWeek) && (($startDate->diffInWeeks($date)) % $interval)==0) || $request->input('repeat') == NULL) {
+                $occurrence = new EventOccurrence();
+                $occurrence->event_id = $event->id;
+                $occurrence->date = $date;
+                $occurrence->save();
+            }
+            $date->addDay();
+        } while ($date < $endDate);
+
+
+        return redirect('activity_planning/planner');
+    }
 
     /**
      * Display the specified resource.

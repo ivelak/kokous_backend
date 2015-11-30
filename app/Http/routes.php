@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/', "EventController@index");
         Route::get('/new', "EventController@create");
         Route::post('/new', "EventController@store");
+        Route::post('/new2', "EventController@storeNoRedirect");
 
         Route::get('/{id}', "EventController@show")->where('id', '[0-9]+');
         Route::get('/{id}/edit', 'EventController@edit')->where('id', '[0-9]+');
@@ -120,6 +121,5 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/planner', 'ActivityPlanningController@showActivityEventPlannerView');
         Route::post('/activities', 'ActivityPlanningController@selectActivities');
         Route::post('/events', 'ActivityPlanningController@selectEvents');
-        Route::post('/planner', 'ActivityPlanningController@logout');
     });
 });

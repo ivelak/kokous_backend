@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Activity;
+use App\Group;
+use App\EventOccurrence;
 use App\EventPattern;
 
 class ActivityPlanningController extends Controller
@@ -59,7 +61,9 @@ class ActivityPlanningController extends Controller
             array_push($eventPatterns, EventPattern::find($id));
         }
         
-        return view('ActivityPlanning/activityEventPlanner', compact('activities', 'eventPatterns'));
+        $groups = Group::all();
+        $events = EventOccurrence::all();
+        return view('ActivityPlanning/activityEventPlanner', compact('activities', 'eventPatterns', 'groups', 'events'));
     }
 
 }

@@ -59,12 +59,12 @@ class EventPatternController extends Controller {
         
         if($request->input('date') != NULL)
         {
-            $event_pattern->date = Carbon::createFromFormat('d.m', $request->input('date'));
+            $event_pattern->date = Carbon::createFromFormat('d.m.Y', $request->input('date'));
         }
         else 
         {
-            $event_pattern->date = Carbon::createFromFormat('d.m', $request->input('start'));
-            $event_pattern->endDate = Carbon::createFromFormat('d.m', $request->input('end'));
+            $event_pattern->date = Carbon::createFromFormat('d.m.Y', $request->input('start'));
+            $event_pattern->endDate = Carbon::createFromFormat('d.m.Y', $request->input('end'));
         }
         
         $event_pattern->save();

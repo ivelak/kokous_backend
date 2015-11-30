@@ -32,14 +32,14 @@
 
         <div class="form-group">
             {!!Form::label('name', 'Tapahtuma päivä:')!!}<br/>
-            {!!Form::text('date', old('date'), ['class'=>'form-control', 'placeholder'=>'dd.mm', 'id'=>'date'])!!}
+            {!!Form::text('date', old('date'), ['class'=>'form-control', 'placeholder'=>'dd.mm.yyyy', 'id'=>'date'])!!}
         </div>
         
         {!!Form::label('name', 'Aikaväli:')!!}
         <div class="input-group">
-            <input id="field1" name="start" type="text" class="form-control" placeholder="Alkamispäivä dd.mm" disabled>
+            <input id="field1" name="start" type="text" class="form-control" placeholder="Alkamispäivä dd.mm.yyyy" disabled>
             <span class="input-group-addon">-</span>
-            <input id="field2" name="end" type="text" class="form-control" placeholder="Loppumispäivä dd.mm" disabled>
+            <input id="field2" name="end" type="text" class="form-control" placeholder="Loppumispäivä dd.mm.yyyy" disabled>
         </div>
         
         <br>
