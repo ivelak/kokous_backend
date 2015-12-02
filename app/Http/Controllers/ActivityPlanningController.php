@@ -55,7 +55,7 @@ class ActivityPlanningController extends Controller {
         }
 
         $groups = Group::all();
-        $events = EventOccurrence::all();
+        $events = EventOccurrence::with('activities')->get();
         return view('ActivityPlanning/activityEventPlanner', compact('activities', 'eventPatterns', 'groups', 'events'));
     }
 
