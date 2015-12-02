@@ -14,7 +14,21 @@ class GroupUserViewTest extends TestCase {
      *
      * @return void
      */
+    private function logIn() {
+        $user = new User();
+        $user->membernumber = '23123342';
+        $user->firstname = 'Matti';
+        $user->lastname = 'Jateppo';
+        
+        $user->save();
+        
+        Auth::login($user);
+    }
+    
     public function testCorrectViewSeen() {
+        $this->logIn();
+        session()->set('admin',1);
+        
         $group = new Group();
         $group->name = 'TestiRyhmä';
         $group->scout_group = 'Lippukunta';
@@ -29,6 +43,8 @@ class GroupUserViewTest extends TestCase {
     }
     
     public function testCorrectViewSeenWhenBackPressed() {
+        $this->logIn();
+        
         $group = new Group();
         $group->name = 'TestiRyhmä';
         $group->scout_group = 'Lippukunta';
@@ -44,6 +60,8 @@ class GroupUserViewTest extends TestCase {
     }
     
     public function testUserCanBeAddedToTheGroup() {
+        $this->logIn();
+        
         $group = new Group();
         $group->name = 'TestiRyhmä';
         $group->scout_group = 'Lippukunta';
@@ -53,12 +71,7 @@ class GroupUserViewTest extends TestCase {
         
         $user = new User();
         $user->id = '23';
-        $user->username = 'Matti';
-        $user->partio_id = '23123xc';
         $user->membernumber = '23123342';
-        $user->postalcode = '00400';
-        $user->is_scout = 'true';
-        $user->email = 'matti@gmail.com';
         $user->firstname = 'Matti';
         $user->lastname = 'Jateppo';
         
@@ -72,6 +85,8 @@ class GroupUserViewTest extends TestCase {
     }
     
     public function testUserCanBeRemovedFromTheGroup() {
+        $this->logIn();
+        
         $group = new Group();
         $group->name = 'TestiRyhmä';
         $group->scout_group = 'Lippukunta';
@@ -81,12 +96,7 @@ class GroupUserViewTest extends TestCase {
         
         $user = new User();
         $user->id = '23';
-        $user->username = 'Liisa';
-        $user->partio_id = '23123afxc';
         $user->membernumber = '2312334212';
-        $user->postalcode = '00330';
-        $user->is_scout = 'true';
-        $user->email = 'liisa@gmail.com';
         $user->firstname = 'Liisa';
         $user->lastname = 'Saarenmaa';
         

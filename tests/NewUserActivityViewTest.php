@@ -10,14 +10,23 @@ class NewUserActivityViewTest extends TestCase {
 
     use DatabaseMigrations;
     
-    public function testActivityIsAddedToUserCorrectly() {
+    private function logIn() {
         $user = new User();
-        $user->username = 'Test_user';
-        $user->partio_id = '000001';
+        $user->membernumber = '23123342';
+        $user->firstname = 'Matti';
+        $user->lastname = 'Jateppo';
+
+        $user->save();
+
+        Auth::login($user);
+    }
+    
+    
+    public function testActivityIsAddedToUserCorrectly() {
+        $this->logIn();
+        
+        $user = new User();
         $user->membernumber = '100000';
-        $user->postalcode = '00550';
-        $user->is_scout = true;
-        $user->email = 'test@test.com';
         $user->firstname = 'First_name';
         $user->lastname = 'Last_name';
         $user->save();
@@ -26,6 +35,7 @@ class NewUserActivityViewTest extends TestCase {
         $activity->guid = 1;
         $activity->name = 'Activity 1';
         $activity->age_group = 'sudenpennut';
+        $activity->task_group = 'pohjoinen';
         $activity->save();
         
         

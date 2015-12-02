@@ -5,6 +5,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\EventOccurrenceController;
 use App\EventOccurrence;
+use App\User;
 
 class EventOccurrenceControllerTest extends TestCase {
 
@@ -14,6 +15,17 @@ class EventOccurrenceControllerTest extends TestCase {
      * @return void
      */
     use DatabaseMigrations;
+    
+     private function logIn() {
+        $user = new User();
+        $user->membernumber = '23123342';
+        $user->firstname = 'Matti';
+        $user->lastname = 'Jateppo';
+        
+        $user->save();
+        
+        Auth::login($user);
+    }
 
     public function setUp() {
         parent::setUp();
@@ -21,11 +33,15 @@ class EventOccurrenceControllerTest extends TestCase {
     }
 
     public function testIndex() {
+        $this->login();
+        
         $this->action('GET', 'EventOccurrenceController@index');
         $this->seePageIs('/event-occurrences');
     }
 
     public function testEventOccurrencesCreatedWithCorrectRequirements() {
+        $this->login();
+        
         factory(App\Activity::class, 5)->create();
         factory(App\User::class, 5)->create();
         factory(App\Group::class, 5)->create();
@@ -40,6 +56,8 @@ class EventOccurrenceControllerTest extends TestCase {
     }
 
     public function testEventOccurrencesNotCreatedWithWrongAtrributes() {
+        $this->login();
+        
         factory(App\Group::class, 5)->create();
 
         $this->visit('/events/new')
@@ -52,6 +70,8 @@ class EventOccurrenceControllerTest extends TestCase {
     }
 
     public function testEventOccurrencesNotCreatedWithWrongAtrributes2() {
+        $this->login();
+        
         factory(App\Group::class, 5)->create();
 
         $this->visit('/events/new')
@@ -64,6 +84,8 @@ class EventOccurrenceControllerTest extends TestCase {
     }
 
     public function testEventOccurrencesNotCreatedWithWrongAtrributes3() {
+        $this->login();
+        
         factory(App\Group::class, 5)->create();
 
         $this->visit('/events/new')
@@ -76,6 +98,8 @@ class EventOccurrenceControllerTest extends TestCase {
     }
 
     public function testEventOccurrencesNotCreatedWithWrongAtrributes4() {
+        $this->login();
+        
         factory(App\Group::class, 5)->create();
 
         $this->visit('/events/new')
@@ -88,6 +112,8 @@ class EventOccurrenceControllerTest extends TestCase {
     }
 
     public function testEventOccurrencesNotCreatedWithWrongAtrributes5() {
+        $this->login();
+        
         factory(App\Group::class, 5)->create();
 
         $this->visit('/events/new')
