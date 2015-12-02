@@ -57,6 +57,7 @@ class ActivityRestController extends Controller {
             'content' => array_get($actArray, 'content', 'ei määritetty'),
             'pakollisuus' => array_get($actArray, 'tags.pakollisuus.name', 'ei määritetty'),
             'pakollisuusikoni' => array_get($actArray, 'tags.pakollisuus.0.icon','ei määritetty'),
+            'kuva' => array_get($actArray, 'tags.logo.url', 'ei määritetty'),
             'ryhmakoko' => array_get($actArray, 'tags.ryhmakoko.0.name', 'ei määritetty'),
             'paikka' => array_get($actArray,'tags.paikka.0.name','ei määritetty'),
             'suoritus_kesto' => array_get($actArray, 'tags.suoritus_kesto.name', 'ei määritetty')];
