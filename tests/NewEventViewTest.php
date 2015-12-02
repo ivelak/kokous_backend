@@ -3,25 +3,34 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\User;
 
 class NewEventViewTest extends TestCase {
 
     use DatabaseMigrations;
-    
-    private static function runFactory()
-    {
+
+    private static function runFactory() {
         factory(App\Activity::class, 5)->create();
         factory(App\User::class, 5)->create();
         factory(App\Group::class, 5)->create();
         factory(App\Event::class, 5)->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
+    private function logIn() {
+        $user = new User();
+        $user->membernumber = '23123342';
+        $user->firstname = 'Matti';
+        $user->lastname = 'Jateppo';
+
+        $user->save();
+
+        Auth::login($user);
+    }
+    
+    
     public function testRedirectsToCorrectViewWhenValidInput() {
+        $this->logIn();
+        
         self::runFactory();
         $this->visit('/events/new')
                 ->type('Kokous', 'name')
@@ -36,6 +45,8 @@ class NewEventViewTest extends TestCase {
     }
 
     public function testShowsErrorMessageWhenInvalidTimeInput() {
+        $this->logIn();
+        
         self::runFactory();
         $this->visit('/events/new')
                 ->type('Kokous', 'name')
@@ -51,6 +62,8 @@ class NewEventViewTest extends TestCase {
     }
 
     public function testReturnsToCorrectViewWhenCancelIsPressed() {
+        $this->logIn();
+        
         self::runFactory();
         $this->visit('/events/new')
                 ->type('Kokous', 'name')
@@ -65,6 +78,8 @@ class NewEventViewTest extends TestCase {
     }
 
     public function testShowsErrorMessageWhenNameIsNotEntered() {
+        $this->logIn();
+        
         self::runFactory();
         $this->visit('/events/new')
                 ->type('', 'name')
@@ -80,6 +95,8 @@ class NewEventViewTest extends TestCase {
     }
 
     public function testShowsErrorMessageWhenPlaceIsNotEntered() {
+        $this->logIn();
+        
         self::runFactory();
         $this->visit('/events/new')
                 ->type('Tanssi', 'name')
@@ -95,6 +112,8 @@ class NewEventViewTest extends TestCase {
     }
 
     public function testShowsErrorMessageWhenTimeIsNotInValidFormat() {
+        $this->logIn();
+        
         self::runFactory();
         $this->visit('/events/new')
                 ->type('Pyöräily', 'name')
@@ -110,6 +129,8 @@ class NewEventViewTest extends TestCase {
     }
 
     public function testShowsErrorMessageWhenDateIsNotInValidFormat() {
+        $this->logIn();
+        
         self::runFactory();
         $this->visit('/events/new')
                 ->type('Melonta', 'name')
@@ -125,34 +146,33 @@ class NewEventViewTest extends TestCase {
     }
 
     // Toiston validointi pitää tehdä ennen näiden toimimista!
-    /*public function testShowsErrorMessageWhenEndindIsSetButEndDateNot() {
-        self::runFactory();
-        $this->visit('/events/new')
-                ->type('Melonta', 'name')
-                ->type('25.07.2016', 'date')
-                ->type('16:40', 'time')
-                ->check('ending')
-                ->select('1', 'groupId')
-                ->type('Munkkiniemi', 'place')
-                ->type('Melontaretki', 'description')
-                ->press('Lisää tapahtuma')
-                ->seePageIs('/events/new');
-        $this->visit('/events/new')
-                ->setValues(array('days' => array('1')))
-                ->see('The endDate is required');
-    }
+    /* public function testShowsErrorMessageWhenEndindIsSetButEndDateNot() {
+      self::runFactory();
+      $this->visit('/events/new')
+      ->type('Melonta', 'name')
+      ->type('25.07.2016', 'date')
+      ->type('16:40', 'time')
+      ->check('ending')
+      ->select('1', 'groupId')
+      ->type('Munkkiniemi', 'place')
+      ->type('Melontaretki', 'description')
+      ->press('Lisää tapahtuma')
+      ->seePageIs('/events/new');
+      $this->visit('/events/new')
+      ->setValues(array('days' => array('1')))
+      ->see('The endDate is required');
+      }
 
-    public function testShowsErrorMessageWhenRepeatIsSetButWeekDayNot() {
-        self::runFactory();
-        $this->visit('/events/new')
-                ->type('Melonta', 'name')
-                ->type('25.07.2016', 'date')
-                ->type('16:40', 'time')
-                ->type('Munkkiniemi', 'place')
-                ->type('Melontaretki', 'description')
-                ->press('Lisää tapahtuma')
-                ->seePageIs('/events/new')
-                ->see('At least one day must be checked');
-    }*/
-
+      public function testShowsErrorMessageWhenRepeatIsSetButWeekDayNot() {
+      self::runFactory();
+      $this->visit('/events/new')
+      ->type('Melonta', 'name')
+      ->type('25.07.2016', 'date')
+      ->type('16:40', 'time')
+      ->type('Munkkiniemi', 'place')
+      ->type('Melontaretki', 'description')
+      ->press('Lisää tapahtuma')
+      ->seePageIs('/events/new')
+      ->see('At least one day must be checked');
+      } */
 }
