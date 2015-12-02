@@ -16,8 +16,9 @@ class GroupRestController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        
-        return Group::with('users')->get();
+        return Group::with(['users' => function($query){
+            $query->wherePivot('role', 'member');
+        }])->get();
     }
 
     /**
