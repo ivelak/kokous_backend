@@ -71,27 +71,29 @@
     <div class="panel panel-default">
         <div class="panel-heading"><strong>Kommentit:</strong></div>
         <div class="panel-body">
-            <div>
-                @foreach($eventOccurrence->comments as $comment)
-                <div class="well">
-                    <p>
-                        {{$comment->comment}}
-                    </p>
-                    <br>
 
-                    {!! Form::open(['action' => ['CommentController@destroy'],'method'=>'delete'])!!}
-                    {!! Form::submit('poista',['class'=>'btn-link pull-right'])!!}
-                    {!! Form::hidden('id',$comment->id)!!}
-                    {!! Form::close()!!}
+            @forelse($eventOccurrence->comments as $comment)
+            <div class="well">
+                <p>
+                    {{$comment->comment}}
+                </p>
+                <br>
 
-                    <p>
-                        {{$comment->user->firstname . ' ' . $comment->user->lastname . ' - ' . $comment->created_at->format('d.m.Y - H:i')}}
-                    </p>
-                </div>
-                
-                @endforeach
+                {!! Form::open(['action' => ['CommentController@destroy'],'method'=>'delete'])!!}
+                {!! Form::submit('poista',['class'=>'btn-link pull-right'])!!}
+                {!! Form::hidden('id',$comment->id)!!}
+                {!! Form::close()!!}
 
+                <p>
+                    {{$comment->user->firstname . ' ' . $comment->user->lastname . ' - ' . $comment->created_at->format('d.m.Y - H:i')}}
+                </p>
             </div>
+            @empty
+            <p>Ei kommentteja!</p>
+
+
+            @endforelse
+
         </div>
     </div>
 

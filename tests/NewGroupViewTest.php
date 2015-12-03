@@ -9,12 +9,22 @@ use App\Group;
 class NewGroupViewTest extends TestCase {
 
     use DatabaseMigrations;
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
+    
+     private function logIn() {
+        $user = new User();
+        $user->membernumber = '23123342';
+        $user->firstname = 'Matti';
+        $user->lastname = 'Jateppo';
+
+        $user->save();
+
+        Auth::login($user);
+    }
+    
     public function testRedirectsToCorrectViewWhenValidInput() {
+        $this->logIn();
+        session()->set('admin',1);
+        
         $this->visit('/groups/new')
                 ->type('Test123','name')
                 ->type('Test_group123','scout_group')
@@ -27,13 +37,7 @@ class NewGroupViewTest extends TestCase {
     private function createUser()
     {
         $user = new User();
-        $user->id = '1';
-        $user->username = 'Teppo';
-        $user->partio_id = '23123xc';
         $user->membernumber = '23123343';
-        $user->postalcode = '00400';
-        $user->is_scout = 'true';
-        $user->email = 'matti@gmail.com';
         $user->firstname = 'Matti';
         $user->lastname = 'Jateppo';
         
@@ -43,19 +47,16 @@ class NewGroupViewTest extends TestCase {
     private function createUser2()
     {
         $user = new User();
-        $user->id = '2';
-        $user->username = 'Matti';
-        $user->partio_id = '23123xd';
-        $user->membernumber = '23123342';
-        $user->postalcode = '00400';
-        $user->is_scout = 'true';
-        $user->email = 'matti@gmail.com';
+        $user->membernumber = '231233342';
         $user->firstname = 'Matti';
-        $user->lastname = 'Jateppo';
+        $user->lastname = 'Repo';
         $user->save();
     }
     
     public function testGroupIsAddedCorrectly() {
+        $this->logIn();
+        session()->set('admin',1);
+        
         self::createUser();
         self::createUser2();
         
@@ -73,6 +74,9 @@ class NewGroupViewTest extends TestCase {
     }
     
     public function testShowsErrorMessageWhenInvalidNameInput(){
+        $this->logIn();
+        session()->set('admin',1);
+        
         $this->visit('/groups/new')
                 ->type('','name')
                 ->type('Test_group123','scout_group')
@@ -84,6 +88,9 @@ class NewGroupViewTest extends TestCase {
     }
     
     public function testShowsErrorMessageWhenInvalidScoutGroupInput(){
+        $this->logIn();
+        session()->set('admin',1);
+        
         $this->visit('/groups/new')
                 ->type('Test123','name')
                 ->type('','scout_group')

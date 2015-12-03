@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use App\Group;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -14,7 +15,20 @@ class GroupViewTest extends TestCase {
      *
      * @return void
      */
+     private function logIn() {
+        $user = new User();
+        $user->membernumber = '23123342';
+        $user->firstname = 'Matti';
+        $user->lastname = 'Jateppo';
+
+        $user->save();
+
+        Auth::login($user);
+    }
+       
     public function testCorrectlyCreatedGroupSeenOnView() {
+        $this->logIn();
+        
         $group = new Group();
         $group->name = 'Test123';
         $group->scout_group = 'Test_group123';
@@ -28,11 +42,15 @@ class GroupViewTest extends TestCase {
     }
     
     public function testCorrectViewWhenNoGroupsAdded() {
+        $this->logIn();
+        
         $this->visit('/groups')
              ->see('Ei ryhmiä');
     }
     
     public function testCorrectlyCreatedGroupSeenOnView1() {
+        $this->logIn();
+        
         $group = new Group();
         $group->name = 'Sudenpennut';
         $group->scout_group = 'Test_ScoutGroup';
@@ -47,6 +65,8 @@ class GroupViewTest extends TestCase {
     }
     
      public function testCorrectFieldsSeenInTheView() {
+        $this->logIn();
+         
         $group = new Group();
         $group->name = 'RyhmäA';
         $group->scout_group = 'Lippulaiset';
@@ -65,6 +85,9 @@ class GroupViewTest extends TestCase {
     }
     
     public function testGroupCanBeDeleted() {
+        $this->logIn();
+        session()->set('admin',1);
+        
         $group = new Group();
         $group->name = 'RyhmäA';
         $group->scout_group = 'Lippulaiset';

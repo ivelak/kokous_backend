@@ -21,7 +21,7 @@
         <div class="panel-heading"><strong>Tiedot:</strong></div>
         <div class="panel-body">
             <ul>
-                <li><strong>Ryhmän nimi: </strong>{{ $group->name}}</li>               
+                <li><strong>Ryhmän nimi: </strong>{{ $group->name}}</li>
                 <li><strong>Lippukunta: </strong>{{ $group->scout_group }}</li>
                 <li><strong>Ikäryhmä: </strong>{{ $group-> age_group }}</li>
             </ul>
@@ -34,13 +34,13 @@
         </div>
         <div id="collapse1" class="panel-collapse collapse">
             <ul class="list-group">
-                @forelse($group->users()->where('role','leader')->get() as $user)
+                @forelse($group->leaders as $user)
                 <li class="list-group-item">{{$user -> firstname . ' ' . $user -> lastname}}</li>
                 @empty
                 <li class="list-group-item"><p><strong> Ei lisättyjä ryhmänjohtajia</strong></p></li>
                 @endforelse
             </ul>
-        </div> 
+        </div>
     </div>
 
     <div class="panel panel-default">
@@ -49,13 +49,13 @@
         </div>
         <div id="collapse2" class="panel-collapse collapse">
             <ul class="list-group">
-                @forelse($group->users()->where('role','member')->get() as $user)
+                @forelse($group->members as $user)
                 <li class="list-group-item">{{$user -> firstname . ' '  . $user -> lastname}}</li>
                 @empty
                 <li class="list-group-item"><p><strong> Ei lisättyjä jäseniä</strong></p></li>
                 @endforelse
             </ul>
-        </div> 
+        </div>
     </div>
 
     <div class="panel panel-default">
@@ -74,4 +74,3 @@
     </div>
 
     @endsection
-

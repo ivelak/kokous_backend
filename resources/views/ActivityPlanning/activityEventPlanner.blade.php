@@ -13,7 +13,7 @@
             <div class="well" style="max-height: 500px; overflow-y:scroll;">
                 <ul class="list-group" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)" style="min-height: 5em">
                     @foreach($activities as $activity)
-                    <li class="list-group-item" draggable="true" id="{{$activity->id}}">{{$activity->name}}</li>
+                    <li class="list-group-item" draggable="true" id="activity-{{$activity->id}}">{{$activity->name}}</li>
                     @endforeach
                 </ul>
             </div>
@@ -23,8 +23,16 @@
             <hr>
             <div class="well" style="max-height: 500px; overflow-y:scroll;" ondrop="drop2(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
                 @foreach($eventPatterns as $eventPattern)
-                <ul class="list-group event-draggable" draggable="true" id="e-{{$eventPattern->id}}" ondragover="allowDrop(event)" ondragstart="drag(event)">
-                    <h4 class="list-group-item-heading">{{$eventPattern->name}}</h4>
+                <ul class="list-group event-draggable" draggable="true" id="pattern-{{$eventPattern->id}}" ondragover="allowDrop(event)" ondragstart="drag(event)">
+                    <input hidden="true" name="event_pattern[]" value="{{$eventPattern->id}}">
+                    <h4 class="list-group-item-heading">{{$eventPattern->name}}
+                        <small>
+                        @if(isset($eventPattern->endDate))
+                        {{$eventPattern->date->format('d.m.Y')}} - {{$eventPattern->endDate->format('d.m.Y')}}
+                        @else
+                        {{$eventPattern->date->format('d.m.Y')}}
+                        @endif
+                        </small></h4>
                     <ul class="list-group" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"  style="min-height: 5em">
                         @foreach($eventPattern->activities as $activity)
                         <li class="list-group-item" draggable="false">{{$activity->name}}<span class="glyphicon glyphicon-lock pull-right"></span></li>
@@ -38,17 +46,17 @@
 
             <h3>Toimintasuunnitelma<button type="button" class="btn btn-sm pull-right" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></h3>
             <hr>
-            <div class="well" style="max-height: 500px; overflow-y:scroll;" ondrop="drop2(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
-                @foreach($events as $event)
+            <div class="well" id="eventPlanner" style="max-height: 500px; overflow-y:scroll;" ondrop="drop2(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
+                {{--@foreach($events as $event)
                 <ul class="list-group event-draggable">
-                    <h4 class="list-group-item-heading">{{$event->event->name}}</h4>
-                    <ul class="list-group">
+                    <h4 class="list-group-item-heading">{{$event->event->name}} <small>{{$event->date->format('d.m.Y')}}</small></h4>
+                    <ul class="list-group" id="event-{{$event->id}}" ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)">
                         @foreach($event->activities as $activity)
                         <li class="list-group-item" draggable="false">{{$activity->name}}<span class="glyphicon glyphicon-lock pull-right"></span></li>
                         @endforeach
                     </ul>
                 </ul>
-                @endforeach
+                @endforeach--}}
             </div>
             <br>
             <strong>Tapahtumien aikaväli</strong>
@@ -175,14 +183,10 @@
         var target = $(ev.target);
         var thisElement = document.getElementById(data);
 
-        console.log(thisElement);
+        console.log(target);
         if (thisElement.tagName === "UL" && target)
         {
-            if (target.is('li'))
-            {
-                target.parent('ul').parent('ul').parent('div').append(document.getElementById(data));
-            }
-            else if ((target.is('ul') && target.parent('ul') !== null) || target.is('h4'))
+            if (target.is('li') || (target.is('ul') && target.parent('ul') !== null) || target.is('h4'))
             {
                 target.parent('ul').parent('div').append(document.getElementById(data));
             }
@@ -215,6 +219,33 @@
             }
         }
     }
+    
+    $(document).ready(function() {
+        var eventOccurrences = {!!$events->toJson()!!};
+        for(var i = 0; i < eventOccurrences.length; i++)
+        {
+            var event = eventOccurrences[i];
+            var ul = $("<ul></ul>").addClass("list-group").attr("id", "event-"+event.id).attr("ondragover", "allowDrop(event)")
+                    .attr("ondragstart", "drag(event)").attr("ondrop", "drop(event)");
+            
+            var h4 = $("<h4></h4>").addClass("list-group-item-heading").text(event.event.name+" ");
+            var date = new Date(event.date.date.substring(0,10));
+            var small = $("<small></small>").text(date.getDay()+"."+date.getMonth()+"."+date.getFullYear());
+            h4.append(small);
+            ul.append(h4);
+            
+            for(var j = 0; j < event.activities.length; j++)
+            {
+                var activity = event.activities[j];
+                var li = $("<li></li>").addClass("list-group-item").attr("draggable", "false").text(activity.name);
+                var span = $("<span></span>").addClass("glyphicon glyphicon-lock pull-right");
+                li.append(span);
+                ul.append(li);
+            }
+            $('#eventPlanner').append(ul);
+        }
+    });
+    
     $(function () {
         $("#slider").slider();
     });
