@@ -17,7 +17,7 @@ class EventRestController extends Controller
      */
     public function index()
     {
-        return EventOccurrence::with(['activities', 'event.group'])->get();
+        return EventOccurrence::with(['activities', 'event.group', 'comments'])->get();
     }
 
     /**
@@ -50,7 +50,7 @@ class EventRestController extends Controller
     public function show($id)
     {
         
-        return EventOccurrence::with('activities')->findOrFail($id);
+        return EventOccurrence::with(['activities', 'comments'])->findOrFail($id);
     }
 
     /**

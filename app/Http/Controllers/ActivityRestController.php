@@ -50,8 +50,9 @@ class ActivityRestController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $actArray = POF::getItem(Activity::findOrFail($id)->guid);
-
+        $asd = Activity::findOrFail($id);
+        $actArray = POF::getItem($asd->guid);
+        
         return ['title' => array_get($actArray, 'title', 'ei määritetty'),
             'guid' => array_get($actArray, 'guid', 'ei määritetty'),
             'content' => array_get($actArray, 'content', 'ei määritetty'),
@@ -61,8 +62,8 @@ class ActivityRestController extends Controller {
             'logo' => array_get($actArray, 'images.logo.url', ''),
             'main_image' => array_get($actArray, 'images.main_image.url', ''),
             'paikka' => array_get($actArray, 'tags.paikka.0.name', 'ei määritetty'),
-            'suoritus_kesto' => array_get($actArray, 'tags.suoritus_kesto.name', 'ei määritetty')];
-
+            'suoritus_kesto' => array_get($actArray, 'tags.suoritus_kesto.name', 'ei määritetty'),
+            'comments' => $asd->comments];
 //             ,
 //            'pakollisuus' => $actArray->tags->pakollisuus->name, 'ryhmakoko' => $actArray->tags->ryhmakoko->name,
 //            'paikka' => $actArray->tags->paikka->name, 'suoritus_kesto' => $actArray->tags->suoritus_kesto->name];
