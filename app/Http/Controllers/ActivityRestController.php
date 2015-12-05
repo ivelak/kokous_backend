@@ -50,8 +50,8 @@ class ActivityRestController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $asd = Activity::findOrFail($id);
-        $actArray = POF::getItem($asd->guid);
+        $aktiviteetti = Activity::findOrFail($id);
+        $actArray = POF::getItem($aktiviteetti->guid);
         
         return ['title' => array_get($actArray, 'title', 'ei määritetty'),
             'guid' => array_get($actArray, 'guid', 'ei määritetty'),
@@ -59,11 +59,11 @@ class ActivityRestController extends Controller {
             'pakollisuus' => array_get($actArray, 'tags.pakollisuus.name', 'ei määritetty'),
             'pakollisuusikoni' => array_get($actArray, 'tags.pakollisuus.0.icon', 'ei määritetty'),
             'ryhmakoko' => array_get($actArray, 'tags.ryhmakoko.0.name', 'ei määritetty'),
-            'logo' => array_get($actArray, 'images.logo.url', ''),
-            'main_image' => array_get($actArray, 'images.main_image.url', ''),
+            'logo' => array_get($actArray, 'images.logo.url', 'https://learn.extension.org/assets/avatar_placeholder-4c003c71739be2ed78864bcd49550380.png'),
+            'main_image' => array_get($actArray, 'images.main_image.url', 'https://secure.bandit.fm/web/img/no-image.png'),
             'paikka' => array_get($actArray, 'tags.paikka.0.name', 'ei määritetty'),
             'suoritus_kesto' => array_get($actArray, 'tags.suoritus_kesto.name', 'ei määritetty'),
-            'comments' => $asd->comments];
+            'comments' => $aktiviteetti->comments];
 //             ,
 //            'pakollisuus' => $actArray->tags->pakollisuus->name, 'ryhmakoko' => $actArray->tags->ryhmakoko->name,
 //            'paikka' => $actArray->tags->paikka->name, 'suoritus_kesto' => $actArray->tags->suoritus_kesto->name];
