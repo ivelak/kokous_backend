@@ -11,7 +11,7 @@ class Activity extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'guid', 'age_group', 'task_group', 'logo'];
+    protected $fillable = ['name', 'guid', 'age_group', 'task_group', 'logo', 'main_image'];
 
     public function eventOccurences(){
         return $this->belongsToMany('App\EventOccurrence');
