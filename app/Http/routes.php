@@ -37,15 +37,19 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['prefix' => 'events'], function () {
         Route::get('/', "EventController@index");
-        Route::get('/new', "EventController@create");
+
         Route::post('/new', "EventController@store");
         Route::post('/new2', "EventController@storeNoRedirect");
-
         Route::get('/{id}', "EventController@show")->where('id', '[0-9]+');
         Route::get('/{id}/edit', 'EventController@edit')->where('id', '[0-9]+');
         Route::put('/{id}', 'EventController@update')->where('id', '[0-9]+');
         Route::delete('/{id}', 'EventController@destroy')->where('id', '[0-9]+');
+
+        Route::group(['middleware' => 'admin'], function() {
+            Route::get('/new', "EventController@create");
+        });
     });
+
 
     Route::group(['prefix' => '/events/{id}/occurrences'], function () {
         Route::get('/{occId}', "EventOccurrenceController@show")->where('occId', '[0-9]+');
@@ -77,12 +81,12 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{id}/newEvent', 'EventController@createForGroup')->where('id', '[0-9]+');
         Route::post('/{id}/users', 'GroupUserController@add')->where('id', '[0-9]+');
         Route::delete('/{id}/users', 'GroupUserController@remove')->where('id', '[0-9]+');
-        Route::get('/{id}/edit', 'GroupController@edit')->where('id', '[0-9]+');
-        Route::put('/{id}', 'GroupController@update')->where('id', '[0-9]+');
 
         Route::group(['middleware' => 'admin'], function() {
             Route::get('/new', "GroupController@create");
             Route::post('/new', "GroupController@store");
+            Route::get('/{id}/edit', 'GroupController@edit')->where('id', '[0-9]+');
+            Route::put('/{id}', 'GroupController@update')->where('id', '[0-9]+');
             Route::delete('/{id}', 'GroupController@destroy')->where('id', '[0-9]+');
         });
     });
@@ -93,7 +97,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/sync', ['uses' => "ActivityController@sync", 'middleware' => "admin"]);
     });
 
-    Route::group(['prefix' => 'event_patterns'], function () {
+    Route::group(['prefix' => 'event_patterns', 'middleware' => 'admin'], function () {
         Route::get('/new', "EventPatternController@create");
         Route::get('/', "EventPatternController@index");
         Route::post('/new', "EventPatternController@store");

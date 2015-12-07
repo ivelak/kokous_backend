@@ -9,6 +9,7 @@ use App\Event;
 use App\EventOccurrence;
 use App\Group;
 use Carbon\Carbon;
+use Gate;
 
 class EventController extends Controller {
 
@@ -150,7 +151,13 @@ class EventController extends Controller {
      */
     public function edit($id) {
         $event = Event::findOrFail($id);
+        
+        if(Gate::allows('manage',$event)){
         return view('editEvent', compact('event'));
+        }
+        else{
+            return abort(403);
+        }
     }
 
     /**

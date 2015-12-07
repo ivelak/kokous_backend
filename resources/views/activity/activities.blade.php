@@ -8,8 +8,9 @@
     <h1> Kaikki aktiviteetit </h1> <hr />
     <div class="panel">
         {!!Form::open(array('action' => ['ActivityController@sync'], 'class'=>'form-inline'))!!}
-        {!!link_to_action('ActivityController@create', $title = 'Uusi aktiviteetti', [], $attributes = array('class'=>'btn btn-default'))!!}
+        @if(App\Admin::isAdmin())
         {!!Form::submit('Hae POFista', ['class' => 'btn btn-default'])!!}
+        @endif
         {!!Form::close()!!}
     </div>
     <div class="panel">
