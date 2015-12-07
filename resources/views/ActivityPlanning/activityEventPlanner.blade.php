@@ -237,8 +237,8 @@
     function submit()
     {
         var data = {};
-        data.patterns = [];
         data.occurrences = [];
+        data.patterns = [];
         
         var uls = $('#eventPlanner').children('ul');
         $.each(uls,function()
@@ -246,7 +246,7 @@
             if($(this).attr('id').search('event') != -1) // on eventOccurrence
             {
                 var occurrence = {};
-                occurrence.id = $(this).attr('id').slice(6, $(this).attr('id').length-1);
+                occurrence.id = $(this).attr('id').slice($(this).attr('id').indexOf('-')+1);
                 occurrence.activities = [];
                 $.each($(this).children('li'),function()
                 {
@@ -280,8 +280,12 @@
             url: "{!! action('ActivityPlanningController@handleActivityPlan')!!}",
             type: "POST",
             data: json,
+            accepts: {
+                text: "application/json"
+            },
+            dataType: "json",
             success: function(data, textStatus, jqXHR) {
-                console.log(jqXHR.responseText);
+                console.log(data);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log("Fail");
