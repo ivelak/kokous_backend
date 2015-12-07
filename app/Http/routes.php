@@ -28,7 +28,7 @@ Route::group(['prefix' => 'dev'], function() {
 
 Route::group(['prefix' => 'api/dev'], function () {
     Route::resource('group', 'GroupRestController', ['only' => ['index', 'show']]);
-    Route::resource('events', 'EventRestController', ['only' => ['index', 'show']]);
+    Route::resource('events', 'EventRestController', ['only' => ['index', 'show', 'store']]);
     Route::resource('activities', 'ActivityRestController', ['only' => ['index', 'show']]);
     Route::get('userActivities', 'ActivityRestController@userActivities');
 });
