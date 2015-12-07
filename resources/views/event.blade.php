@@ -7,14 +7,17 @@
 <div class="container">
     <h1>{{ $event->name }} <small>{{$event->group->name}}</small></h1>
     <hr>
+
+    @can('manage',$event)
     <div class="panel">
 
         {!!Form::open(array('action' => ['EventController@destroy', $event], 'method'=>'delete', 'class'=>'form-inline'))!!}
         {!!link_to_action('EventController@edit', $title = 'Muokkaa tapahtumaa', ['id' => $event->id], $attributes = array('class'=>'btn btn-default'))!!}
         {!!Form::submit('Poista', ['onclick'=>'return confirm("Haluatko varmasti poistaa tapahtuman?")', 'class' => 'btn btn-default pull-right'])!!}
         {!!Form::close()!!}
-
     </div>
+    @endcan
+    
     <div class="panel panel-default">
         <div class="panel-heading"><strong>Tiedot:</strong></div>
         <div class="panel-body">

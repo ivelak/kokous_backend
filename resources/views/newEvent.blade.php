@@ -97,9 +97,5 @@
         {!! Form::close() !!}
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $("select.sieve").sieve({itemSelector: "option"});
-    });
-</script>
+
 @endsection

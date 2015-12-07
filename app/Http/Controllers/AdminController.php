@@ -20,7 +20,7 @@ class AdminController extends Controller {
 
     public function logout(Request $request) {
         $request->session()->forget('admin');
-        return back()->with('message', 'Uloskirjautuminen hallintopaneelista onnistui!');
+        return view('welcome')->with('message', 'Uloskirjautuminen hallintopaneelista onnistui!');
     }
 
     public function show() {

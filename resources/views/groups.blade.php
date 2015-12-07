@@ -5,7 +5,9 @@
 <div class="container">
     <h1> Kaikki ryhmät </h1> <hr />
     <div class="panel">
+        @if(App\Admin::isAdmin())
         {!!link_to_action('GroupController@create', $title = 'Uusi ryhmä', [], $attributes = array('class'=>'btn btn-default'))!!}
+        @endif
     </div>
     <div class="panel">
         <div class="panel panel-default">

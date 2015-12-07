@@ -4,9 +4,12 @@
 @section('content')
 <div class="container">
     <h1> Kaikki tapahtumat </h1> <hr />
-    <div class="panel">
+    
+    @if(App\Admin::isAdmin())
+    <div class="panel">      
         {!!link_to_action('EventController@create', $title = 'Uusi tapahtuma', [], $attributes = array('class'=>'btn btn-default'))!!}
     </div>
+    @endif
     <div class="panel">
         <div class="panel panel-default">
             <div class="panel-heading">
