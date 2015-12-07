@@ -50,7 +50,7 @@ class ActivityRestController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $aktiviteetti = Activity::findOrFail($id);
+        $aktiviteetti = Activity::with('comments')->findOrFail($id);
         $actArray = POF::getItem($aktiviteetti->guid);
         
         return ['title' => array_get($actArray, 'title', 'ei määritetty'),
