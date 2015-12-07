@@ -42,6 +42,16 @@
         </div>
         @endforeach
     </div>
+    <div class="container">
+        {!!Form::label('groups', 'Valitse ryhmä:')!!}
+            <select class="form-control sieve" name="groupId" id="groups">
+                @forelse($groups as $group)
+                <option value="{{ $group->id }}">{{ $group->name }}</option>             
+                @empty
+                <option disabled value=""> Ei ryhmiä</option>
+                @endforelse
+            </select>
+    </div>
     <hr>
     <div class="btn-group pull-right" role="group">
         <button class="btn btn-default" onclick="confirm('Oletko varma?')">Nollaa valinnat</button>

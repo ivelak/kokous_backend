@@ -18,16 +18,18 @@ class ActivityPlanningController extends Controller {
         $activitiesByTaskGroups = $activitiesByTaskGroups->map(function($item, $key) {
             return collect([$key => $item]);
         });
+        
+        $groups = Group::all();
 
         $activitiesByAgeGroups = $activitiesByTaskGroups->groupBy(function($item, $key) {
             return $item->first()->first()->age_group;
         });
 
-        return view('ActivityPlanning/activitySelection', compact('activitiesByAgeGroups'));
+        return view('ActivityPlanning/activitySelection', compact('activitiesByAgeGroups', 'groups'));
     }
 
     public function selectActivities() {
-        session(['activities' => request('activities')]);
+        session(['activities' => request('activities')], ['group' => request('group')]);
         return redirect('activity_planning/events');
     }
 
@@ -54,9 +56,17 @@ class ActivityPlanningController extends Controller {
             array_push($eventPatterns, EventPattern::find($id));
         }
 
+        $groupId = session('group');
+        $group = Group::find($groupId);
         $groups = Group::all();
+        //$events = EventOccurrence::with('activities')->where('group', $groupId)->get();
         $events = EventOccurrence::with('activities')->get();
-        return view('ActivityPlanning/activityEventPlanner', compact('activities', 'eventPatterns', 'groups', 'events'));
+        
+        return view('ActivityPlanning/activityEventPlanner', compact('activities', 'eventPatterns', 'groups', 'group', 'events'));
+    }
+    
+    public function handleActivityPlan(Request $request) {
+        dd($request);
     }
 
 }

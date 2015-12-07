@@ -8,6 +8,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         {!!Html::style('css/bootstrap.min.css', [], Request::secure())!!}
         {!!Html::style('css/bootstrap-theme.min.css', [], Request::secure())!!}
         {!!Html::style('css/styles.css', [], Request::secure())!!}

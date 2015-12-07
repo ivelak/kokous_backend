@@ -5,7 +5,6 @@
 @section('content')
 
 <div class="container-fluid">
-    {!! Form::open(['url' => '#']) !!}
     <div class="row">
         <div class="col-sm-4">
             <h3>Aktiviteetit</h3>
@@ -21,7 +20,7 @@
         <div class="col-sm-4">
             <h3>Tapahtumapohjat</h3>
             <hr>
-            <div class="well" style="max-height: 500px; overflow-y:scroll;" ondrop="drop2(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
+            <div class="well" style="max-height: 500px; overflow-y:scroll;" ondrop="drop3(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
                 @foreach($eventPatterns as $eventPattern)
                 <ul class="list-group event-draggable" draggable="true" id="pattern-{{$eventPattern->id}}" ondragover="allowDrop(event)" ondragstart="drag(event)">
                     <input hidden="true" name="event_pattern[]" value="{{$eventPattern->id}}">
@@ -70,10 +69,9 @@
     <hr>
     <div class="btn-group pull-right" role="group">
         <button class="btn btn-default" onclick="confirm('Oletko varma?')">Nollaa valinnat</button>
-        <input type="submit" class="btn btn-primary" value="Seuraava"></button>
+        <input type="button" class="btn btn-primary" onclick="submit()" value="Seuraava"></button>
     </div>
 
-    {!! Form::close() !!}
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -95,8 +93,8 @@
 
                         {!!Form::label('groups', 'Valitse ryhmä:')!!}
                         <select class="form-control sieve" name="groupId" id="groups">
-                            @forelse($groups as $group)
-                            <option value="{{ $group->id }}">{{ $group->name }}</option>             
+                            @forelse($groups as $group2)
+                            <option value="{{ $group2->id }}">{{ $group2->name }}</option>             
                             @empty
                             <option disabled value=""> Ei ryhmiä</option>
                             @endforelse
@@ -183,9 +181,21 @@
         var target = $(ev.target);
         var thisElement = document.getElementById(data);
 
-        console.log(target);
         if (thisElement.tagName === "UL" && target)
         {
+            var date = thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML;
+            
+            if(date.indexOf('-') != -1)
+            {
+                var time = prompt("Anna päivämäärä:", "");
+                // Tarkasta oikeellisuus
+                thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML = time;
+            }
+            else
+            {
+                savedTimes[thisElement.id] = thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML;
+            }
+            
             if (target.is('li') || (target.is('ul') && target.parent('ul') !== null) || target.is('h4'))
             {
                 target.parent('ul').parent('div').append(document.getElementById(data));
@@ -199,6 +209,85 @@
                 target.append(document.getElementById(data));
             }
         }
+    }
+    
+    function drop3(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var target = $(ev.target);
+        var thisElement = document.getElementById(data);
+
+        if (thisElement.tagName === "UL" && target)
+        {
+            thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML = savedTimes[thisElement.id]
+            
+            if (target.is('li') || (target.is('ul') && target.parent('ul') !== null) || target.is('h4'))
+            {
+                target.parent('ul').parent('div').append(document.getElementById(data));
+            }
+            else if (target.is('ul') && target.parent('ul') === null)
+            {
+                target.parent('div').append(document.getElementById(data));
+            }
+            else
+            {
+                target.append(document.getElementById(data));
+            }
+        }
+    }
+    
+    function submit()
+    {
+        var data = {};
+        data.patterns = [];
+        data.occurrences = [];
+        
+        var uls = $('#eventPlanner').children('ul');
+        $.each(uls,function()
+        {
+            console.log($(this).attr('id'));
+            if($(this).attr('id').search('event') != -1) // on eventOccurrence
+            {
+                var occurrence = {};
+                occurrence.id = $(this).attr('id').slice(5, $(this).attr('id').length-1);
+                occurrence.activities = [];
+                $.each($(this).children('li'),function()
+                {
+                    if($(this).attr('id') != null)
+                    {
+                        occurrence.activities.push($(this).attr('id').slice($(this).attr('id').indexOf('-')+1));
+                    }
+                    
+                });
+                data.occurrences.push(occurrence);
+            }
+            else // on eventPattern
+            {
+                var pattern = {};
+                pattern.date = $(this).children('small').first().html();
+                pattern.id = $(this).attr('id').slice($(this).attr('id').indexOf('-')+1);
+                pattern.activities = [];
+                $.each($(this).children('li'), function()
+                {
+                    if($(this).attr('id') != null)
+                    {
+                        pattern.activities.push($(this).attr('id').slice($(this).attr('id').indexOf('-')+1));
+                    }
+                });
+                data.patterns.push(pattern);
+            }
+        });
+        var json = JSON.stringify(data);
+        var request = {
+            url: "{!! action('ActivityPlanningController@handleActivityPlan')!!}",
+            data: json,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        };
+        //$.post(request);
+        $.post("{!! action('ActivityPlanningController@handleActivityPlan')!!}", json, function(returnData) { console.log(returnData);});
+        
     }
 
     function drop(ev) {
@@ -222,6 +311,7 @@
     
     $(document).ready(function() {
         var eventOccurrences = {!!$events->toJson()!!};
+        window.savedTimes = {};
         for(var i = 0; i < eventOccurrences.length; i++)
         {
             var event = eventOccurrences[i];
