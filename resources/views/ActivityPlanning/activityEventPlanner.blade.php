@@ -22,8 +22,7 @@
             <hr>
             <div class="well" style="max-height: 500px; overflow-y:scroll;" ondrop="drop3(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
                 @foreach($eventPatterns as $eventPattern)
-                <ul class="list-group event-draggable" draggable="true" id="pattern-{{$eventPattern->id}}" ondragover="allowDrop(event)" ondragstart="drag(event)">
-                    <input hidden="true" name="event_pattern[]" value="{{$eventPattern->id}}">
+                <ul class="list-group event-draggable" style="min-height: 5em" draggable="true" ondrop="drop(event)" id="pattern-{{$eventPattern->id}}" ondragover="allowDrop(event)" ondragstart="drag(event)">
                     <h4 class="list-group-item-heading">{{$eventPattern->name}}
                         <small>
                         @if(isset($eventPattern->endDate))
@@ -32,11 +31,10 @@
                         {{$eventPattern->date->format('d.m.Y')}}
                         @endif
                         </small></h4>
-                    <ul class="list-group" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"  style="min-height: 5em">
+
                         @foreach($eventPattern->activities as $activity)
                         <li class="list-group-item" draggable="false">{{$activity->name}}<span class="glyphicon glyphicon-lock pull-right"></span></li>
                         @endforeach
-                    </ul>
                 </ul>
                 @endforeach
             </div>
@@ -245,11 +243,10 @@
         var uls = $('#eventPlanner').children('ul');
         $.each(uls,function()
         {
-            console.log($(this).attr('id'));
             if($(this).attr('id').search('event') != -1) // on eventOccurrence
             {
                 var occurrence = {};
-                occurrence.id = $(this).attr('id').slice(5, $(this).attr('id').length-1);
+                occurrence.id = $(this).attr('id').slice(6, $(this).attr('id').length-1);
                 occurrence.activities = [];
                 $.each($(this).children('li'),function()
                 {
@@ -278,15 +275,23 @@
             }
         });
         var json = JSON.stringify(data);
+        console.log(json);
         var request = {
             url: "{!! action('ActivityPlanningController@handleActivityPlan')!!}",
+            type: "POST",
             data: json,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            success: function(data, textStatus, jqXHR) {
+                console.log(jqXHR.responseText);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("Fail");
+                console.log(textStatus);
+                console.log(errorThrown);
             }
         };
-        //$.post(request);
-        $.post("{!! action('ActivityPlanningController@handleActivityPlan')!!}", json, function(returnData) { console.log(returnData);});
+        
+        $.ajax(request);
+        //$.post("{!! action('ActivityPlanningController@handleActivityPlan')!!}", json, function(returnData) { console.log(returnData);});
         
     }
 

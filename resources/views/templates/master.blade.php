@@ -8,18 +8,11 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-<<<<<<< HEAD
         <meta name="csrf-token" content="{{ csrf_token() }}">
         {!!Html::style('css/bootstrap.min.css', [], Request::secure())!!}
         {!!Html::style('css/bootstrap-theme.min.css', [], Request::secure())!!}
         {!!Html::style('css/styles.css', [], Request::secure())!!}
         {!!Html::style('http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css', [], Request::secure())!!}
-=======
-        {!!Html::style('css/bootstrap.min.css', [], $secure)!!}
-        {!!Html::style('css/bootstrap-theme.min.css', [], $secure)!!}
-        {!!Html::style('css/styles.css', [], $secure)!!}
-        {!!Html::style('https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css', [], $secure)!!}
->>>>>>> origin/master
         @yield('styles')
         {!! Html::script('js/jquery-2.1.4.js', [], $secure) !!}
         {!! Html::script('js/bootstrap.min.js', [], $secure) !!}

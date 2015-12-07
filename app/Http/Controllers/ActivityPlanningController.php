@@ -66,7 +66,9 @@ class ActivityPlanningController extends Controller {
     }
     
     public function handleActivityPlan(Request $request) {
-        dd($request);
+        $occurrences = $request->input('occurrences');
+        $patterns = $request->input('patterns');
+        return $request->input();
     }
 
 }
