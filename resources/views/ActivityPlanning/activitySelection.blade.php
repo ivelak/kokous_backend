@@ -43,8 +43,8 @@
         @endforeach
     </div>
     <div class="container">
-        {!!Form::label('groups', 'Valitse ryhmä:')!!}
-            <select class="form-control sieve" name="groupId" id="groups">
+        {!!Form::label('group', 'Valitse ryhmä:')!!}
+            <select class="form-control sieve" name="group" id="groups">
                 @forelse($groups as $group)
                 <option value="{{ $group->id }}">{{ $group->name }}</option>             
                 @empty

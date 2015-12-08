@@ -239,6 +239,7 @@
         var data = {};
         data.occurrences = [];
         data.patterns = [];
+        data.group = {!!$groupId!!};
         
         var uls = $('#eventPlanner').children('ul');
         $.each(uls,function()
@@ -261,7 +262,9 @@
             else // on eventPattern
             {
                 var pattern = {};
-                pattern.date = $(this).children('small').first().html();
+                pattern.date = $(this).children('h4').first().children('small').first().html();
+                pattern.date = $.trim(pattern.date);
+                pattern.name = $(this).children('h4').first().html(); // saattaa bugata koska <small> on <h4> sisässä
                 pattern.id = $(this).attr('id').slice($(this).attr('id').indexOf('-')+1);
                 pattern.activities = [];
                 $.each($(this).children('li'), function()
@@ -275,11 +278,12 @@
             }
         });
         var json = JSON.stringify(data);
-        console.log(json);
+        console.log(JSON.parse(json));
         var request = {
             url: "{!! action('ActivityPlanningController@handleActivityPlan')!!}",
             type: "POST",
             data: json,
+            contentType: "application/json",
             accepts: {
                 text: "application/json"
             },
