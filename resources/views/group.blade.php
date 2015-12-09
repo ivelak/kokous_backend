@@ -6,7 +6,9 @@
 <div class="container">
     <h1>{{ $group->name }}</h1>
     <hr>
-
+    
+    @can('manageForGroup',$group)
+    
     <div class="panel">
 
         {!!Form::open(array('action' => ['GroupController@destroy', $group], 'method'=>'delete', 'class'=>'form-inline'))!!}
@@ -21,6 +23,9 @@
         {!!Form::close()!!}
 
     </div>
+    
+    @endcan
+    
     <div class="panel panel-default">
         <div class="panel-heading"><strong>Tiedot:</strong></div>
         <div class="panel-body">

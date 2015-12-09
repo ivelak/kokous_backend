@@ -30,6 +30,7 @@ class NewEventViewTest extends TestCase {
     
     public function testRedirectsToCorrectViewWhenValidInput() {
         $this->logIn();
+        session()->set('admin',1);
         
         self::runFactory();
         $this->visit('/events/new')
@@ -46,6 +47,7 @@ class NewEventViewTest extends TestCase {
 
     public function testShowsErrorMessageWhenInvalidTimeInput() {
         $this->logIn();
+        session()->set('admin',1);
         
         self::runFactory();
         $this->visit('/events/new')
@@ -63,6 +65,7 @@ class NewEventViewTest extends TestCase {
 
     public function testReturnsToCorrectViewWhenCancelIsPressed() {
         $this->logIn();
+        session()->set('admin',1);
         
         self::runFactory();
         $this->visit('/events/new')
@@ -79,6 +82,7 @@ class NewEventViewTest extends TestCase {
 
     public function testShowsErrorMessageWhenNameIsNotEntered() {
         $this->logIn();
+        session()->set('admin',1);
         
         self::runFactory();
         $this->visit('/events/new')
@@ -96,6 +100,7 @@ class NewEventViewTest extends TestCase {
 
     public function testShowsErrorMessageWhenPlaceIsNotEntered() {
         $this->logIn();
+        session()->set('admin',1);
         
         self::runFactory();
         $this->visit('/events/new')
@@ -113,6 +118,7 @@ class NewEventViewTest extends TestCase {
 
     public function testShowsErrorMessageWhenTimeIsNotInValidFormat() {
         $this->logIn();
+        session()->set('admin',1);
         
         self::runFactory();
         $this->visit('/events/new')
@@ -130,6 +136,7 @@ class NewEventViewTest extends TestCase {
 
     public function testShowsErrorMessageWhenDateIsNotInValidFormat() {
         $this->logIn();
+        session()->set('admin',1);
         
         self::runFactory();
         $this->visit('/events/new')

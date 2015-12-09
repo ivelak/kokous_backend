@@ -41,6 +41,7 @@ class EventOccurrenceControllerTest extends TestCase {
 
     public function testEventOccurrencesCreatedWithCorrectRequirements() {
         $this->login();
+        session()->set('admin',1);
         
         factory(App\Activity::class, 5)->create();
         factory(App\User::class, 5)->create();
@@ -57,6 +58,7 @@ class EventOccurrenceControllerTest extends TestCase {
 
     public function testEventOccurrencesNotCreatedWithWrongAtrributes() {
         $this->login();
+        session()->set('admin',1);
         
         factory(App\Group::class, 5)->create();
 
@@ -71,6 +73,7 @@ class EventOccurrenceControllerTest extends TestCase {
 
     public function testEventOccurrencesNotCreatedWithWrongAtrributes2() {
         $this->login();
+        session()->set('admin',1);
         
         factory(App\Group::class, 5)->create();
 
@@ -85,6 +88,7 @@ class EventOccurrenceControllerTest extends TestCase {
 
     public function testEventOccurrencesNotCreatedWithWrongAtrributes3() {
         $this->login();
+        session()->set('admin',1);
         
         factory(App\Group::class, 5)->create();
 
@@ -99,6 +103,7 @@ class EventOccurrenceControllerTest extends TestCase {
 
     public function testEventOccurrencesNotCreatedWithWrongAtrributes4() {
         $this->login();
+        session()->set('admin',1);
         
         factory(App\Group::class, 5)->create();
 
@@ -113,6 +118,7 @@ class EventOccurrenceControllerTest extends TestCase {
 
     public function testEventOccurrencesNotCreatedWithWrongAtrributes5() {
         $this->login();
+        session()->set('admin',1);
         
         factory(App\Group::class, 5)->create();
 

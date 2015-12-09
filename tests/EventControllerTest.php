@@ -29,6 +29,7 @@ class EventControllerTest extends TestCase {
      */
     public function testEventCreatedWithCorrectRequirements() {
         $this->login();
+        session()->set('admin',1);
         
         factory(App\Activity::class, 5)->create();
         factory(App\User::class, 5)->create();
@@ -66,6 +67,7 @@ class EventControllerTest extends TestCase {
 
     public function testCreate() {
         $this->login();
+        session()->set('admin',1);
         
         $this->action('GET', 'EventController@create');
         $this->seePageIs('/events/new');
@@ -92,6 +94,7 @@ class EventControllerTest extends TestCase {
 
     public function testEdit() {
         $this->login();
+        session()->set('admin',1);
         
         $event = new Event();
         $event->name = 'Kokous';
@@ -111,6 +114,7 @@ class EventControllerTest extends TestCase {
 
     public function testDestroy() {
         $this->login();
+        session()->set('admin',1);
         
         $event = new Event();
         $event->name = 'Iltakokous';
@@ -139,6 +143,7 @@ class EventControllerTest extends TestCase {
 
     public function testEventIsNotCreatedWithoutName() {
         $this->login();
+        session()->set('admin',1);
         
         $this->visit('/events/new')
                 ->type('', 'name')
@@ -153,6 +158,7 @@ class EventControllerTest extends TestCase {
 
     public function testEventIsNotCreatedWithPastDate() {
         $this->login();
+        session()->set('admin',1);
         
         $this->visit('/events/new')
                 ->type('Jumppa', 'name')
@@ -167,6 +173,7 @@ class EventControllerTest extends TestCase {
 
     public function testEventIsCreatedWithoutDescription() {
         $this->login();
+        session()->set('admin',1);
         
         factory(App\Activity::class, 5)->create();
         factory(App\User::class, 5)->create();

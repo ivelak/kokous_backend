@@ -69,6 +69,7 @@ class EventOccurrenceViewTest extends TestCase {
 
     public function testMarkingActivitiesToUsers() {
         $this->logIn();
+        session()->set('admin',1);
 
         self::initData();
         $event = Event::find(1);
@@ -84,6 +85,7 @@ class EventOccurrenceViewTest extends TestCase {
 
     public function testCorrectViewShows() {
         $this->login();
+        session()->set('admin',1);
 
         factory(App\Activity::class, 5)->create();
         factory(App\User::class, 5)->create();
@@ -109,6 +111,7 @@ class EventOccurrenceViewTest extends TestCase {
 
     public function testLinkEditLeadsToCorrectPage() {
         $this->login();
+        session()->set('admin',1);
         
         factory(App\Activity::class, 5)->create();
         factory(App\User::class, 5)->create();
@@ -138,6 +141,7 @@ class EventOccurrenceViewTest extends TestCase {
 
     public function testLinkMuutaAktiviteettejaLeadsToCorrectPage() {
         $this->login();
+        session()->set('admin',1);
         
         factory(App\Activity::class, 5)->create();
         factory(App\User::class, 5)->create();

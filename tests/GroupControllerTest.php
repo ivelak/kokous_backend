@@ -84,6 +84,7 @@ class GroupControllerTest extends TestCase {
 
     public function testEdit() {
         $this->logIn();
+        session()->set('admin',1);
 
         $group_id = self::createTestGroup();
 
@@ -94,6 +95,7 @@ class GroupControllerTest extends TestCase {
 
     public function testDestroy() {
         $this->logIn();
+        session()->set('admin',1);
 
         $group_id = self::createTestGroup();
 

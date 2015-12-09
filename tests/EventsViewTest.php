@@ -35,6 +35,7 @@ class EventsViewTest extends TestCase {
 
     public function testClickingOnLinkLeadsToCorrectView() {
         $this->logIn();
+        session()->set('admin',1);
         
         $this->visit('/events')
                 ->click('Uusi tapahtuma')
@@ -43,6 +44,7 @@ class EventsViewTest extends TestCase {
 
     public function testCorrectlyAddedEventShowsOnTheEventsList() {
         $this->logIn();
+        session()->set('admin',1);
         
         factory(App\Activity::class, 5)->create();
         factory(App\User::class, 5)->create();
@@ -67,6 +69,7 @@ class EventsViewTest extends TestCase {
 
     public function testClickingOnEventLeadsToEventView() {
         $this->logIn();
+        session()->set('admin',1);
         
         factory(App\Activity::class, 5)->create();
         factory(App\User::class, 5)->create();

@@ -10,7 +10,7 @@
             {!! Form::open(['action' => ['OccurrenceActivityController@add', 'occId' => $eventOccurrence->id, 'id' => $eventOccurrence->event->id], 'class'=>'form-inline'])!!}
             {!! Form::select('activityId', $activities->keyBy('id')->map(function ($item, $key) {return $item->name; }), null, ['class'=>'form-control']) !!}
             {!! Form::submit('Lisää', ['class'=>'btn btn-default']) !!}
-            {!!link_to_action('EventOccurrenceController@show', $title = 'Takaisin', ['id' => $eventOccurrence->id, 'occId' => $eventOccurrence], $attributes = array('class'=>'btn btn-default pull-right'))!!}
+            {!!link_to_action('EventOccurrenceController@show', $title = 'Takaisin', ['id' => $eventOccurrence->event->id, 'occId' => $eventOccurrence], $attributes = array('class'=>'btn btn-default pull-right'))!!}
             {!! Form::close() !!}
         </div>
     </div>

@@ -7,16 +7,17 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\EventOccurrence;
 use Carbon\Carbon;
+use App\Event;
+use Gate;
 
-class EventOccurrenceController extends Controller
-{
+class EventOccurrenceController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $eventOccurrences = EventOccurrence::with('event')->orderBy('date', 'asc')->paginate($request->input('perpage', 15));
         return view('eventOccurrences', compact('eventOccurrences'));
     }
@@ -26,8 +27,7 @@ class EventOccurrenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -37,8 +37,7 @@ class EventOccurrenceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -48,21 +47,18 @@ class EventOccurrenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $occId)
-    {
+    public function show($id, $occId) {
         //
         $eventOccurrence = EventOccurrence::with(['comments'])->where('event_id', $id)->findOrFail($occId);
         $activitiesCompleted = collect([]);
-        foreach($eventOccurrence->activities as $activity)
-        {
+        foreach ($eventOccurrence->activities as $activity) {
             $usersWhoHaveCompleted = collect([]);
-            foreach($eventOccurrence->event->group->users as $user)
-            {
+            foreach ($eventOccurrence->event->group->users as $user) {
                 $usersWhoHaveCompleted->push($user->id);
             }
             $activitiesCompleted->put($activity->id, $usersWhoHaveCompleted);
         }
-        
+
         return view('eventOccurrence', compact('eventOccurrence'), compact('activitiesCompleted'));
     }
 
@@ -72,10 +68,15 @@ class EventOccurrenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, $occId)
-    {
-        $eventOccurrence = EventOccurrence::where('event_id', $id)->findOrFail($occId);
-        return view('editEventOccurrence', compact('eventOccurrence'));
+    public function edit($id, $occId) {
+        $event = Event::findOrFail($id);
+
+        if (Gate::allows('manage', $event)) {
+            $eventOccurrence = EventOccurrence::where('event_id', $id)->findOrFail($occId);
+            return view('editEventOccurrence', compact('eventOccurrence'));
+        } else {
+            return abort(403);
+        }
     }
 
     /**
@@ -85,18 +86,23 @@ class EventOccurrenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $occId)
-    {
-        $this->validate($request, [
-            'time' => 'required|date_format:H:i',
-            'place' => 'required|max:128'
-        ]);
-        $event = EventOccurrence::where('event_id', $id)->findOrFail($occId);
-        $event->time = Carbon::createFromFormat('H:i', $request->input('time'));
-        $event->place = $request->input('place');
-        $event->save();
+    public function update(Request $request, $id, $occId) {
+        $eventti = Event::findOrFail($id);
 
-        return redirect()->action('EventOccurrenceController@show', [$id, $occId]);
+        if (Gate::allows('manage', $eventti)) {
+            $this->validate($request, [
+                'time' => 'required|date_format:H:i',
+                'place' => 'required|max:128'
+            ]);
+            $event = EventOccurrence::where('event_id', $id)->findOrFail($occId);
+            $event->time = Carbon::createFromFormat('H:i', $request->input('time'));
+            $event->place = $request->input('place');
+            $event->save();
+
+            return redirect()->action('EventOccurrenceController@show', [$id, $occId]);
+        } else {
+            return abort(403);
+        }
     }
 
     /**
@@ -105,8 +111,8 @@ class EventOccurrenceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
 }

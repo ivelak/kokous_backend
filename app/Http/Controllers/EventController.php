@@ -35,8 +35,15 @@ class EventController extends Controller {
         return view('newEvent', compact('groups'));
     }
 
-    public function createForGroup($id) {
-        return view('newEvent', compact('id'));
+    public function createForGroup($id) {        
+        $group = Group::FindOrFail($id);
+        
+
+        if (Gate::allows('manageForGroup', $group)) {
+            return view('newEvent', compact('id'));
+        } else {
+            return abort(403);
+        }
     }
 
     /**
@@ -60,34 +67,40 @@ class EventController extends Controller {
         $event->description = $request->input('description');
         $event->group_id = $request->input('groupId');
 
-        $days = collect($request->input('days'));
-        $date = Carbon::createFromFormat('d.m.Y', $request->input('date'));
-        $endDate = $date->copy();
-        $startDate = $date->copy();
-        
-        $interval = $request->input('interval');
+        $group = Group::FindOrFail($request->input('groupId'));
 
-        if ($request->input('repeat') != NULL) {
-            $ending = $request->input('ending');
-            $endDate = $ending == "afterYear" ? $endDate->addYear() : Carbon::createFromFormat('d.m.Y',$request->input('endDate'));
-        }
-        $event->endDate = $endDate;
-        $event->save();
+        if (Gate::allows('manageForGroup', $group)) {
+            $days = collect($request->input('days'));
+            $date = Carbon::createFromFormat('d.m.Y', $request->input('date'));
+            $endDate = $date->copy();
+            $startDate = $date->copy();
 
-        do {
-            if (($days->contains($date->dayOfWeek) && (($startDate->diffInWeeks($date)) % $interval)==0) || $request->input('repeat') == NULL) {
-                $occurrence = new EventOccurrence();
-                $occurrence->event_id = $event->id;
-                $occurrence->date = $date;
-                $occurrence->save();
+            $interval = $request->input('interval');
+
+            if ($request->input('repeat') != NULL) {
+                $ending = $request->input('ending');
+                $endDate = $ending == "afterYear" ? $endDate->addYear() : Carbon::createFromFormat('d.m.Y', $request->input('endDate'));
             }
-            $date->addDay();
-        } while ($date < $endDate);
+            $event->endDate = $endDate;
+            $event->save();
+
+            do {
+                if (($days->contains($date->dayOfWeek) && (($startDate->diffInWeeks($date)) % $interval) == 0) || $request->input('repeat') == NULL) {
+                    $occurrence = new EventOccurrence();
+                    $occurrence->event_id = $event->id;
+                    $occurrence->date = $date;
+                    $occurrence->save();
+                }
+                $date->addDay();
+            } while ($date < $endDate);
 
 
-        return redirect('events');
+            return redirect('events');
+        } else {
+            return abort(403);
+        }
     }
-    
+
     public function storeNoRedirect(Request $request) {
         $this->validate($request, [
             'name' => 'required|max:64',
@@ -103,32 +116,39 @@ class EventController extends Controller {
         $event->description = $request->input('description');
         $event->group_id = $request->input('groupId');
 
-        $days = collect($request->input('days'));
-        $date = Carbon::createFromFormat('d.m.Y', $request->input('date'));
-        $endDate = $date->copy();
-        $startDate = $date->copy();
-        
-        $interval = $request->input('interval');
+        $group = Group::FindOrFail($request->input('groupId'));
 
-        if ($request->input('repeat') != NULL) {
-            $ending = $request->input('ending');
-            $endDate = $ending == "afterYear" ? $endDate->addYear() : Carbon::createFromFormat('d.m.Y',$request->input('endDate'));
-        }
-        $event->endDate = $endDate;
-        $event->save();
+        if (Gate::allows('manageForGroup', $group)) {
 
-        do {
-            if (($days->contains($date->dayOfWeek) && (($startDate->diffInWeeks($date)) % $interval)==0) || $request->input('repeat') == NULL) {
-                $occurrence = new EventOccurrence();
-                $occurrence->event_id = $event->id;
-                $occurrence->date = $date;
-                $occurrence->save();
+            $days = collect($request->input('days'));
+            $date = Carbon::createFromFormat('d.m.Y', $request->input('date'));
+            $endDate = $date->copy();
+            $startDate = $date->copy();
+
+            $interval = $request->input('interval');
+
+            if ($request->input('repeat') != NULL) {
+                $ending = $request->input('ending');
+                $endDate = $ending == "afterYear" ? $endDate->addYear() : Carbon::createFromFormat('d.m.Y', $request->input('endDate'));
             }
-            $date->addDay();
-        } while ($date < $endDate);
+            $event->endDate = $endDate;
+            $event->save();
+
+            do {
+                if (($days->contains($date->dayOfWeek) && (($startDate->diffInWeeks($date)) % $interval) == 0) || $request->input('repeat') == NULL) {
+                    $occurrence = new EventOccurrence();
+                    $occurrence->event_id = $event->id;
+                    $occurrence->date = $date;
+                    $occurrence->save();
+                }
+                $date->addDay();
+            } while ($date < $endDate);
 
 
-        return redirect('activity_planning/planner');
+            return redirect('activity_planning/planner');
+        } else {
+            return abort(403);
+        }
     }
 
     /**
@@ -138,9 +158,9 @@ class EventController extends Controller {
      * @return Response
      */
     public function show($id) {
-        $event = Event::with(['group','eventOccurrences'])->findOrFail($id);
-        $eventOccurrences = EventOccurrence::where('event_id',$id)->paginate();
-        return view('event', compact('event','eventOccurrences'));
+        $event = Event::with(['group', 'eventOccurrences'])->findOrFail($id);
+        $eventOccurrences = EventOccurrence::where('event_id', $id)->paginate();
+        return view('event', compact('event', 'eventOccurrences'));
     }
 
     /**
@@ -151,11 +171,10 @@ class EventController extends Controller {
      */
     public function edit($id) {
         $event = Event::findOrFail($id);
-        
-        if(Gate::allows('manage',$event)){
-        return view('editEvent', compact('event'));
-        }
-        else{
+
+        if (Gate::allows('manage', $event)) {
+            return view('editEvent', compact('event'));
+        } else {
             return abort(403);
         }
     }
@@ -173,14 +192,20 @@ class EventController extends Controller {
             'time' => 'required|date_format:H:i',
             'place' => 'required|max:128'
         ]);
-        $event = Event::findOrFail($id);
-        $event->name = $request->input('name');
-        $event->time = Carbon::createFromFormat('d.m.Y H:i', $event->time->format('d.m.Y') . ' ' . $request->input('time'));
-        $event->place = $request->input('place');
-        $event->description = $request->input('description');
-        $event->save();
 
-        return redirect()->action('EventController@show', [$event]);
+        $event = Event::findOrFail($id);
+
+        if (Gate::allows('manage', $event)) {
+            $event->name = $request->input('name');
+            $event->time = Carbon::createFromFormat('d.m.Y H:i', $event->time->format('d.m.Y') . ' ' . $request->input('time'));
+            $event->place = $request->input('place');
+            $event->description = $request->input('description');
+            $event->save();
+
+            return redirect()->action('EventController@show', [$event]);
+        } else {
+            return abort(403);
+        }
     }
 
     /**
@@ -190,8 +215,14 @@ class EventController extends Controller {
      * @return Response
      */
     public function destroy($id) {
-        Event::destroy($id);
-        return redirect('events');
+        $event = Event::findOrFail($id);
+
+        if (Gate::allows('manage', $event)) {
+            Event::destroy($id);
+            return redirect('events');
+        } else {
+            return abort(403);
+        }
     }
 
 }

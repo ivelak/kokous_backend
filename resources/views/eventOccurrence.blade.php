@@ -7,10 +7,16 @@
     {!! Form::open(['action' => ['UserActivityController@addMany', 'id' => $eventOccurrence->event->id, 'occId' => $eventOccurrence->id, 'class'=>'form-inline']])!!}
     <h1>{{ $eventOccurrence->event->name }}</h1>
     <hr>
+    
+    @can('manage',$eventOccurrence->event)
+    
     <div class="panel">
         {!!link_to_action('OccurrenceActivityController@index', $title = 'Muuta aktiviteetteja', ['occId' => $eventOccurrence->id, 'id' => $eventOccurrence->event->id], $attributes = array('class'=>'btn btn-default'))!!}
         {!!link_to_action('EventOccurrenceController@edit', $title = 'edit', ['id' => $eventOccurrence->event, 'occId' => $eventOccurrence], $attributes = array('class'=>'btn btn-default'))!!}
     </div>
+    
+    @endcan
+    
     <div class="panel panel-default">
         <div class="panel-heading"><strong>Tiedot:</strong></div>
         <div class="panel-body">
@@ -27,6 +33,9 @@
             {{ empty($eventOccurrence->event->description) ? 'Ei kuvausta' : $eventOccurrence->event->description}}
         </div>
     </div>
+    
+    @can('manage',$eventOccurrence->event)
+    
     <div class="panel panel-default">
         <div class="panel-heading"><strong>Suoritusten merkitseminen:</strong></div>
         <div class="panel-body">
@@ -66,6 +75,9 @@
         @endif
 
     </div>
+    
+    @endcan
+    
     {!! Form::close()!!}
 
     <div class="panel panel-default">
