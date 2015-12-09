@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Activity;
 use App\Event;
 use App\EventOccurrence;
 use App\Group;
+use App\User;
 class EventRestController extends Controller
 {
     /**
@@ -38,7 +40,16 @@ class EventRestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $activity = Activity::findOrFail($request->input('activity'));
+        $users = $request->input('user');
+
+        foreach($users as $key => $value) {
+            if($value) {
+                $user = User::findOrFail($key);
+                $user->activities()->attach($activity, ['marked_by_user_id' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(), 'event_date' => Carbon::now()]);
+            }
+        }
+
     }
 
     /**
@@ -49,7 +60,7 @@ class EventRestController extends Controller
      */
     public function show($id)
     {
-        
+
         return EventOccurrence::with(['activities', 'comments'])->findOrFail($id);
     }
 
