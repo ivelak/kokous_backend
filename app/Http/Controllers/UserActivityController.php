@@ -9,6 +9,7 @@ use App\User;
 use App\Activity;
 use App\Group;
 use Carbon\Carbon;
+use App\POF;
 
 class UserActivityController extends Controller
 {
@@ -82,5 +83,25 @@ class UserActivityController extends Controller
         $user->activities()->detach($activity);
         $user->save();
         return redirect()->back();
+    }
+    
+    public function show($id,$userId){
+        $user = User::findOrFail($userId);
+        $actArray = POF::getItem(Activity::findOrFail($id)->guid);
+        $activity = Activity::findOrFail($id);
+        
+
+        $singleActArray = ['title' => array_get($actArray, 'title', 'ei määritetty'),
+            'guid' => array_get($actArray, 'guid', 'ei määritetty'),
+            'content' => array_get($actArray, 'content', 'ei määritetty'),
+            'pakollisuus' => array_get($actArray, 'tags.pakollisuus.name', 'ei määritetty'),
+            'pakollisuusikoni' => array_get($actArray, 'tags.pakollisuus.0.icon','ei määritetty'),
+            'ryhmakoko' => array_get($actArray, 'tags.ryhmakoko.0.name', 'ei määritetty'),
+            'agegroup' =>  array_get($actArray, 'parents.1.title'),
+            'paikka' => array_get($actArray,'tags.paikka.0.name','ei määritetty'),
+            'suoritus_kesto' => array_get($actArray, 'tags.suoritus_kesto.name', 'ei määritetty')];
+        
+        return view('activityShare', compact('singleActArray','activity','user'));
+        
     }
 }
