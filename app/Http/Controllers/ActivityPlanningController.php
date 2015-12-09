@@ -9,6 +9,8 @@ use App\Activity;
 use App\Group;
 use App\EventOccurrence;
 use App\EventPattern;
+use App\Event;
+use Carbon\Carbon;
 
 class ActivityPlanningController extends Controller {
 
@@ -18,16 +20,19 @@ class ActivityPlanningController extends Controller {
         $activitiesByTaskGroups = $activitiesByTaskGroups->map(function($item, $key) {
             return collect([$key => $item]);
         });
+        
+        $groups = Group::all();
 
         $activitiesByAgeGroups = $activitiesByTaskGroups->groupBy(function($item, $key) {
             return $item->first()->first()->age_group;
         });
 
-        return view('ActivityPlanning/activitySelection', compact('activitiesByAgeGroups'));
+        return view('ActivityPlanning/activitySelection', compact('activitiesByAgeGroups', 'groups'));
     }
 
     public function selectActivities() {
         session(['activities' => request('activities')]);
+        session(['group' => request('group')]);
         return redirect('activity_planning/events');
     }
 
@@ -54,9 +59,55 @@ class ActivityPlanningController extends Controller {
             array_push($eventPatterns, EventPattern::find($id));
         }
 
+        $groupId = session('group');
+        $group = Group::find($groupId);
         $groups = Group::all();
+        //$events = EventOccurrence::with('activities')->where('group', $groupId)->get();
         $events = EventOccurrence::with('activities')->get();
-        return view('ActivityPlanning/activityEventPlanner', compact('activities', 'eventPatterns', 'groups', 'events'));
+        
+        return view('ActivityPlanning/activityEventPlanner', compact('activities', 'eventPatterns', 'groups', 'group', 'events', 'groupId'));
+    }
+    
+    public function handleActivityPlan(Request $request) {
+
+        $occurrences = $request->input('occurrences');
+        $eventPatterns = $request->input('patterns');
+        
+        // occurrencejen käsittely
+        foreach($occurrences as $occurrence) {
+            $eventOccurrence = EventOccurrence::findOrFail($occurrence['id']);
+            foreach($occurrence['activities'] as $activityId)
+            {
+                $activity = Activity::findOrFail($activityId);
+                $eventOccurrence->activities()->attach($activity);
+            }
+        }
+        
+        // eventPatternien käsittely
+        foreach($eventPatterns as $eventPattern) {
+            $event = new Event();
+            $event->time = Carbon::createFromFormat('d.m.Y h:i', $eventPattern['date'] . " 00:00");
+            $event->endDate = Carbon::createFromFormat('d.m.Y', $eventPattern['date']);
+            $event->description = "dadasdasd";
+            $event->place = "asdada";
+            //$event->name = $eventPattern['name'];
+            $event->name = "test_name";
+            $event->group_id = $request->input('group');
+            $event->save();
+            
+            $eventOccurrence = new EventOccurrence();
+            $eventOccurrence->date = Carbon::createFromFormat('d.m.Y', $eventPattern['date']);
+            $eventOccurrence->event_id = $event->id;
+            $eventOccurrence->save();
+            
+            foreach($eventPattern['activities'] as $activityId)
+            {
+                $activity = Activity::findOrFail($activityId);
+                $eventOccurrence->activities()->attach($activity);
+            }
+        }
+        
+        return $request->input('patterns');
     }
 
 }

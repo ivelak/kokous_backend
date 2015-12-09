@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Services\POFBackend;
 use App\Services\AdminAuthService;
+use Request;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $age_groups = ['sudenpennut' => 'Sudenpennut','seikkailijat' => 'Seikkailijat','tarpojat' => 'Tarpojat','samoajat' => 'Samoajat','vaeltajat' => 'Vaeltajat'];
         view()->share('age_groups', $age_groups);
+        
+        view()->composer('*', function ($view) {
+            $view->with('secure', Request::server('HTTP_X_FORWARDED_PROTO') == 'https');
+        });
     }
 
     /**

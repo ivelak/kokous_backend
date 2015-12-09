@@ -8,16 +8,17 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         {!!Html::style('css/bootstrap.min.css', [], Request::secure())!!}
         {!!Html::style('css/bootstrap-theme.min.css', [], Request::secure())!!}
         {!!Html::style('css/styles.css', [], Request::secure())!!}
         {!!Html::style('http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css', [], Request::secure())!!}
         @yield('styles')
-        {!! Html::script('js/jquery-2.1.4.js', [], Request::secure()) !!}
-        {!! Html::script('js/bootstrap.min.js', [], Request::secure()) !!}
-        {!! Html::script('js/jquery.sieve.js', [], Request::secure()) !!}
-        {!! Html::script('js/app.js', [], Request::secure()) !!}
-        {!! Html::script('http://code.jquery.com/ui/1.11.4/jquery-ui.js', [], Request::secure()) !!}
+        {!! Html::script('js/jquery-2.1.4.js', [], $secure) !!}
+        {!! Html::script('js/bootstrap.min.js', [], $secure) !!}
+        {!! Html::script('js/jquery.sieve.js', [], $secure) !!}
+        {!! Html::script('js/app.js', [], $secure) !!}
+        {!! Html::script('https://code.jquery.com/ui/1.11.4/jquery-ui.js', [], $secure) !!}
         @yield('scripts')
         <title>@yield('title')</title>
     </head>
