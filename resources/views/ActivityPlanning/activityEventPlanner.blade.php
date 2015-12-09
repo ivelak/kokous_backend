@@ -56,10 +56,6 @@
                 @endforeach--}}
             </div>
             <br>
-            <strong>Tapahtumien aikaväli</strong>
-            <br>
-            <br>
-            <div id="slider"></div>
             <br>
             <br>
         </div>
@@ -171,6 +167,39 @@
     function drag(ev) {
         ev.dataTransfer.setData("text", ev.target.id);
     }
+    
+    function checkDateValidity(date, originalDate)
+    {
+        var date_regex = /^(0[1-9]|1\d|2\d|3[01])\.(0[1-9]|1[0-2])\.(19|20)\d{2}$/ ;
+        if(!(date_regex.test(date)))
+        {
+            return false;
+        }
+        
+        var dates = originalDate.split(" - "); // 11.11.2015 - 10.12.2015
+        var dateComponents = date.split(".");
+        var startDateComponents = dates[0].split(".");
+        var endDateComponents = dates[1].split(".");
+        if(parseInt(dateComponents[0]) >= parseInt(startDateComponents[0]) && parseInt(dateComponents[0]) <= parseInt(endDateComponents[0]))
+        {
+            if(parseInt(dateComponents[1]) >= parseInt(startDateComponents[1]) && parseInt(dateComponents[1]) <= parseInt(endDateComponents[1]))
+            {
+                if(parseInt(dateComponents[2]) >= parseInt(startDateComponents[2]) && parseInt(dateComponents[2]) <= parseInt(endDateComponents[2]))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return false;
+        }
+        return false;
+    }
+    
+    function checkTimeValidity(time)
+    {
+        var timeRegEx = /^([01]?[0-9]|2[0-3]):[0-5][0-9]/;
+        return timeRegEx.test(time);
+    }
 
 
     function drop2(ev) {
@@ -182,29 +211,45 @@
         if (thisElement.tagName === "UL" && target)
         {
             var date = thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML;
+            var isValid = null;
             
             if(date.indexOf('-') != -1)
             {
+                var originalDate = thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML;
                 var time = prompt("Anna päivämäärä:", "");
-                // Tarkasta oikeellisuus
-                thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML = time;
+                isValid = checkDateValidity($.trim(time), $.trim(originalDate));
+                if(isValid) {
+                    var clockTime = prompt("Anna kellonaika:", "");
+                    isValid = checkTimeValidity(clockTime);
+                    
+                    savedTimes[thisElement.id] = originalDate;
+                    thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML = (time + ' ' + clockTime);
+                }
             }
             else
             {
-                savedTimes[thisElement.id] = thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML;
+                var originalDate = thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML;
+                var clockTime = prompt("Anna kellonaika:", "");
+                isValid = checkTimeValidity(clockTime);
+                    
+                savedTimes[thisElement.id] = originalDate;
+                thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML = (originalDate + ' ' + clockTime);
             }
             
-            if (target.is('li') || (target.is('ul') && target.parent('ul') !== null) || target.is('h4'))
+            if(isValid == true || isValid == null)
             {
-                target.parent('ul').parent('div').append(document.getElementById(data));
-            }
-            else if (target.is('ul') && target.parent('ul') === null)
-            {
-                target.parent('div').append(document.getElementById(data));
-            }
-            else
-            {
-                target.append(document.getElementById(data));
+                if (target.is('li') || (target.is('ul') && target.parent('ul') !== null) || target.is('h4'))
+                {
+                    target.parent('ul').parent('div').append(document.getElementById(data));
+                }
+                else if (target.is('ul') && target.parent('ul') === null)
+                {
+                    target.parent('div').append(document.getElementById(data));
+                }
+                else
+                {
+                    target.append(document.getElementById(data));
+                }
             }
         }
     }
@@ -262,9 +307,11 @@
             else // on eventPattern
             {
                 var pattern = {};
-                pattern.date = $(this).children('h4').first().children('small').first().html();
-                pattern.date = $.trim(pattern.date);
-                pattern.name = $(this).children('h4').first().html(); // saattaa bugata koska <small> on <h4> sisässä
+                var date = $.trim($(this).children('h4').first().children('small').first().html());
+                pattern.date = date;
+                pattern.datePart = date.split(" ")[0];
+                console.log(pattern.datePart);
+                
                 pattern.id = $(this).attr('id').slice($(this).attr('id').indexOf('-')+1);
                 pattern.activities = [];
                 $.each($(this).children('li'), function()
@@ -278,7 +325,6 @@
             }
         });
         var json = JSON.stringify(data);
-        console.log(JSON.parse(json));
         var request = {
             url: "{!! action('ActivityPlanningController@handleActivityPlan')!!}",
             type: "POST",
@@ -293,6 +339,7 @@
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log("Fail");
+                console.log(jqXHR);
                 console.log(textStatus);
                 console.log(errorThrown);
             }
@@ -347,10 +394,6 @@
             }
             $('#eventPlanner').append(ul);
         }
-    });
-    
-    $(function () {
-        $("#slider").slider();
     });
 </script>
 @endsection
