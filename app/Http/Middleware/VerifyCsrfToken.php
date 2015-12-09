@@ -13,7 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         'saml2/acs',
-        'api/*'
+        'api/*',
         'activity_planning/planner'
     ];
 }
