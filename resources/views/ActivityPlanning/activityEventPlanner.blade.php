@@ -20,7 +20,7 @@
         <div class="col-sm-4">
             <h3>Tapahtumapohjat</h3>
             <hr>
-            <div class="well" style="max-height: 500px; overflow-y:scroll;" ondrop="drop3(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
+            <div class="well" id="patternsDiv" style="max-height: 500px; overflow-y:scroll;" ondrop="drop3(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
                 @foreach($eventPatterns as $eventPattern)
                 <ul class="list-group event-draggable" style="min-height: 5em" draggable="true" ondrop="drop(event)" id="pattern-{{$eventPattern->id}}" ondragover="allowDrop(event)" ondragstart="drag(event)">
                     <h4 class="list-group-item-heading">{{$eventPattern->name}}
@@ -177,22 +177,16 @@
         }
         
         var dates = originalDate.split(" - "); // 11.11.2015 - 10.12.2015
-        var dateComponents = date.split(".");
+        
         var startDateComponents = dates[0].split(".");
         var endDateComponents = dates[1].split(".");
-        if(parseInt(dateComponents[0]) >= parseInt(startDateComponents[0]) && parseInt(dateComponents[0]) <= parseInt(endDateComponents[0]))
-        {
-            if(parseInt(dateComponents[1]) >= parseInt(startDateComponents[1]) && parseInt(dateComponents[1]) <= parseInt(endDateComponents[1]))
-            {
-                if(parseInt(dateComponents[2]) >= parseInt(startDateComponents[2]) && parseInt(dateComponents[2]) <= parseInt(endDateComponents[2]))
-                {
-                    return true;
-                }
-                return false;
-            }
-            return false;
-        }
-        return false;
+        var dateComponents = date.split(".");
+
+        var from = new Date(startDateComponents[2], startDateComponents[1]-1, startDateComponents[0]);
+        var to   = new Date(endDateComponents[2], endDateComponents[1]-1, endDateComponents[0]);
+        var check = new Date(dateComponents[2], dateComponents[1]-1, dateComponents[0]);
+        
+        return (check > from && check < to);
     }
     
     function checkTimeValidity(time)
@@ -232,7 +226,7 @@
                 var clockTime = prompt("Anna kellonaika:", "");
                 isValid = checkTimeValidity(clockTime);
                     
-                savedTimes[thisElement.id] = originalDate;
+                //savedTimes[thisElement.id] = originalDate;
                 thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML = (originalDate + ' ' + clockTime);
             }
             
@@ -336,6 +330,10 @@
             dataType: "json",
             success: function(data, textStatus, jqXHR) {
                 console.log(data);
+                if(data == 2)
+                {
+                    window.location="{!! url('/') !!}";
+                }
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log("Fail");
@@ -372,6 +370,14 @@
     $(document).ready(function() {
         var eventOccurrences = {!!$events->toJson()!!};
         window.savedTimes = {};
+        var uls = $('#patternsDiv').children('ul');
+        $.each(uls,function()
+        {
+            var date = $.trim($(this).children('h4').first().children('small').first().html());
+            console.log($(this).attr('id'));
+            savedTimes[$(this).attr('id')] = date;
+        });
+        
         for(var i = 0; i < eventOccurrences.length; i++)
         {
             var event = eventOccurrences[i];
