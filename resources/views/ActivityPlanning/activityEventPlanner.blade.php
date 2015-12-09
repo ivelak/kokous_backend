@@ -56,10 +56,6 @@
                 @endforeach--}}
             </div>
             <br>
-            <strong>Tapahtumien aikaväli</strong>
-            <br>
-            <br>
-            <div id="slider"></div>
             <br>
             <br>
         </div>
@@ -232,7 +228,12 @@
             }
             else
             {
-                savedTimes[thisElement.id] = thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML;
+                var originalDate = thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML;
+                var clockTime = prompt("Anna kellonaika:", "");
+                isValid = checkTimeValidity(clockTime);
+                    
+                savedTimes[thisElement.id] = originalDate;
+                thisElement.getElementsByTagName('H4')[0].getElementsByTagName('SMALL')[0].innerHTML = (originalDate + ' ' + clockTime);
             }
             
             if(isValid == true || isValid == null)
@@ -306,11 +307,10 @@
             else // on eventPattern
             {
                 var pattern = {};
-                pattern.date = $(this).children('h4').first().children('small').first().html();
-                pattern.date = $.trim(pattern.date);
-                var dateSplit = pattern.date.split(" ");
-                pattern.date = dateSplit[0];
-                pattern.time = dateSplit[1];
+                var date = $.trim($(this).children('h4').first().children('small').first().html());
+                pattern.date = date;
+                pattern.datePart = date.split(" ")[0];
+                console.log(pattern.datePart);
                 
                 pattern.id = $(this).attr('id').slice($(this).attr('id').indexOf('-')+1);
                 pattern.activities = [];
@@ -394,10 +394,6 @@
             }
             $('#eventPlanner').append(ul);
         }
-    });
-    
-    $(function () {
-        $("#slider").slider();
     });
 </script>
 @endsection

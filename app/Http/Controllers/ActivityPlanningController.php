@@ -87,9 +87,8 @@ class ActivityPlanningController extends Controller {
         foreach($eventPatterns as $eventPattern) {
             $eventPatternReal = EventPattern::findOrFail($eventPattern['id']);
             $event = new Event();
-            return $eventPattern['date'];
-            $event->time = Carbon::createFromFormat('d.m.Y h:i', $eventPattern['date'] . ' ' . $eventPattern['time']);
-            $event->endDate = Carbon::createFromFormat('d.m.Y', $eventPattern['date']);
+            $event->time = Carbon::createFromFormat('d.m.Y H:i', $eventPattern['date']);
+            $event->endDate = Carbon::createFromFormat('d.m.Y', $eventPattern['datePart']);
             $event->description = " ";
             $event->place = " ";
             $event->name = $eventPatternReal->name;
@@ -97,7 +96,7 @@ class ActivityPlanningController extends Controller {
             $event->save();
             
             $eventOccurrence = new EventOccurrence();
-            $eventOccurrence->date = Carbon::createFromFormat('d.m.Y', $eventPattern['date']);
+            $eventOccurrence->date = Carbon::createFromFormat('d.m.Y', $eventPattern['datePart']);
             $eventOccurrence->event_id = $event->id;
             $eventOccurrence->save();
             
@@ -108,7 +107,7 @@ class ActivityPlanningController extends Controller {
             }
         }
         
-        return $request->input('patterns');
+        return 2;
     }
 
 }
