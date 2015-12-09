@@ -20,7 +20,7 @@ class EventRestController extends Controller
      */
     public function index()
     {
-        return EventOccurrence::with(['activities', 'event.group', 'comments'])->get();
+        return EventOccurrence::with(['activities', 'event.group', 'comments'])->where('date', '>=', Carbon::yesterday())->orderBy('date', 'ASC')->get();
     }
 
     /**
@@ -61,7 +61,6 @@ class EventRestController extends Controller
      */
     public function show($id)
     {
-
         return EventOccurrence::with(['activities', 'comments'])->findOrFail($id);
     }
 
