@@ -39,7 +39,7 @@
             @foreach($eventOccurrence->activities as $activity)
             <div id="{{$activity->id}}" style="display:none" name="activityBox">
                 <ul class="list-group">
-                    @foreach($eventOccurrence->event->group->users as $user)
+                    @foreach($eventOccurrence->event->group->members as $user)
                     @if($user->activities->contains($activity))
                     <li class="list-group-item list-group-item-success">
                         {{ $user->firstname . ' ' . $user->lastname }}
@@ -65,7 +65,7 @@
         </div>
         @endif
 
-    </div> 
+    </div>
     {!! Form::close()!!}
 
     <div class="panel panel-default">
