@@ -96,6 +96,7 @@ class UserActivityController extends Controller
             'content' => array_get($actArray, 'content', 'ei määritetty'),
             'pakollisuus' => array_get($actArray, 'tags.pakollisuus.name', 'ei määritetty'),
             'pakollisuusikoni' => array_get($actArray, 'tags.pakollisuus.0.icon','ei määritetty'),
+            'logo' => array_get($actArray, 'images.logo.url', 'https://learn.extension.org/assets/avatar_placeholder-4c003c71739be2ed78864bcd49550380.png'),
             'ryhmakoko' => array_get($actArray, 'tags.ryhmakoko.0.name', 'ei määritetty'),
             'agegroup' =>  array_get($actArray, 'parents.1.title'),
             'paikka' => array_get($actArray,'tags.paikka.0.name','ei määritetty'),
