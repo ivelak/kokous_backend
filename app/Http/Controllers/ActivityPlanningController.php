@@ -85,13 +85,14 @@ class ActivityPlanningController extends Controller {
         
         // eventPatternien käsittely
         foreach($eventPatterns as $eventPattern) {
+            $eventPatternReal = EventPattern::findOrFail($eventPattern['id']);
             $event = new Event();
-            $event->time = Carbon::createFromFormat('d.m.Y h:i', $eventPattern['date'] . " 00:00");
+            return $eventPattern['date'];
+            $event->time = Carbon::createFromFormat('d.m.Y h:i', $eventPattern['date'] . ' ' . $eventPattern['time']);
             $event->endDate = Carbon::createFromFormat('d.m.Y', $eventPattern['date']);
-            $event->description = "dadasdasd";
-            $event->place = "asdada";
-            //$event->name = $eventPattern['name'];
-            $event->name = "test_name";
+            $event->description = " ";
+            $event->place = " ";
+            $event->name = $eventPatternReal->name;
             $event->group_id = $request->input('group');
             $event->save();
             
