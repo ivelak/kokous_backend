@@ -10,6 +10,8 @@ use App\Activity;
 use App\Group;
 use Carbon\Carbon;
 use App\POF;
+use Illuminate\Database;
+use DB;
 
 class UserActivityController extends Controller
 {
@@ -89,9 +91,12 @@ class UserActivityController extends Controller
         $user = User::findOrFail($userId);
         $actArray = POF::getItem(Activity::findOrFail($id)->guid);
         $activity = Activity::findOrFail($id);
+        $time = DB::table('activity_user')->where('user_id', $userId)->where('activity_id', $id)->first();
+       
         
 
         $singleActArray = ['title' => array_get($actArray, 'title', 'ei määritetty'),
+            'event_date' => $time->event_date,
             'guid' => array_get($actArray, 'guid', 'ei määritetty'),
             'content' => array_get($actArray, 'content', 'ei määritetty'),
             'pakollisuus' => array_get($actArray, 'tags.pakollisuus.name', 'ei määritetty'),

@@ -22,3 +22,27 @@ background-size: cover;
 .jumbotron {
     opacity: 0.91;
 }
+
+
+article {
+    color: rgb(37, 55, 100);
+    font-family: 'Trebuchet MS', Trebuchet, Arial, sans-serif;
+    font-size: medium;
+    background-color: rgb(255, 255, 255);
+    margin: 10em;
+    padding: 2em;
+    width: 10px;
+    border-radius: 30px;   
+    border-color: rgb(37, 55, 100);
+    border-width: thick;
+    border-style: solid;
+    
+   
+}
+
+
+
+article p {
+    word-wrap: break-word;
+    width:650px;
+}
