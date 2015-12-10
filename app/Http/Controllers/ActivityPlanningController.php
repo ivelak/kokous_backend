@@ -46,6 +46,7 @@ class ActivityPlanningController extends Controller {
         return redirect('activity_planning/planner');
     }
 
+
     public function showActivityEventPlannerView() {
         $activitiesIds = session('activities');
         $activities = [];
@@ -62,9 +63,10 @@ class ActivityPlanningController extends Controller {
         $groupId = session('group');
         $group = Group::find($groupId);
         $groups = Group::all();
-        //$events = EventOccurrence::with('activities')->where('group', $groupId)->get();
-        $events = EventOccurrence::with('activities')->get();
-        
+        $events2 = EventOccurrence::with('activities')->get();
+        $events = $events2->filter(function($item) use ($groupId) {
+            return $item->group->id === $groupId;
+        });
         return view('ActivityPlanning/activityEventPlanner', compact('activities', 'eventPatterns', 'groups', 'group', 'events', 'groupId'));
     }
     

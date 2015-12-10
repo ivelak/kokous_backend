@@ -11,9 +11,10 @@
             <hr>
             <div class="well" style="max-height: 500px; overflow-y:scroll;">
                 <ul class="list-group" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)" style="min-height: 5em">
-                    @foreach($activities as $activity)
+                    @forelse($activities as $activity)
                     <li class="list-group-item" draggable="true" id="activity-{{$activity->id}}">{{$activity->name}}</li>
-                    @endforeach
+                    @empty
+                    @endforelse
                 </ul>
             </div>
         </div>
@@ -21,7 +22,7 @@
             <h3>Tapahtumapohjat</h3>
             <hr>
             <div class="well" id="patternsDiv" style="max-height: 500px; overflow-y:scroll;" ondrop="drop3(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
-                @foreach($eventPatterns as $eventPattern)
+                @forelse($eventPatterns as $eventPattern)
                 <ul class="list-group event-draggable" style="min-height: 5em" draggable="true" ondrop="drop(event)" id="pattern-{{$eventPattern->id}}" ondragover="allowDrop(event)" ondragstart="drag(event)">
                     <h4 class="list-group-item-heading">{{$eventPattern->name}}
                         <small>
@@ -32,11 +33,13 @@
                         @endif
                         </small></h4>
 
-                        @foreach($eventPattern->activities as $activity)
+                        @forelse($eventPattern->activities as $activity)
                         <li class="list-group-item" draggable="false">{{$activity->name}}<span class="glyphicon glyphicon-lock pull-right"></span></li>
-                        @endforeach
+                        @empty
+                        @endforelse
                 </ul>
-                @endforeach
+                @empty
+                @endforelse
             </div>
         </div>
         <div class="col-sm-4">
@@ -44,16 +47,6 @@
             <h3>Toimintasuunnitelma<button type="button" class="btn btn-sm pull-right" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></h3>
             <hr>
             <div class="well" id="eventPlanner" style="max-height: 500px; overflow-y:scroll;" ondrop="drop2(event)" ondragover="allowDrop(event)" ondragstart="drag(event)">
-                {{--@foreach($events as $event)
-                <ul class="list-group event-draggable">
-                    <h4 class="list-group-item-heading">{{$event->event->name}} <small>{{$event->date->format('d.m.Y')}}</small></h4>
-                    <ul class="list-group" id="event-{{$event->id}}" ondragover="allowDrop(event)" ondragstart="drag(event)" ondrop="drop(event)">
-                        @foreach($event->activities as $activity)
-                        <li class="list-group-item" draggable="false">{{$activity->name}}<span class="glyphicon glyphicon-lock pull-right"></span></li>
-                        @endforeach
-                    </ul>
-                </ul>
-                @endforeach--}}
             </div>
             <br>
             <br>
@@ -304,7 +297,6 @@
                 var date = $.trim($(this).children('h4').first().children('small').first().html());
                 pattern.date = date;
                 pattern.datePart = date.split(" ")[0];
-                console.log(pattern.datePart);
                 
                 pattern.id = $(this).attr('id').slice($(this).attr('id').indexOf('-')+1);
                 pattern.activities = [];
@@ -329,23 +321,17 @@
             },
             dataType: "json",
             success: function(data, textStatus, jqXHR) {
-                console.log(data);
                 if(data == 2)
                 {
                     window.location="{!! url('/') !!}";
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log("Fail");
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
+                alert('Toimintasuunnitelman lisäämisessä tapahtui virhe!')
             }
         };
         
         $.ajax(request);
-        //$.post("{!! action('ActivityPlanningController@handleActivityPlan')!!}", json, function(returnData) { console.log(returnData);});
-        
     }
 
     function drop(ev) {
@@ -369,6 +355,8 @@
     
     $(document).ready(function() {
         var eventOccurrences = {!!$events->toJson()!!};
+        console.log(eventOccurrences);
+        console.log(eventOccurrences.length);
         window.savedTimes = {};
         var uls = $('#patternsDiv').children('ul');
         $.each(uls,function()
@@ -378,9 +366,12 @@
             savedTimes[$(this).attr('id')] = date;
         });
         
-        for(var i = 0; i < eventOccurrences.length; i++)
+        //for(var i = 0; i < eventOccurrences.length; i++)
+        var key;
+        for(key in eventOccurrences)
         {
-            var event = eventOccurrences[i];
+            //var event = eventOccurrences[i];
+            var event = eventOccurrences[key];
             var ul = $("<ul></ul>").addClass("list-group").attr("id", "event-"+event.id).attr("ondragover", "allowDrop(event)")
                     .attr("ondragstart", "drag(event)").attr("ondrop", "drop(event)");
             
