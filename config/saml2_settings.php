@@ -1,7 +1,7 @@
 <?php
 
 //This is variable is an example - Just make sure that the urls in the 'idp' config are ok.
-$idp_host = 'https://qaid.partio.fi/simplesaml';
+$idp_host = 'https://id.partio.fi/simplesaml';
 
 return $settings = array(
     /*****
